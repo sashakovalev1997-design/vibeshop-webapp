@@ -1,3 +1,5 @@
 body { font-family: Arial; text-align: center; margin: 20px; }
-button { margin: 5px; padding: 10px 15px; }
-img { border-radius: 8px; }
+button { margin: 5px; padding: 10px 15px; cursor: pointer; }
+img { border-radius: 8px; margin-bottom: 5px; }
+.product { display: inline-block; border: 1px solid #ddd; padding: 10px; margin: 5px; border-radius: 8px; width: 150px; }
+.category-btn { padding: 8px 12px; margin: 5px; }
