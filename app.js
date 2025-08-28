@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
 
-    // Товары с картинками из папки images/
     const products = [
         { id: 1, name: "Футболка Vibe", price: 1500, img: "images/tshirt.jpg" },
         { id: 2, name: "Худи Vibe", price: 3500, img: "images/hoodie.jpg" },
@@ -9,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     let cart = [];
-
     const container = document.getElementById("products");
 
     products.forEach(p => {
@@ -35,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Корзина пуста!");
             return;
         }
-        tg.sendData(JSON.stringify(cart)); // отправляем заказ боту
+        tg.sendData(JSON.stringify(cart)); // Отправка заказа боту
         tg.close();
     });
 });
