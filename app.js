@@ -1,42 +1,21 @@
+// Получаем Telegram WebApp SDK
 const tg = window.Telegram.WebApp;
+
+// Устанавливаем расширение окна
 tg.expand();
 
-const products = [
-    { id: 1, name: "Футболка", price: 40, image: "images/tshirt.jpg" },
-    { id: 2, name: "Худи", price: 70, image: "images/hoodie.jpg" },
-    { id: 3, name: "Сумка", price: 35, image: "images/bag.jpg" }
-];
+const buttons = document.querySelectorAll("button");
+buttons.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        const product = e.target.closest(".product");
+        const name = product.dataset.name;
+        const price = product.dataset.price;
 
-let cart = [];
+        const order = `Товар: ${name}\nЦена: ${price} BYN`;
 
-function renderProducts() {
-    const container = document.getElementById("products");
-    products.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p>${p.price} BYN</p>
-      <button onclick="addToCart(${p.id})">Добавить</button>
-    `;
-        container.appendChild(div);
+        // Отправляем заказ в Telegram боту
+        tg.sendData(order);
+
+        alert("✅ Заказ отправлен!");
     });
-}
-
-function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    tg.MainButton.text = `Оформить заказ (${cart.length})`;
-    tg.MainButton.show();
-}
-
-document.getElementById("orderBtn").addEventListener("click", () => {
-    if (cart.length === 0) {
-        alert("Корзина пуста!");
-        return;
-    }
-    tg.sendData(JSON.stringify(cart));
 });
-
-renderProducts();
