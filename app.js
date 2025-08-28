@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
 
+    // Лёгкая смена цен
     const products = [
-        { id: 1, name: "Футболка Vibe", price: 50, img: "images/tshirt.jpg" },
-        { id: 2, name: "Худи Vibe", price: 120, img: "images/hoodie.jpg" },
-        { id: 3, name: "Сумка Vibe", price: 80, img: "images/bag.jpg" }
+        { id: 1, name: "Футболка Vibe", price: 55, img: "images/tshirt.jpg" },
+        { id: 2, name: "Худи Vibe", price: 130, img: "images/hoodie.jpg" },
+        { id: 3, name: "Сумка Vibe", price: 85, img: "images/bag.jpg" }
     ];
 
     let cart = [];
