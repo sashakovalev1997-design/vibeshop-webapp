@@ -1,3 +1,5 @@
+window.Telegram.WebApp.ready();
+
 let cart = [];
 
 function addToCart(button) {
@@ -17,10 +19,10 @@ function checkout() {
 
     const order = JSON.stringify(cart);
 
-    // Отправка заказа в Telegram через WebApp
-    if (window.Telegram.WebApp) {
+    if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.sendData(order);
         cart = [];
+        alert("Заказ отправлен!");
     } else {
         alert("Ошибка: Telegram WebApp не найден");
     }
