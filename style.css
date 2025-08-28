@@ -31,7 +31,6 @@ h1 {
     width: 200px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
     transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
 }
 
 .product:hover {
@@ -73,40 +72,4 @@ h1 {
     transition: all 0.3s ease;
 }
 
-.add-btn:hover {
-    background: #ff6347;
-    box-shadow: 0 0 15px #ff6347;
-    transform: scale(1.05);
-}
-
-/* Кнопка Checkout */
-#checkout {
-    margin-top: 40px;
-    background: #27ae60;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-#checkout:hover {
-    background: #2ecc71;
-    box-shadow: 0 0 20px #2ecc71;
-    transform: scale(1.05);
-}
-
-/* Адаптив для мобильных */
-@media (max-width: 600px) {
-    #products {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .product {
-        width: 90%;
-    }
-}
+.add-btn

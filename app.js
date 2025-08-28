@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
 
-    // Все товары
     const products = [
         { id: 1, name: "Футболка Vibe", price: 55, img: "images/tshirt.jpg" },
         { id: 2, name: "Худи Vibe", price: 130, img: "images/hoodie.jpg" },
@@ -13,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const productsDiv = document.getElementById("products");
     const checkoutBtn = document.getElementById("checkout");
 
-    // Показываем все товары
+    // Отображение всех товаров
     products.forEach(p => {
         const div = document.createElement("div");
         div.className = "product";
         div.innerHTML = `
-            <img src="${p.img}" width="100">
+            <img src="${p.img}" alt="${p.name}">
             <h4>${p.name}</h4>
             <p>${p.price} BYN</p>
             <button class="add-btn">Добавить</button>
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         productsDiv.appendChild(div);
     });
 
-    // Checkout — отправляем данные в Telegram
+    // Checkout
     checkoutBtn.addEventListener("click", () => {
         if(cart.length === 0){
             alert("Корзина пуста!");
