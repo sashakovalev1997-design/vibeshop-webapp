@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
 
-    // Товары с реальными картинками из папки images/
+    // Товары с картинками из папки images/
     const products = [
         { id: 1, name: "Футболка Vibe", price: 1500, img: "images/tshirt.jpg" },
         { id: 2, name: "Худи Vibe", price: 3500, img: "images/hoodie.jpg" },
