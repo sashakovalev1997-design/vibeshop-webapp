@@ -1,29 +1,42 @@
-window.Telegram.WebApp.ready();
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+const products = [
+    { id: 1, name: "Футболка", price: 40, image: "images/tshirt.jpg" },
+    { id: 2, name: "Худи", price: 70, image: "images/hoodie.jpg" },
+    { id: 3, name: "Сумка", price: 35, image: "images/bag.jpg" }
+];
 
 let cart = [];
 
-function addToCart(button) {
-    const product = button.parentElement;
-    cart.push({
-        name: product.dataset.name,
-        price: product.dataset.price
+function renderProducts() {
+    const container = document.getElementById("products");
+    products.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p>${p.price} BYN</p>
+      <button onclick="addToCart(${p.id})">Добавить</button>
+    `;
+        container.appendChild(div);
     });
-    alert(`${product.dataset.name} добавлен в корзину`);
 }
 
-function checkout() {
-    if(cart.length === 0){
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    cart.push(product);
+    tg.MainButton.text = `Оформить заказ (${cart.length})`;
+    tg.MainButton.show();
+}
+
+document.getElementById("orderBtn").addEventListener("click", () => {
+    if (cart.length === 0) {
         alert("Корзина пуста!");
         return;
     }
+    tg.sendData(JSON.stringify(cart));
+});
 
-    const order = JSON.stringify(cart);
-
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(order);
-        cart = [];
-        alert("Заказ отправлен!");
-    } else {
-        alert("Ошибка: Telegram WebApp не найден");
-    }
-}
+renderProducts();
