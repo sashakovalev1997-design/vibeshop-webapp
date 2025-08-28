@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
 
-    // Лёгкая смена цен
     const products = [
         { id: 1, name: "Футболка Vibe", price: 55, img: "images/tshirt.jpg" },
         { id: 2, name: "Худи Vibe", price: 130, img: "images/hoodie.jpg" },
@@ -35,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        tg.sendData(JSON.stringify(cart));
+        tg.sendData(JSON.stringify(cart)); // отправка заказа боту
         alert("✅ Ваш заказ отправлен!");
         cart = [];
     });
