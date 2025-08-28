@@ -1,53 +1,31 @@
-body {
-background: linear-gradient(to right, #ff9a9e, #fad0c4);
-font-family: 'Arial', sans-serif;
-text-align: center;
-margin: 0;
-padding: 0;
-}
-h1 {
-margin: 20px 0;
-color: #fff;
-text-shadow: 2px 2px 4px #000;
-}
-.products {
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-gap: 20px;
-margin: 20px;
-}
-.product {
-background: #fff;
-border-radius: 15px;
-box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-padding: 10px;
-width: 180px;
-transition: transform 0.2s;
-}
-.product:hover {
-transform: scale(1.05);
-}
-.product img {
-width: 100%;
-border-radius: 10px;
-}
-button {
-margin-top: 10px;
-padding: 10px;
-border: none;
-background-color: #ff6f61;
-color: #fff;
-font-weight: bold;
-border-radius: 10px;
-cursor: pointer;
-transition: background 0.2s;
-}
-button:hover {
-background-color: #ff3b2e;
-}
-#checkout {
-margin: 20px;
-font-size: 18px;
-padding: 15px 25px;
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VibeShop WebApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>VibeShop Catalog</h1>
+<div class="products">
+    <div class="product">
+        <img src="images/tshirt.jpg" alt="T-shirt">
+        <h2>Футболка</h2>
+        <p>Цена: 20 BYN</p>
+    </div>
+    <div class="product">
+        <img src="images/hoodie.jpg" alt="Hoodie">
+        <h2>Толстовка</h2>
+        <p>Цена: 50 BYN</p>
+    </div>
+    <div class="product">
+        <img src="images/bag.jpg" alt="Bag">
+        <h2>Сумка</h2>
+        <p>Цена: 30 BYN</p>
+    </div>
+</div>
+<button id="orderBtn">Сделать заказ</button>
+
+<script src="app.js"></script>
+</body>
+</html>
