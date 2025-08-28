@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
 
     const products = [
-        { id: 1, name: "Футболка Vibe", price: 1500, img: "images/tshirt.jpg" },
-        { id: 2, name: "Худи Vibe", price: 3500, img: "images/hoodie.jpg" },
-        { id: 3, name: "Сумка Vibe", price: 2500, img: "images/bag.jpg" }
+        { id: 1, name: "Футболка Vibe", price: 150, img: "images/tshirt.jpg" },
+        { id: 2, name: "Худи Vibe", price: 350, img: "images/hoodie.jpg" },
+        { id: 3, name: "Сумка Vibe", price: 250, img: "images/bag.jpg" }
     ];
 
     let cart = [];
