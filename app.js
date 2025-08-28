@@ -33,7 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Корзина пуста!");
             return;
         }
-        tg.sendData(JSON.stringify(cart)); // Отправка заказа боту
-        tg.close();
+
+        // Отправка заказа боту
+        tg.sendData(JSON.stringify(cart));
+
+        // Показываем сообщение пользователю
+        alert("✅ Ваш заказ отправлен!");
+
+        // Очищаем корзину для новых покупок
+        cart = [];
     });
 });
