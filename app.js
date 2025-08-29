@@ -36,6 +36,7 @@ products.forEach(product => {
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) return;
 
+    // Отправка данных боту
     tg.sendData(JSON.stringify({
         items: cartItems,
         total: cartItems.reduce((sum, i) => sum + Number(i.price), 0)

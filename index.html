@@ -4,23 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeShop</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { font-family: Arial; text-align: center; padding: 20px; }
-        .product { margin: 10px 0; }
-        button { padding: 5px 10px; }
-    </style>
 </head>
 <body>
-<h1>VibeShop</h1>
 
-<div class="product" data-name="Футболка" data-price="20">
-    Футболка — 20 BYN
-    <button class="order-btn">Добавить в корзину</button>
-</div>
-<div class="product" data-name="Худи" data-price="50">
-    Худи — 50 BYN
-    <button class="order-btn">Добавить в корзину</button>
+<h1>VibeShop 👕👜</h1>
+<p>Добавьте товары в корзину и отправьте заказ боту</p>
+
+<div class="products">
+    <div class="product" data-name="Футболка" data-price="20">
+        <img src="images/tshirt.jpg" alt="Футболка">
+        <p>Футболка — 20 BYN</p>
+        <button class="order-btn">Добавить в корзину</button>
+    </div>
+    <div class="product" data-name="Худи" data-price="50">
+        <img src="images/hoodie.jpg" alt="Худи">
+        <p>Худи — 50 BYN</p>
+        <button class="order-btn">Добавить в корзину</button>
+    </div>
+    <div class="product" data-name="Сумка" data-price="35">
+        <img src="images/bag.jpg" alt="Сумка">
+        <p>Сумка — 35 BYN</p>
+        <button class="order-btn">Добавить в корзину</button>
+    </div>
 </div>
 
 <h2>Корзина (<span id="cart-count">0</span>)</h2>
