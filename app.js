@@ -54,14 +54,13 @@ document.addEventListener('click', (e) => {
     if(!cart.contains(e.target) && e.target !== cartToggle) cart.classList.remove('show');
 });
 
-// --- Отправка заказа в бота ---
+// --- Отправка заказа ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) return;
 
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    console.log("Отправка в бот:", orderText);
     tg.sendData(orderText); // отправка боту
 
     cartItems = [];
