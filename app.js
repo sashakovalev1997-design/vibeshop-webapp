@@ -11,6 +11,7 @@ const cart = document.getElementById("cart");
 const cartList = document.getElementById("cart-items");
 const cartTotalEl = document.getElementById("cart-total");
 const cartCountEl = document.getElementById("cart-count");
+const sendOrderBtn = document.getElementById("send-order");
 
 cartToggle.addEventListener("click", ()=> cart.classList.toggle("show"));
 
@@ -52,11 +53,24 @@ document.querySelectorAll(".order-btn").forEach(btn=>{
         const price = product.dataset.price;
 
         addToCart(name, price);
-        showNotification(`🛒 Вы заказали: ${name}`);
-        if(tg.sendData) tg.sendData(`Товар: ${name}\nЦена: ${price} BYN`);
-
-        btn.textContent="✅ Заказ отправлен!"; btn.disabled=true; btn.style.background="#28a745";
+        showNotification(`🛒 Вы добавили: ${name}`);
+        btn.textContent="✅ В корзину"; btn.disabled=true; btn.style.background="#28a745";
     });
+});
+
+// Отправка заказа
+sendOrderBtn.addEventListener("click", ()=>{
+    if(cartItems.length === 0){ showNotification("🛒 Корзина пуста!"); return; }
+    let orderText = "🛒 Новый заказ:\n\n";
+    cartItems.forEach(item => { orderText += `${item.name} — ${item.price} BYN\n`; });
+    orderText += `\nИтого: ${cartTotal} BYN`;
+
+    // Отправка через Telegram WebApp
+    if(tg.sendData){
+        tg.sendData(orderText); // бот получит orderText и данные о пользователе
+        showNotification("✅ Заказ отправлен!");
+        cartItems=[]; cartTotal=0; updateCart(); cart.classList.remove("show");
+    }
 });
 
 // Темная тема
