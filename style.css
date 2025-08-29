@@ -8,49 +8,18 @@
     --btn-hover:linear-gradient(90deg,#45008b,#8f2cf3);
 }
 
-body {
-    margin:0;
-    font-family:'Poppins',sans-serif;
-    background:var(--bg-color);
-    color:var(--text-color);
-    text-align:center;
-}
+body { margin:0; font-family:'Poppins',sans-serif; background:var(--bg-color); color:var(--text-color); text-align:center; }
 
 /* Header */
-header {
-    position: relative;
-    padding: 15px 20px;
-    background: var(--header-bg);
-    color: #fff;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
+header { position: relative; padding: 15px 20px; background: var(--header-bg); color: #fff; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 .header-left h1 { margin:0; font-size:1.8em; }
 .header-left p { margin-top:5px; font-size:0.9em; opacity:0.9; }
 .header-right { display:flex; gap:10px; }
 .header-right button { background:transparent; border:none; font-size:1.5em; cursor:pointer; color:#fff; }
 
 /* Products */
-main.products {
-    display: flex;
-    flex-direction: column;
-    gap:20px;
-    padding:20px;
-}
-.product {
-    background: var(--card-bg);
-    border-radius:20px;
-    padding:15px;
-    box-shadow: 0 10px 25px var(--card-shadow);
-    transform: translateY(50px);
-    opacity:0;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-}
+main.products { display:flex; flex-direction:column; gap:20px; padding:20px; }
+.product { background: var(--card-bg); border-radius:20px; padding:15px; box-shadow: 0 10px 25px var(--card-shadow); transform: translateY(50px); opacity:0; transition: transform 0.6s ease, opacity 0.6s ease; }
 .product.visible { transform: translateY(0); opacity:1; }
 .product img { width:100%; border-radius:15px; transition: transform 0.3s; }
 .product img:hover { transform: scale(1.05); }
@@ -60,21 +29,7 @@ main.products {
 .order-btn:hover { background:var(--btn-hover); transform:scale(1.05); }
 
 /* Cart */
-#cart {
-    position: fixed;
-    top: 100px;
-    right: 10px;
-    width: 250px;
-    max-height: 60vh;
-    background: var(--card-bg);
-    color: var(--text-color);
-    border-radius: 15px;
-    box-shadow:0 10px 25px var(--card-shadow);
-    padding:15px;
-    overflow-y:auto;
-    z-index:1000;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
+#cart { position: fixed; top: 100px; right: 10px; width: 250px; max-height: 60vh; background: var(--card-bg); color: var(--text-color); border-radius: 15px; box-shadow:0 10px 25px var(--card-shadow); padding:15px; overflow-y:auto; z-index:1000; transition: transform 0.3s ease, opacity 0.3s ease; }
 #cart.hidden { opacity:0; pointer-events:none; }
 #cart:not(.hidden) { opacity:1; transform:translateY(0); }
 #cart h3 { text-align:center; color:#6a0dad; }
@@ -82,18 +37,18 @@ main.products {
 #cart ul li { display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px solid #ccc; padding-bottom:4px; font-size:0.95em; }
 #cart ul li button { cursor:pointer; border:none; background:transparent; color:red; }
 
-/* Contacts */
-.contacts { background: var(--card-bg); margin:30px 20px; padding:20px; border-radius:20px; box-shadow:0 10px 25px var(--card-shadow); text-align:center; }
-.contacts h2 { color:#6a0dad; margin-bottom:10px; }
-.contacts p { margin-bottom:15px; font-size:1em; color:var(--text-color); }
-.contact-buttons { display:flex; justify-content:center; gap:15px; flex-wrap:wrap; }
-.contact-btn { background:var(--btn-bg); color:#fff; text-decoration:none; padding:12px 20px; border-radius:15px; font-weight:bold; transition:background 0.3s, transform 0.2s; }
-.contact-btn:hover { background:var(--btn-hover); transform:scale(1.05); }
-
-/* Dark Theme */
-body.dark { --bg-color:#1e1e2f; --text-color:#fff; --header-bg:linear-gradient(90deg,#45008b,#8f2cf3); --card-bg:#2a2a3d; --card-shadow:rgba(0,0,0,0.5); --btn-bg:linear-gradient(90deg,#6a0dad,#b76efb); --btn-hover:linear-gradient(90deg,#45008b,#8f2cf3); }
-
 /* Notifications */
 #notification-container { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1000; display:flex; flex-direction:column; gap:10px; }
 .notification { background:linear-gradient(90deg,#6a0dad,#b76efb); color:#fff; padding:12px 20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.3); font-weight:bold; opacity:0; transform:translateY(50px); animation:floatUp 0.6s forwards; }
 @keyframes floatUp {0%{opacity:0;transform:translateY(50px);}20%{opacity:1;transform:translateY(0);}80%{opacity:1;transform:translateY(-10px);}100%{opacity:0;transform:translateY(-50px);}}
+
+/* Floating contacts */
+.contact-floating { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+.contact-floating button { background: linear-gradient(90deg,#6a0dad,#b76efb); color:#fff; border:none; border-radius:50%; width:50px; height:50px; font-size:1.5em; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.3); transition:transform 0.2s; }
+.contact-floating button:hover { transform:scale(1.1); }
+.contact-card { display:none; background:#fff; color:#333; padding:15px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2); margin-bottom:10px; text-align:left; }
+.contact-card a { display:block; color:#6a0dad; margin-bottom:8px; text-decoration:none; font-weight:bold; }
+.contact-card a:hover { text-decoration:underline; }
+
+/* Dark theme */
+body.dark { --bg-color:#1e1e2f; --text-color:#fff; --header-bg:linear-gradient(90deg,#45008b,#8f2cf3); --card-bg:#2a2a3d; --card-shadow:rgba(0,0,0,0.5); --btn-bg:linear-gradient(90deg,#6a0dad,#b76efb); --btn-hover:linear-gradient(90deg,#45008b,#8f2cf3); }

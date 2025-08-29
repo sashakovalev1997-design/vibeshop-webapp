@@ -8,6 +8,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+
 <header>
     <div class="header-left">
         <h1>VibeShop 👕👜</h1>
@@ -33,12 +34,14 @@
         <p class="price">20 BYN</p>
         <button class="order-btn">Заказать</button>
     </div>
+
     <div class="product" data-name="Худи" data-price="50">
         <img src="images/hoodie.jpg" alt="Худи">
         <h2>Худи</h2>
         <p class="price">50 BYN</p>
         <button class="order-btn">Заказать</button>
     </div>
+
     <div class="product" data-name="Сумка" data-price="35">
         <img src="images/bag.jpg" alt="Сумка">
         <h2>Сумка</h2>
@@ -47,15 +50,15 @@
     </div>
 </main>
 
-<!-- Контакты -->
-<section class="contacts">
-    <h2>Связаться с нами</h2>
-    <p>Если есть вопросы, напишите напрямую:</p>
-    <div class="contact-buttons">
-        <a href="https://t.me/bigdigovich" target="_blank" class="contact-btn">@bigdigovich</a>
-        <a href="https://t.me/Amg0101am" target="_blank" class="contact-btn">@Amg0101am</a>
+<!-- Плавающие контакты -->
+<div class="contact-floating">
+    <div class="contact-card" id="contactCard">
+        <p>Связаться с нами:</p>
+        <a href="https://t.me/bigdigovich" target="_blank">@bigdigovich</a>
+        <a href="https://t.me/Amg0101am" target="_blank">@Amg0101am</a>
     </div>
-</section>
+    <button id="contactToggle">✉️</button>
+</div>
 
 <div id="notification-container"></div>
 <script src="app.js"></script>
