@@ -2,31 +2,40 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>VibeShop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeShop 👕👜</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-<h1>VibeShop 👕👜</h1>
-<div class="products">
+<header>
+    <h1>VibeShop 👕👜</h1>
+    <p>Самые стильные вещи прямо в Telegram!</p>
+</header>
+
+<main class="products">
     <div class="product" data-name="Футболка" data-price="20">
-        <img src="images/tshirt.jpg" alt="Футболка">
+        <div class="product-img"><img src="images/tshirt.jpg" alt="Футболка"></div>
         <h2>Футболка</h2>
-        <p>Цена: 20 BYN</p>
-        <button>Заказать</button>
+        <p class="price">20 BYN</p>
+        <button class="order-btn">Заказать</button>
     </div>
+
     <div class="product" data-name="Худи" data-price="50">
-        <img src="images/hoodie.jpg" alt="Худи">
+        <div class="product-img"><img src="images/hoodie.jpg" alt="Худи"></div>
         <h2>Худи</h2>
-        <p>Цена: 50 BYN</p>
-        <button>Заказать</button>
+        <p class="price">50 BYN</p>
+        <button class="order-btn">Заказать</button>
     </div>
+
     <div class="product" data-name="Сумка" data-price="35">
-        <img src="images/bag.jpg" alt="Сумка">
+        <div class="product-img"><img src="images/bag.jpg" alt="Сумка"></div>
         <h2>Сумка</h2>
-        <p>Цена: 35 BYN</p>
-        <button>Заказать</button>
+        <p class="price">35 BYN</p>
+        <button class="order-btn">Заказать</button>
     </div>
-</div>
+</main>
+
 <script src="app.js"></script>
 </body>
 </html>

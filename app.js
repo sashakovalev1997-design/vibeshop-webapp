@@ -1,21 +1,22 @@
-// Получаем Telegram WebApp SDK
+// Подключение Telegram WebApp SDK
 const tg = window.Telegram.WebApp;
-
-// Устанавливаем расширение окна
 tg.expand();
 
-const buttons = document.querySelectorAll("button");
-buttons.forEach(btn => {
-    btn.addEventListener("click", (e) => {
+// Обработка кнопок заказа
+document.querySelectorAll(".order-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
         const product = e.target.closest(".product");
         const name = product.dataset.name;
         const price = product.dataset.price;
 
         const order = `Товар: ${name}\nЦена: ${price} BYN`;
 
-        // Отправляем заказ в Telegram боту
+        // Отправка данных в Telegram боту
         tg.sendData(order);
 
-        alert("✅ Заказ отправлен!");
+        // Визуальное подтверждение пользователю
+        btn.textContent = "✅ Заказ отправлен!";
+        btn.disabled = true;
+        btn.style.background = "#28a745";
     });
 });
