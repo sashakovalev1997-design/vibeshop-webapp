@@ -60,9 +60,9 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// --- Отправка заказа в Telegram ---
+// --- Отправка заказа напрямую боту ---
 sendOrderBtn.addEventListener('click', () => {
-    if(cartItems.length === 0) {
+    if(cartItems.length === 0){
         showNotification('Корзина пуста!');
         return;
     }
@@ -70,15 +70,9 @@ sendOrderBtn.addEventListener('click', () => {
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    // Копируем заказ в буфер
-    navigator.clipboard.writeText(orderText).then(() => {
-        showNotification('Текст заказа скопирован! Откроется Telegram для отправки.');
+    // Отправка через Telegram WebApp
+    tg.sendData(orderText);
 
-        // Всегда открываем веб-ссылку на Telegram (работает на всех устройствах)
-        window.open("https://t.me/bigdigovich", "_blank");
-    });
-
-    // Очистка корзины
     cartItems = [];
     updateCartUI();
     document.querySelectorAll('.order-btn').forEach(b => b.classList.remove('in-cart'));
@@ -91,7 +85,7 @@ contactToggle.addEventListener('click', () => {
 });
 
 // --- Уведомления ---
-function showNotification(text) {
+function showNotification(text){
     const notif = document.createElement('div');
     notif.classList.add('notification');
     notif.textContent = text;
