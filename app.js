@@ -1,70 +1,79 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-const cartToggle = document.getElementById('cart-toggle');
-const cart = document.getElementById('cart');
-const cartItemsList = document.getElementById('cart-items');
-const cartTotal = document.getElementById('cart-total');
-const sendOrderBtn = document.getElementById('send-order');
-const products = document.querySelectorAll('.product');
-
 let cartItems = [];
 
+const cartEl = document.getElementById("cart");
+const cartItemsEl = document.getElementById("cart-items");
+const sendOrderBtn = document.getElementById("send-order");
+const closeCartBtn = document.getElementById("close-cart");
+
+const contactsBtn = document.getElementById("contacts-btn");
+const contactsEl = document.getElementById("contacts");
+const closeContactsBtn = document.getElementById("close-contacts");
+
+// --- Обновление корзины ---
 function updateCartUI() {
-    cartItemsList.innerHTML = '';
-    let total = 0;
-    cartItems.forEach((item, index) => {
-        const li = document.createElement('li');
+    cartItemsEl.innerHTML = "";
+    cartItems.forEach(item => {
+        const li = document.createElement("li");
         li.textContent = `${item.name} — ${item.price} BYN`;
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = '❌';
-        removeBtn.onclick = () => {
-            cartItems.splice(index, 1);
-            products.forEach(p => {
-                if(p.dataset.name === item.name) p.querySelector('button').classList.remove('in-cart');
-            });
-            updateCartUI();
-        };
-        li.appendChild(removeBtn);
-        cartItemsList.appendChild(li);
-        total += Number(item.price);
+        cartItemsEl.appendChild(li);
     });
-    cartTotal.textContent = total;
-    document.getElementById('cart-count').textContent = cartItems.length;
+
+    cartEl.style.display = cartItems.length ? "block" : "none";
 }
 
-products.forEach(product => {
-    const btn = product.querySelector('.order-btn');
-    btn.addEventListener('click', () => {
+// --- Добавление товара в корзину ---
+document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        const product = e.target.closest(".product");
         const name = product.dataset.name;
         const price = product.dataset.price;
-        if(cartItems.some(i => i.name === name)) return;
+
+        if(cartItems.find(i => i.name === name)) return;
+
         cartItems.push({name, price});
-        btn.classList.add('in-cart');
+        btn.classList.add("in-cart");
         updateCartUI();
     });
 });
 
-cartToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    cart.classList.toggle('show');
-});
-
-document.addEventListener('click', (e) => {
-    if(!cart.contains(e.target) && e.target !== cartToggle) cart.classList.remove('show');
-});
-
-// --- Отправка заказа боту WebApp ---
-sendOrderBtn.addEventListener('click', () => {
-    if(cartItems.length === 0) return;
+// --- Отправка заказа ---
+sendOrderBtn.addEventListener("click", () => {
+    if(cartItems.length === 0){
+        alert("Корзина пуста!");
+        return;
+    }
 
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    tg.sendData(orderText); // отправка боту WebApp
+    tg.sendData(orderText);
 
     cartItems = [];
+    document.querySelectorAll(".add-to-cart").forEach(btn => btn.classList.remove("in-cart"));
     updateCartUI();
-    cart.classList.remove('show');
-    alert('✅ Ваш заказ отправлен!');
+    alert("✅ Ваш заказ отправлен!");
+});
+
+// --- Закрытие корзины ---
+closeCartBtn.addEventListener("click", () => {
+    cartEl.style.display = "none";
+});
+
+// --- Открытие/закрытие контактов ---
+contactsBtn.addEventListener("click", () => {
+    contactsEl.style.display = "block";
+});
+
+closeContactsBtn.addEventListener("click", () => {
+    contactsEl.style.display = "none";
+});
+
+// Закрытие по клику вне блока
+window.addEventListener("click", (e) => {
+    if(e.target === contactsEl){
+        contactsEl.style.display = "none";
+    }
 });

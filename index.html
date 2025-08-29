@@ -3,49 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜</title>
+    <title>VibeShop</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-<div class="container">
-    <header>
-        <div class="header-left">
-            <h1>VibeShop 👕👜</h1>
-            <p>Стильные вещи прямо в Telegram</p>
-        </div>
-        <div class="header-right">
-            <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
-        </div>
-    </header>
 
-    <main class="products">
-        <div class="product" data-name="Футболка" data-price="20">
-            <img src="images/tshirt.jpg" alt="Футболка">
-            <h2>Футболка</h2>
-            <p class="price">20 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-        <div class="product" data-name="Худи" data-price="50">
-            <img src="images/hoodie.jpg" alt="Худи">
-            <h2>Худи</h2>
-            <p class="price">50 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-        <div class="product" data-name="Сумка" data-price="35">
-            <img src="images/bag.jpg" alt="Сумка">
-            <h2>Сумка</h2>
-            <p class="price">35 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-    </main>
+<header>
+    <h1>VibeShop 👕👜</h1>
+</header>
+
+<!-- Продукты -->
+<main class="products">
+    <div class="product" data-name="Футболка" data-price="20">
+        <img src="images/tshirt.jpg" alt="Футболка">
+        <h2>Футболка</h2>
+        <p>Цена: 20 BYN</p>
+        <button class="add-to-cart">Добавить в корзину</button>
+    </div>
+    <div class="product" data-name="Худи" data-price="50">
+        <img src="images/hoodie.jpg" alt="Худи">
+        <h2>Худи</h2>
+        <p>Цена: 50 BYN</p>
+        <button class="add-to-cart">Добавить в корзину</button>
+    </div>
+    <div class="product" data-name="Сумка" data-price="35">
+        <img src="images/bag.jpg" alt="Сумка">
+        <h2>Сумка</h2>
+        <p>Цена: 35 BYN</p>
+        <button class="add-to-cart">Добавить в корзину</button>
+    </div>
+</main>
+
+<!-- Корзина -->
+<div id="cart" class="cart">
+    <h3>🛒 Корзина</h3>
+    <ul id="cart-items"></ul>
+    <button id="send-order">Отправить заказ</button>
+    <button id="close-cart">Закрыть</button>
 </div>
 
-<div id="cart">
-    <h3>Ваша корзина</h3>
-    <ul id="cart-items"></ul>
-    <p>Итого: <span id="cart-total">0</span> BYN</p>
-    <button id="send-order">📩 Отправить заказ</button>
+<!-- Кнопка контактов -->
+<button id="contacts-btn">📞 Контакты</button>
+
+<!-- Контакты -->
+<div id="contacts" class="contacts">
+    <h3>📞 Контакты</h3>
+    <p>
+        Написать напрямую:
+        <a href="https://t.me/bigdigovich" target="_blank">@bigdigovich</a>,
+        <a href="https://t.me/Amg0101am" target="_blank">@Amg0101am</a>
+    </p>
+    <button id="close-contacts">Закрыть</button>
 </div>
 
 <script src="app.js"></script>
