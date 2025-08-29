@@ -128,3 +128,45 @@ main.products {
 #cart h3 {
     margin-top: 0;
 }
+
+/* 📩 Контакты */
+footer.contacts {
+    margin: 25px auto 15px;
+    padding: 15px;
+    max-width: 480px;
+    background: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+footer.contacts h3 {
+    margin: 0 0 10px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    background: #ff073a;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.contact-btn:hover {
+    background: #e6002e;
+}
