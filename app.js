@@ -33,7 +33,7 @@ function flyToCart(product){
     clone.style.position="fixed"; clone.style.left=rect.left+"px"; clone.style.top=rect.top+"px";
     clone.style.width=rect.width+"px"; clone.style.height=rect.height+"px"; clone.style.transition="all 0.6s ease-in-out"; clone.style.zIndex=1000;
     document.body.appendChild(clone);
-    const cartX=window.innerWidth/2-rect.width/4; const cartY=window.innerHeight;
+    const cartX=window.innerWidth-80; const cartY=100;
     setTimeout(()=>{ clone.style.left=cartX+"px"; clone.style.top=cartY+"px"; clone.style.width=rect.width/2+"px"; clone.style.height=rect.height/2+"px"; clone.style.opacity=0; },50);
     setTimeout(()=>clone.remove(),700);
 }
@@ -80,6 +80,7 @@ document.querySelectorAll(".order-btn").forEach(btn=>{
     });
 });
 
+// Темная тема
 const themeToggle=document.getElementById("theme-toggle");
 themeToggle.addEventListener("click",()=>{
     document.body.classList.toggle("dark");
