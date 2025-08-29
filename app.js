@@ -54,11 +54,10 @@ document.addEventListener('click', (e) => {
     if(!cart.contains(e.target) && e.target !== cartToggle) cart.classList.remove('show');
 });
 
-// --- Отправка заказа в бот ---
+// --- Отправка заказа ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) return;
 
-    // Отправка данных в формате JSON
     tg.sendData(JSON.stringify({
         items: cartItems,
         total: cartItems.reduce((sum, i) => sum + Number(i.price), 0)
