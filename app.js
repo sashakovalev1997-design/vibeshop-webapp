@@ -1,34 +1,15 @@
-const tg = window.Telegram.WebApp;
-tg.expand();
+const tg=window.Telegram.WebApp; tg.expand();
 
-const products = document.querySelectorAll(".product");
-const notificationContainer = document.getElementById("notification-container");
+const products=document.querySelectorAll(".product");
+const notificationContainer=document.getElementById("notification-container");
 
 // Плавное появление карточек
-const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, index) => {
-        if(entry.isIntersecting) setTimeout(()=>entry.target.classList.add("visible"), index*150);
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach((entry,index)=>{
+        if(entry.isIntersecting)setTimeout(()=>entry.target.classList.add("visible"),index*150);
     });
-}, { threshold: 0.2 });
-products.forEach(p => observer.observe(p));
-
-// Параллакс через requestAnimationFrame
-let latestScroll=0, ticking=false;
-window.addEventListener('scroll', ()=>{
-    latestScroll=window.scrollY;
-    if(!ticking){
-        requestAnimationFrame(()=>{
-            products.forEach((product,index)=>{
-                if(product.classList.contains("visible")){
-                    const speed=0.03+index*0.01;
-                    product.style.transform=`translateY(${-latestScroll*speed}px)`;
-                }
-            });
-            ticking=false;
-        });
-        ticking=true;
-    }
-});
+},{threshold:0.2});
+products.forEach(p=>observer.observe(p));
 
 // Корзина
 let cartItems=[], cartTotal=0;
@@ -37,7 +18,6 @@ const cart=document.getElementById("cart");
 const cartList=document.getElementById("cart-items");
 const cartTotalEl=document.getElementById("cart-total");
 const cartCountEl=document.getElementById("cart-count");
-
 cartToggle.addEventListener("click",()=>cart.classList.toggle("hidden"));
 
 function showNotification(message){
@@ -51,34 +31,11 @@ function flyToCart(product){
     const clone=img.cloneNode(true);
     const rect=img.getBoundingClientRect();
     clone.style.position="fixed"; clone.style.left=rect.left+"px"; clone.style.top=rect.top+"px";
-    clone.style.width=rect.width+"px"; clone.style.height=rect.height+"px";
-    clone.style.transition="all 0.8s ease-in-out"; clone.style.zIndex=1000;
+    clone.style.width=rect.width+"px"; clone.style.height=rect.height+"px"; clone.style.transition="all 0.6s ease-in-out"; clone.style.zIndex=1000;
     document.body.appendChild(clone);
     const cartX=window.innerWidth/2-rect.width/4; const cartY=window.innerHeight;
-    setTimeout(()=>{
-        clone.style.left=cartX+"px"; clone.style.top=cartY+"px";
-        clone.style.width=rect.width/2+"px"; clone.style.height=rect.height/2+"px"; clone.style.opacity=0;
-    },50);
-    setTimeout(()=>clone.remove(),900);
-}
-
-function addToCart(name, price){
-    cartItems.push({name,price:Number(price)});
-    cartTotal+=Number(price);
-    cartList.innerHTML="";
-    cartItems.forEach((item,index)=>{
-        const li=document.createElement("li");
-        li.textContent=`${item.name} — ${item.price} BYN`;
-        const delBtn=document.createElement("button");
-        delBtn.textContent="❌"; delBtn.style.marginLeft="10px"; delBtn.style.cursor="pointer";
-        delBtn.addEventListener("click",()=>{
-            cartTotal-=item.price; cartItems.splice(index,1); updateCart();
-        });
-        li.appendChild(delBtn);
-        cartList.appendChild(li);
-    });
-    cartTotalEl.textContent=cartTotal;
-    cartCountEl.textContent=cartItems.length;
+    setTimeout(()=>{ clone.style.left=cartX+"px"; clone.style.top=cartY+"px"; clone.style.width=rect.width/2+"px"; clone.style.height=rect.height/2+"px"; clone.style.opacity=0; },50);
+    setTimeout(()=>clone.remove(),700);
 }
 
 function updateCart(){
@@ -86,8 +43,7 @@ function updateCart(){
     cartItems.forEach((item,index)=>{
         const li=document.createElement("li");
         li.textContent=`${item.name} — ${item.price} BYN`;
-        const delBtn=document.createElement("button");
-        delBtn.textContent="❌"; delBtn.style.marginLeft="10px"; delBtn.style.cursor="pointer";
+        const delBtn=document.createElement("button"); delBtn.textContent="❌";
         delBtn.addEventListener("click",()=>{
             cartTotal-=item.price; cartItems.splice(index,1); updateCart();
         });
@@ -98,7 +54,12 @@ function updateCart(){
     cartCountEl.textContent=cartItems.length;
 }
 
-// Отправка заказа
+function addToCart(name,price){
+    cartItems.push({name,price:Number(price)});
+    cartTotal+=Number(price);
+    updateCart();
+}
+
 function sendOrder(product){
     const name=product.dataset.name, price=product.dataset.price;
     const order=`Товар: ${name}\nЦена: ${price} BYN`;
@@ -112,7 +73,6 @@ function sendOrder(product){
     addToCart(name,price);
 }
 
-// Кнопки заказа
 document.querySelectorAll(".order-btn").forEach(btn=>{
     btn.addEventListener("click", e=>{
         const product=e.target.closest(".product");
@@ -120,7 +80,6 @@ document.querySelectorAll(".order-btn").forEach(btn=>{
     });
 });
 
-// Тёмная тема
 const themeToggle=document.getElementById("theme-toggle");
 themeToggle.addEventListener("click",()=>{
     document.body.classList.toggle("dark");
