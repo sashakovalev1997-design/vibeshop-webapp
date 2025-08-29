@@ -57,9 +57,6 @@ document.querySelectorAll(".order-btn").forEach(btn => {
 
         addToCart(name, price);
         showNotification(`🛒 Вы добавили: ${name}`);
-        btn.textContent = "✅ В корзину";
-        btn.disabled = true;
-        btn.style.background = "#28a745";
     });
 });
 
