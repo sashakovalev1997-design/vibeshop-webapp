@@ -8,9 +8,6 @@ const cartTotal = document.getElementById('cart-total');
 const sendOrderBtn = document.getElementById('send-order');
 const products = document.querySelectorAll('.product');
 
-const contactToggle = document.getElementById('contactToggle');
-const contactCard = document.getElementById('contactCard');
-
 let cartItems = [];
 
 function updateCartUI() {
@@ -45,7 +42,6 @@ products.forEach(product => {
         cartItems.push({name, price});
         btn.classList.add('in-cart');
         updateCartUI();
-        showNotification(`${name} добавлен в корзину`);
     });
 });
 
@@ -55,47 +51,20 @@ cartToggle.addEventListener('click', (e) => {
 });
 
 document.addEventListener('click', (e) => {
-    if(!cart.contains(e.target) && e.target !== cartToggle) {
-        cart.classList.remove('show');
-    }
+    if(!cart.contains(e.target) && e.target !== cartToggle) cart.classList.remove('show');
 });
 
-// --- Отправка заказа напрямую боту ---
+// --- Отправка заказа боту WebApp ---
 sendOrderBtn.addEventListener('click', () => {
-    if(cartItems.length === 0){
-        showNotification('Корзина пуста!');
-        return;
-    }
+    if(cartItems.length === 0) return;
 
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    // Отправка заказа в WebApp боту
-    tg.sendData(orderText);
+    tg.sendData(orderText); // отправка боту WebApp
 
     cartItems = [];
     updateCartUI();
     cart.classList.remove('show');
-    showNotification('✅ Ваш заказ отправлен!');
+    alert('✅ Ваш заказ отправлен!');
 });
-
-// --- Контакты ---
-contactToggle.addEventListener('click', () => contactCard.classList.toggle('show'));
-
-// --- Всплывающие уведомления ---
-function showNotification(text) {
-    const notif = document.createElement('div');
-    notif.textContent = text;
-    notif.style.position = 'fixed';
-    notif.style.bottom = '20px';
-    notif.style.left = '50%';
-    notif.style.transform = 'translateX(-50%)';
-    notif.style.background = '#ff073a';
-    notif.style.color = '#fff';
-    notif.style.padding = '10px 20px';
-    notif.style.borderRadius = '10px';
-    notif.style.zIndex = 2000;
-    notif.style.opacity = '0.9';
-    document.body.appendChild(notif);
-    setTimeout(() => notif.remove(), 2500);
-}
