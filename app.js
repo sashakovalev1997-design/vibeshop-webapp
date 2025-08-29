@@ -27,7 +27,7 @@ function updateCartUI() {
     cartTotal.textContent = total;
 }
 
-// Добавление товаров в корзину
+// Добавление товаров
 document.querySelectorAll('.order-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const product = btn.closest('.product');
@@ -55,5 +55,5 @@ sendOrderBtn.addEventListener('click', () => {
     tg.sendData(JSON.stringify(order)); // WebApp остаётся открытым
     cartItems.length = 0;
     updateCartUI();
-    alert('✅ Ваш заказ отправлен! Приложение остаётся открытым.');
+    alert('✅ Ваш заказ отправлен! Вы можете продолжать покупки.');
 });
