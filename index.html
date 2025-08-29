@@ -3,57 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop</title>
+    <title>Vibe Shop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <header>
-    <h1>VibeShop 👕👜</h1>
+    <h1 class="shop-title">Vibe Shop</h1>
 </header>
 
-<!-- Продукты -->
-<main class="products">
-    <div class="product" data-name="Футболка" data-price="20">
-        <img src="images/tshirt.jpg" alt="Футболка">
-        <h2>Футболка</h2>
-        <p>Цена: 20 BYN</p>
-        <button class="add-to-cart">Добавить в корзину</button>
-    </div>
-    <div class="product" data-name="Худи" data-price="50">
-        <img src="images/hoodie.jpg" alt="Худи">
-        <h2>Худи</h2>
-        <p>Цена: 50 BYN</p>
-        <button class="add-to-cart">Добавить в корзину</button>
-    </div>
-    <div class="product" data-name="Сумка" data-price="35">
-        <img src="images/bag.jpg" alt="Сумка">
-        <h2>Сумка</h2>
-        <p>Цена: 35 BYN</p>
-        <button class="add-to-cart">Добавить в корзину</button>
+<main>
+    <div class="products" id="products">
+        <!-- Карточки товаров вставляются через JS -->
     </div>
 </main>
 
-<!-- Корзина -->
-<div id="cart" class="cart">
-    <h3>🛒 Корзина</h3>
-    <ul id="cart-items"></ul>
-    <button id="send-order">Отправить заказ</button>
-    <button id="close-cart">Закрыть</button>
-</div>
+<!-- Кнопка корзины -->
+<button id="cart-btn">🛒 Корзина (<span id="cart-count">0</span>)</button>
 
 <!-- Кнопка контактов -->
 <button id="contacts-btn">📞 Контакты</button>
 
-<!-- Контакты -->
+<!-- Модальное окно корзины -->
+<div id="cart" class="cart">
+    <h2>Ваша корзина</h2>
+    <ul id="cart-items"></ul>
+    <button id="send-order">✅ Отправить заказ</button>
+    <button id="close-cart">❌ Закрыть</button>
+</div>
+
+<!-- Модальное окно контактов -->
 <div id="contacts" class="contacts">
-    <h3>📞 Контакты</h3>
-    <p>
-        Написать напрямую:
-        <a href="https://t.me/bigdigovich" target="_blank">@bigdigovich</a>,
-        <a href="https://t.me/Amg0101am" target="_blank">@Amg0101am</a>
-    </p>
-    <button id="close-contacts">Закрыть</button>
+    <h2>Связаться с нами</h2>
+    <p>Telegram: @bigdigovich</p>
+    <p>Instagram: @shop_inst</p>
+    <button id="close-contacts">❌ Закрыть</button>
 </div>
 
 <script src="app.js"></script>

@@ -1,45 +1,72 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
+const productsEl = document.getElementById("products");
+const cartBtn = document.getElementById("cart-btn");
+const contactsBtn = document.getElementById("contacts-btn");
+const cartEl = document.getElementById("cart");
+const contactsEl = document.getElementById("contacts");
+const closeCartBtn = document.getElementById("close-cart");
+const closeContactsBtn = document.getElementById("close-contacts");
+const cartItemsEl = document.getElementById("cart-items");
+const cartCountEl = document.getElementById("cart-count");
+const sendOrderBtn = document.getElementById("send-order");
+
 let cartItems = [];
 
-const cartEl = document.getElementById("cart");
-const cartItemsEl = document.getElementById("cart-items");
-const sendOrderBtn = document.getElementById("send-order");
-const closeCartBtn = document.getElementById("close-cart");
+// Список товаров
+const products = [
+    { id: 1, name: "Товар 1", price: 10 },
+    { id: 2, name: "Товар 2", price: 20 },
+    { id: 3, name: "Товар 3", price: 30 },
+];
 
-const contactsBtn = document.getElementById("contacts-btn");
-const contactsEl = document.getElementById("contacts");
-const closeContactsBtn = document.getElementById("close-contacts");
+// Рендер товаров
+products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+    <h3>${p.name}</h3>
+    <p>${p.price} BYN</p>
+    <button onclick="addToCart(${p.id})">Добавить в корзину</button>
+  `;
+    productsEl.appendChild(card);
+});
 
-// --- Обновление корзины ---
-function updateCartUI() {
+window.addToCart = function(id){
+    const product = products.find(p => p.id === id);
+    cartItems.push(product);
+    updateCartUI();
+};
+
+// Обновление корзины
+function updateCartUI(){
     cartItemsEl.innerHTML = "";
     cartItems.forEach(item => {
         const li = document.createElement("li");
         li.textContent = `${item.name} — ${item.price} BYN`;
         cartItemsEl.appendChild(li);
     });
-
-    cartEl.style.display = cartItems.length ? "block" : "none";
+    cartCountEl.textContent = cartItems.length;
 }
 
-// --- Добавление товара в корзину ---
-document.querySelectorAll(".add-to-cart").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        const product = e.target.closest(".product");
-        const name = product.dataset.name;
-        const price = product.dataset.price;
-
-        if(cartItems.find(i => i.name === name)) return;
-
-        cartItems.push({name, price});
-        btn.classList.add("in-cart");
-        updateCartUI();
-    });
+// Кнопка корзины
+cartBtn.addEventListener("click", () => {
+    cartEl.style.display = "block";
+});
+closeCartBtn.addEventListener("click", () => {
+    cartEl.style.display = "none";
 });
 
-// --- Отправка заказа ---
+// Кнопка контактов
+contactsBtn.addEventListener("click", () => {
+    contactsEl.style.display = "block";
+});
+closeContactsBtn.addEventListener("click", () => {
+    contactsEl.style.display = "none";
+});
+
+// Отправка заказа
 sendOrderBtn.addEventListener("click", () => {
     if(cartItems.length === 0){
         alert("Корзина пуста!");
@@ -52,28 +79,7 @@ sendOrderBtn.addEventListener("click", () => {
     tg.sendData(orderText);
 
     cartItems = [];
-    document.querySelectorAll(".add-to-cart").forEach(btn => btn.classList.remove("in-cart"));
     updateCartUI();
-    alert("✅ Ваш заказ отправлен!");
-});
-
-// --- Закрытие корзины ---
-closeCartBtn.addEventListener("click", () => {
     cartEl.style.display = "none";
-});
-
-// --- Открытие/закрытие контактов ---
-contactsBtn.addEventListener("click", () => {
-    contactsEl.style.display = "block";
-});
-
-closeContactsBtn.addEventListener("click", () => {
-    contactsEl.style.display = "none";
-});
-
-// Закрытие по клику вне блока
-window.addEventListener("click", (e) => {
-    if(e.target === contactsEl){
-        contactsEl.style.display = "none";
-    }
+    alert("✅ Заказ отправлен!");
 });
