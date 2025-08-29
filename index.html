@@ -12,6 +12,7 @@
     <header>
         <h1>VibeShop 👕👜</h1>
         <p>Стильные вещи прямо в Telegram</p>
+        <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
     </header>
 
     <main class="products">
@@ -30,3 +31,18 @@
         <div class="product" data-name="Сумка" data-price="35">
             <img src="images/bag.jpg" alt="Сумка">
             <h2>Сумка</h2>
+            <p class="price">35 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+    </main>
+
+    <div id="cart">
+        <h3>Ваша корзина</h3>
+        <ul id="cart-items"></ul>
+        <p>Итого: <span id="cart-total">0</span> BYN</p>
+        <button id="send-order">📩 Отправить заказ</button>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

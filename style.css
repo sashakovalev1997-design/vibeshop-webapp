@@ -1,29 +1,14 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
+    font-family: sans-serif;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: #fff;
-    color: #333;
+    padding: 0;
     text-align: center;
 }
 
 .container {
     max-width: 480px;
-    width: 100%;
     margin: 0 auto;
     padding: 10px;
-}
-
-header {
-    margin-bottom: 15px;
-}
-
-header h1 {
-    color: #ff073a;
-    margin: 0;
 }
 
 .products {
@@ -31,51 +16,37 @@ header h1 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin-top: 10px;
 }
 
 .product {
-    background: #f0f0f0;
-    border-radius: 12px;
-    padding: 10px;
     width: 45%;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .product img {
     width: 100%;
-    border-radius: 8px;
-}
-
-.product h2 {
-    font-size: 1em;
-    color: #ff073a;
-    margin: 8px 0 4px;
-}
-
-.price {
-    font-weight: bold;
-    margin-bottom: 6px;
+    border-radius: 5px;
 }
 
 .order-btn {
     background: #ff073a;
     color: #fff;
     border: none;
-    border-radius: 10px;
-    padding: 6px 12px;
+    border-radius: 5px;
+    padding: 5px 10px;
     cursor: pointer;
 }
 
-.order-btn:hover {
-    background: #e6002e;
-}
-
 #cart {
-    margin-top: 20px;
+    margin-top: 15px;
     background: #fff;
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 #cart ul {
@@ -93,19 +64,16 @@ header h1 {
 #cart button {
     background: transparent;
     border: none;
-    cursor: pointer;
     color: red;
-}
-
-#send-order {
-    background: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 12px;
     cursor: pointer;
 }
 
-#send-order:hover {
-    background: #218838;
+#cart-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
 }
