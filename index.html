@@ -3,40 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Shop</title>
+    <title>VibeShop 👕👜</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-<header>
-    <h1 class="shop-title">Vibe Shop</h1>
-</header>
+<div class="container">
+    <header>
+        <div class="header-left">
+            <h1>VibeShop 👕👜</h1>
+            <p>Стильные вещи прямо в Telegram</p>
+        </div>
+        <div class="header-right">
+            <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
+        </div>
+    </header>
 
-<main>
-    <div class="products" id="products">
-        <!-- Карточки товаров вставляются через JS -->
-    </div>
-</main>
-
-<!-- Кнопка корзины -->
-<button id="cart-btn">🛒 Корзина (<span id="cart-count">0</span>)</button>
-
-<!-- Кнопка контактов -->
-<button id="contacts-btn">📞 Контакты</button>
-
-<!-- Модальное окно корзины -->
-<div id="cart" class="cart">
-    <h2>Ваша корзина</h2>
-    <ul id="cart-items"></ul>
-    <button id="send-order">✅ Отправить заказ</button>
-    <button id="close-cart">❌ Закрыть</button>
+    <main class="products">
+        <div class="product" data-name="Футболка" data-price="20">
+            <img src="images/tshirt.jpg" alt="Футболка">
+            <h2>Футболка</h2>
+            <p class="price">20 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+        <div class="product" data-name="Худи" data-price="50">
+            <img src="images/hoodie.jpg" alt="Худи">
+            <h2>Худи</h2>
+            <p class="price">50 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+        <div class="product" data-name="Сумка" data-price="35">
+            <img src="images/bag.jpg" alt="Сумка">
+            <h2>Сумка</h2>
+            <p class="price">35 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+    </main>
 </div>
 
-<!-- Модальное окно контактов -->
-<div id="contacts" class="contacts">
-    <h2>Связаться с нами</h2>
-    <p>Telegram: @bigdigovich</p>
-    <p>Instagram: @shop_inst</p>
-    <button id="close-contacts">❌ Закрыть</button>
+<div id="cart">
+    <h3>Ваша корзина</h3>
+    <ul id="cart-items"></ul>
+    <p>Итого: <span id="cart-total">0</span> BYN</p>
+    <button id="send-order">📩 Отправить заказ</button>
 </div>
 
 <script src="app.js"></script>
