@@ -1,12 +1,12 @@
 const tg = window.Telegram?.WebApp;
-if (!tg) console.warn("⚠ Telegram WebApp SDK не найден, тестируем в браузере.");
 tg?.expand();
 
 const products = document.querySelectorAll(".product");
 products.forEach((p, i) => setTimeout(() => p.classList.add("visible"), i * 150));
 
 let cartItems = [], cartTotal = 0;
-const orderedItems = new Set(); // Сохраняем, что уже заказано
+const orderedItems = new Set();
+
 const cartToggle = document.getElementById("cart-toggle");
 const cart = document.getElementById("cart");
 const cartList = document.getElementById("cart-items");
@@ -44,6 +44,28 @@ function updateCart() {
     cartCountEl.textContent = cartItems.length;
 }
 
+function animateFlyToCart(img) {
+    const rect = img.getBoundingClientRect();
+    const fly = img.cloneNode(true);
+    fly.style.position = "fixed";
+    fly.style.left = rect.left + "px";
+    fly.style.top = rect.top + "px";
+    fly.style.width = rect.width + "px";
+    fly.style.height = rect.height + "px";
+    fly.style.transition = "all 0.8s ease-in-out";
+    fly.style.zIndex = 1000;
+    document.body.appendChild(fly);
+    const cartRect = document.getElementById("cart-toggle").getBoundingClientRect();
+    setTimeout(() => {
+        fly.style.left = cartRect.left + "px";
+        fly.style.top = cartRect.top + "px";
+        fly.style.width = "30px";
+        fly.style.height = "30px";
+        fly.style.opacity = "0";
+    }, 10);
+    setTimeout(() => fly.remove(), 810);
+}
+
 function markInCart(name) {
     const product = Array.from(products).find(p => p.dataset.name === name);
     if (product) {
@@ -66,7 +88,7 @@ function markOrdered(name) {
 }
 
 function resetProductButton(name) {
-    if (orderedItems.has(name)) return; // Уже заказано
+    if (orderedItems.has(name)) return;
     const product = Array.from(products).find(p => p.dataset.name === name);
     if (product) {
         const btn = product.querySelector(".order-btn");
@@ -76,18 +98,19 @@ function resetProductButton(name) {
     }
 }
 
-function addToCart(name, price) {
+function addToCart(name, price, img) {
     if (orderedItems.has(name)) return;
     cartItems.push({name, price: Number(price)});
     cartTotal += Number(price);
     updateCart();
+    animateFlyToCart(img);
     markInCart(name);
 }
 
 document.querySelectorAll(".order-btn").forEach(btn => {
     btn.addEventListener("click", e => {
         const product = e.target.closest(".product");
-        addToCart(product.dataset.name, product.dataset.price);
+        addToCart(product.dataset.name, product.dataset.price, product.querySelector("img"));
         showNotification(`🛒 Вы добавили: ${product.dataset.name}`);
     });
 });
@@ -111,13 +134,11 @@ sendOrderBtn.addEventListener("click", () => {
     }
 });
 
-// Темная тема
 document.getElementById("theme-toggle").addEventListener("click", () => {
     document.body.classList.toggle("dark");
     document.getElementById("theme-toggle").textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
 
-// Плавающие контакты
 document.getElementById("contactToggle").addEventListener("click", () => {
     document.getElementById("contactCard").classList.toggle("show");
 });
