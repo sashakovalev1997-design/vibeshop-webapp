@@ -70,17 +70,15 @@ sendOrderBtn.addEventListener('click', () => {
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
+    // Копируем заказ в буфер
     navigator.clipboard.writeText(orderText).then(() => {
         showNotification('Текст заказа скопирован! Откроется Telegram для отправки.');
 
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if(isMobile){
-            window.location.href = "tg://resolve?domain=bigdigovich";
-        } else {
-            window.open("https://t.me/bigdigovich", "_blank");
-        }
+        // Всегда открываем веб-ссылку на Telegram (работает на всех устройствах)
+        window.open("https://t.me/bigdigovich", "_blank");
     });
 
+    // Очистка корзины
     cartItems = [];
     updateCartUI();
     document.querySelectorAll('.order-btn').forEach(b => b.classList.remove('in-cart'));
