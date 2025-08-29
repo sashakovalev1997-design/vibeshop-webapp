@@ -2,8 +2,8 @@
 
 html, body {
     width: 100%;
-    height: 100%;
-    margin: 0;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 0;
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
@@ -12,13 +12,12 @@ html, body {
     text-align: center;
 }
 
-/* Header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: #1a1a2e;
+    background: linear-gradient(90deg, #2a0a20, #6a0d6d);
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     box-shadow: 0 5px 20px rgba(255, 0, 50, 0.4);
@@ -29,7 +28,7 @@ header {
     font-size: 2.2em;
     font-family: 'Fredoka One', cursive;
     color: #ff073a;
-    text-shadow: 0 0 5px #ff073a, 0 0 10px #ff073a, 0 0 20px #ff073a, 0 0 40px #ff073a;
+    text-shadow: 0 0 5px #ff073a, 0 0 10px #ff073a, 0 0 20px #ff073a, 0 0 30px #ff073a, 0 0 50px #ff073a;
 }
 
 .header-left p {
@@ -315,7 +314,7 @@ main.products {
     cursor: default !important;
 }
 
-/* Dark theme (optional) */
+/* Dark theme */
 body.dark {
     background: #0f0f1f;
     color: #fff;
