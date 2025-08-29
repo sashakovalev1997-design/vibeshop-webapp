@@ -2,23 +2,21 @@
 
 html, body {
     width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
-    background: #ffffff; /* белый фон */
+    background: #fff;
     color: #333;
     text-align: center;
 }
 
-/* Header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: #ff073a; /* яркий красный */
+    background: #ff073a;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     box-shadow: 0 5px 20px rgba(255, 0, 50, 0.2);
@@ -29,7 +27,6 @@ header {
     font-size: 2em;
     font-family: 'Fredoka One', cursive;
     color: #fff;
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
 }
 
 .header-left p {
@@ -37,11 +34,6 @@ header {
     font-size: 0.95em;
     opacity: 0.8;
     font-weight: 500;
-}
-
-.header-right {
-    display: flex;
-    gap: 10px;
 }
 
 .header-right button {
@@ -52,7 +44,6 @@ header {
     color: #fff;
 }
 
-/* Products */
 main.products {
     display: flex;
     flex-direction: column;
@@ -60,17 +51,16 @@ main.products {
     padding: 20px;
     width: 100%;
     max-width: 480px;
-    margin: 0 auto; /* центрируем */
+    margin: 0 auto;
 }
 
 .product {
-    background: #f0f0f0; /* светлая карточка */
+    background: #f0f0f0;
     border-radius: 20px;
     padding: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
-    font-family: 'Roboto', sans-serif;
 }
 
 .product img {
@@ -111,7 +101,11 @@ main.products {
     transform: scale(1.05);
 }
 
-/* Cart */
+.in-cart {
+    background: #28a745 !important;
+    cursor: default;
+}
+
 #cart {
     position: fixed;
     top: 100px;
@@ -180,7 +174,6 @@ main.products {
     background: #218838;
 }
 
-/* Floating contacts */
 .contact-floating {
     position: fixed;
     bottom: 20px;

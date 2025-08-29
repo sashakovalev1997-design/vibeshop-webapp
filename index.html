@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VibeShop 👕👜</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -15,17 +15,9 @@
         <p>Стильные вещи прямо в Telegram</p>
     </div>
     <div class="header-right">
-        <button id="theme-toggle">🌙</button>
         <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
     </div>
 </header>
-
-<div id="cart" class="hidden">
-    <h3>Ваша корзина</h3>
-    <ul id="cart-items"></ul>
-    <p>Итого: <span id="cart-total">0</span> BYN</p>
-    <button id="send-order">📩 Отправить заказ</button>
-</div>
 
 <main class="products">
     <div class="product" data-name="Футболка" data-price="20">
@@ -50,6 +42,13 @@
     </div>
 </main>
 
+<div id="cart">
+    <h3>Ваша корзина</h3>
+    <ul id="cart-items"></ul>
+    <p>Итого: <span id="cart-total">0</span> BYN</p>
+    <button id="send-order">📩 Отправить заказ</button>
+</div>
+
 <div class="contact-floating">
     <div class="contact-card" id="contactCard">
         <p>Связаться с нами:</p>
@@ -59,7 +58,6 @@
     <button id="contactToggle">✉️</button>
 </div>
 
-<div id="notification-container"></div>
 <script src="app.js"></script>
 </body>
 </html>
