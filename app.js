@@ -27,7 +27,7 @@ function updateCartUI() {
         removeBtn.onclick = () => {
             cartItems.splice(index, 1);
             products.forEach(p => {
-                if (p.dataset.name === item.name) p.querySelector('button').classList.remove('in-cart');
+                if(p.dataset.name === item.name) p.querySelector('button').classList.remove('in-cart');
             });
             updateCartUI();
         };
@@ -46,7 +46,7 @@ products.forEach(product => {
         const name = product.dataset.name;
         const price = product.dataset.price;
         // Если товар уже в корзине — не добавляем
-        if (cartItems.some(i => i.name === name)) return;
+        if(cartItems.some(i => i.name === name)) return;
         cartItems.push({name, price});
         btn.classList.add('in-cart');
         updateCartUI();
@@ -62,14 +62,14 @@ cartToggle.addEventListener('click', (e) => {
 
 // --- Закрытие корзины при клике вне ---
 document.addEventListener('click', (e) => {
-    if (!cart.contains(e.target) && e.target !== cartToggle) {
+    if(!cart.contains(e.target) && e.target !== cartToggle) {
         cart.classList.remove('show');
     }
 });
 
 // --- Отправка заказа в Telegram ---
 sendOrderBtn.addEventListener('click', () => {
-    if (cartItems.length === 0) {
+    if(cartItems.length === 0) {
         showNotification('Корзина пуста!');
         return;
     }
@@ -94,5 +94,15 @@ function showNotification(text) {
     notif.classList.add('notification');
     notif.textContent = text;
     document.body.appendChild(notif);
+    notif.style.position = 'fixed';
+    notif.style.bottom = '20px';
+    notif.style.left = '50%';
+    notif.style.transform = 'translateX(-50%)';
+    notif.style.background = '#28a745';
+    notif.style.color = '#fff';
+    notif.style.padding = '10px 20px';
+    notif.style.borderRadius = '10px';
+    notif.style.zIndex = 2000;
+    notif.style.opacity = '0.9';
     setTimeout(() => notif.remove(), 2500);
 }
