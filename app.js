@@ -54,32 +54,18 @@ document.addEventListener('click', (e) => {
     if(!cart.contains(e.target) && e.target !== cartToggle) cart.classList.remove('show');
 });
 
-// --- Отправка заказа боту WebApp ---
+// --- Отправка заказа в бота ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) return;
 
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    tg.sendData(orderText); // отправка боту WebApp
+    console.log("Отправка в бот:", orderText);
+    tg.sendData(orderText); // отправка боту
 
     cartItems = [];
     updateCartUI();
     cart.classList.remove('show');
     alert('✅ Ваш заказ отправлен!');
-});
-
-// --- Контакты (модальное окно) ---
-const contactBtn = document.getElementById('contact-btn');
-const contactModal = document.getElementById('contact-modal');
-const closeModal = document.getElementById('close-modal');
-
-contactBtn.addEventListener('click', () => {
-    contactModal.style.display = "block";
-});
-closeModal.addEventListener('click', () => {
-    contactModal.style.display = "none";
-});
-window.addEventListener('click', (e) => {
-    if (e.target === contactModal) contactModal.style.display = "none";
 });
