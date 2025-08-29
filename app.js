@@ -9,23 +9,35 @@ const observer = new IntersectionObserver(entries => {
         if(entry.isIntersecting){
             setTimeout(() => {
                 entry.target.classList.add("visible");
-            }, index * 150);
+            }, index * 150); // последовательное появление
         }
     });
 }, { threshold: 0.2 });
 
 products.forEach(p => observer.observe(p));
 
-// Параллакс эффект при прокрутке
+// Параллакс при скролле с requestAnimationFrame
+let latestScroll = 0;
+let ticking = false;
+
 window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY;
-    products.forEach((product, index) => {
-        const speed = 0.2 + index * 0.05;
-        product.style.transform = `translateY(${50 - scrollPos * speed}px)`;
-    });
+    latestScroll = window.scrollY;
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            products.forEach((product, index) => {
+                // параллакс только для видимых элементов
+                if (product.classList.contains("visible")) {
+                    const speed = 0.03 + index * 0.01; // лёгкое смещение
+                    product.style.transform = `translateY(${ -latestScroll * speed }px)`;
+                }
+            });
+            ticking = false;
+        });
+        ticking = true;
+    }
 });
 
-// Контейнер для уведомлений
+// Контейнер для всплывающих уведомлений
 const notificationContainer = document.getElementById("notification-container");
 
 // Функция для всплывающих уведомлений
@@ -56,7 +68,6 @@ function flyToCart(product) {
 
     document.body.appendChild(clone);
 
-    // Координаты "корзины" (снизу по центру)
     const cartX = window.innerWidth / 2 - rect.width / 4;
     const cartY = window.innerHeight;
 
