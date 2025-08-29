@@ -10,10 +10,17 @@
 <body>
 
 <header>
-    <h1>VibeShop 👕👜</h1>
-    <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
+    <div class="header-left">
+        <h1>VibeShop 👕👜</h1>
+        <p>Стильные вещи прямо в Telegram</p>
+    </div>
+    <div class="header-right">
+        <button id="theme-toggle">🌙</button>
+        <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
+    </div>
 </header>
 
+<!-- Корзина -->
 <div id="cart" class="hidden">
     <h3>Ваша корзина</h3>
     <ul id="cart-items"></ul>
@@ -28,12 +35,14 @@
         <p class="price">20 BYN</p>
         <button class="order-btn">Добавить в корзину</button>
     </div>
+
     <div class="product" data-name="Худи" data-price="50">
         <img src="images/hoodie.jpg" alt="Худи">
         <h2>Худи</h2>
         <p class="price">50 BYN</p>
         <button class="order-btn">Добавить в корзину</button>
     </div>
+
     <div class="product" data-name="Сумка" data-price="35">
         <img src="images/bag.jpg" alt="Сумка">
         <h2>Сумка</h2>
@@ -42,6 +51,17 @@
     </div>
 </main>
 
+<!-- Плавающие контакты -->
+<div class="contact-floating">
+    <div class="contact-card" id="contactCard">
+        <p>Связаться с нами:</p>
+        <a href="https://t.me/bigdigovich" target="_blank">@bigdigovich</a>
+        <a href="https://t.me/Amg0101am" target="_blank">@Amg0101am</a>
+    </div>
+    <button id="contactToggle">✉️</button>
+</div>
+
+<div id="notification-container"></div>
 <script src="app.js"></script>
 </body>
 </html>
