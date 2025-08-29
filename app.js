@@ -60,25 +60,36 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// --- Отправка заказа в Telegram через переход на @bigdigovich ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) {
         showNotification('Корзина пуста!');
         return;
     }
-    let orderText = '🛒 Новый заказ:\n';
+
+    let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
-    tg.sendData(orderText);
-    showNotification('✅ Заказ отправлен!');
+
+    // Копируем в буфер обмена
+    navigator.clipboard.writeText(orderText).then(() => {
+        showNotification('Текст заказа скопирован! Откроется Telegram для отправки.');
+        // Открываем чат с твоим Telegram
+        window.location.href = "tg://resolve?domain=bigdigovich";
+    });
+
+    // Очистка корзины
     cartItems = [];
     updateCartUI();
     document.querySelectorAll('.order-btn').forEach(b => b.classList.remove('in-cart'));
     cart.classList.remove('show');
 });
 
+// --- Контакты ---
 contactToggle.addEventListener('click', () => {
     contactCard.classList.toggle('show');
 });
 
+// --- Уведомления ---
 function showNotification(text) {
     const notif = document.createElement('div');
     notif.classList.add('notification');
