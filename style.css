@@ -203,3 +203,56 @@ body.dark {
     --btn-bg:linear-gradient(90deg,#6a0dad,#b76efb);
     --btn-hover:linear-gradient(90deg,#45008b,#8f2cf3);
 }
+.contacts {
+    background: var(--card-bg);
+    margin: 30px 20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px var(--card-shadow);
+    text-align: center;
+}
+
+.contacts h2 {
+    color: #6a0dad;
+    margin-bottom: 10px;
+}
+
+.contacts p {
+    margin-bottom: 15px;
+    font-size: 1em;
+    color: var(--text-color);
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    background: var(--btn-bg);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.contact-btn:hover {
+    background: var(--btn-hover);
+    transform: scale(1.05);
+}
+
+/* Dark theme для контактов */
+body.dark .contacts {
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+body.dark .contact-btn {
+    background: var(--btn-bg);
+}
+body.dark .contact-btn:hover {
+    background: var(--btn-hover);
+}
