@@ -12,12 +12,14 @@ function updateCartUI() {
     cartItems.forEach((item, index) => {
         const li = document.createElement('li');
         li.textContent = `${item.name} — ${item.price} BYN`;
+
         const removeBtn = document.createElement('button');
         removeBtn.textContent = '❌';
         removeBtn.onclick = () => {
             cartItems.splice(index, 1);
             updateCartUI();
         };
+
         li.appendChild(removeBtn);
         cartItemsList.appendChild(li);
         total += Number(item.price);
@@ -25,7 +27,7 @@ function updateCartUI() {
     cartTotal.textContent = total;
 }
 
-// Пример добавления товара
+// Добавление товаров в корзину
 document.querySelectorAll('.order-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const product = btn.closest('.product');
@@ -38,11 +40,20 @@ document.querySelectorAll('.order-btn').forEach(btn => {
     });
 });
 
+// Отправка заказа (WebApp не закрывается)
 sendOrderBtn.addEventListener('click', () => {
-    if (cartItems.length === 0) return;
-    const order = {items: cartItems, total: cartItems.reduce((sum, i) => sum + i.price, 0)};
-    tg.sendData(JSON.stringify(order));
+    if (cartItems.length === 0) {
+        alert('Корзина пуста!');
+        return;
+    }
+
+    const order = {
+        items: cartItems,
+        total: cartItems.reduce((sum, i) => sum + i.price, 0)
+    };
+
+    tg.sendData(JSON.stringify(order)); // WebApp остаётся открытым
     cartItems.length = 0;
     updateCartUI();
-    alert('✅ Ваш заказ отправлен!');
+    alert('✅ Ваш заказ отправлен! Приложение остаётся открытым.');
 });
