@@ -15,71 +15,45 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 10px;
-    height: 100vh;
-    overflow-y: auto;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
+    margin-bottom: 15px;
 }
 
-.header-left h1 {
-    margin: 0;
-    font-size: 2em;
+header h1 {
     color: #ff073a;
+    margin: 0;
 }
 
-.header-left p {
-    margin: 5px 0 0;
-    font-size: 0.95em;
-    color: #555;
-}
-
-.header-right button {
-    background: transparent;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
-main.products {
+.products {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    margin-top: 15px;
 }
 
 .product {
     background: #f0f0f0;
     border-radius: 12px;
     padding: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 45%;
-    max-width: 220px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
 .product img {
     width: 100%;
-    height: auto;
     border-radius: 8px;
 }
 
 .product h2 {
     font-size: 1em;
-    margin: 8px 0 4px;
     color: #ff073a;
+    margin: 8px 0 4px;
 }
 
 .price {
     font-weight: bold;
-    font-size: 0.9em;
     margin-bottom: 6px;
 }
 
@@ -89,7 +63,6 @@ main.products {
     border: none;
     border-radius: 10px;
     padding: 6px 12px;
-    font-size: 0.85em;
     cursor: pointer;
 }
 
@@ -97,34 +70,42 @@ main.products {
     background: #e6002e;
 }
 
-.in-cart {
-    background: #28a745 !important;
-    cursor: default;
-}
-
 #cart {
-    position: fixed;
-    top: 100px;
-    right: 10px;
-    width: 90%;
-    max-width: 250px;
-    max-height: 60vh;
+    margin-top: 20px;
     background: #fff;
-    border-radius: 15px;
-    padding: 15px;
-    overflow-y: auto;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    transform: translateX(150%);
-    opacity: 0;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-    z-index: 1000;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-#cart.show {
-    transform: translateX(0);
-    opacity: 1;
+#cart ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
 }
 
-#cart h3 {
-    margin-top: 0;
+#cart li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+#cart button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: red;
+}
+
+#send-order {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+#send-order:hover {
+    background: #218838;
 }

@@ -1,48 +1,48 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-const products = document.querySelectorAll('.product');
+const cartItems = [];
 const cartItemsList = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
-const cartCount = document.getElementById('cart-count');
 const sendOrderBtn = document.getElementById('send-order');
-
-let cartItems = [];
 
 function updateCartUI() {
     cartItemsList.innerHTML = '';
     let total = 0;
-    cartItems.forEach(item => {
+    cartItems.forEach((item, index) => {
         const li = document.createElement('li');
         li.textContent = `${item.name} — ${item.price} BYN`;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = '❌';
+        removeBtn.onclick = () => {
+            cartItems.splice(index, 1);
+            updateCartUI();
+        };
+        li.appendChild(removeBtn);
         cartItemsList.appendChild(li);
         total += Number(item.price);
     });
     cartTotal.textContent = total;
-    cartCount.textContent = cartItems.length;
 }
 
-products.forEach(product => {
-    const btn = product.querySelector('.order-btn');
+// Пример добавления товара
+document.querySelectorAll('.order-btn').forEach(btn => {
     btn.addEventListener('click', () => {
+        const product = btn.closest('.product');
         const name = product.dataset.name;
-        const price = product.dataset.price;
-        if(cartItems.some(i => i.name === name)) return;
-        cartItems.push({name, price});
+        const price = Number(product.dataset.price);
+        if (!cartItems.some(i => i.name === name)) {
+            cartItems.push({name, price});
+        }
         updateCartUI();
     });
 });
 
 sendOrderBtn.addEventListener('click', () => {
-    if(cartItems.length === 0) return;
-
-    // Отправка данных боту
-    tg.sendData(JSON.stringify({
-        items: cartItems,
-        total: cartItems.reduce((sum, i) => sum + Number(i.price), 0)
-    }));
-
-    cartItems = [];
+    if (cartItems.length === 0) return;
+    const order = {items: cartItems, total: cartItems.reduce((sum, i) => sum + i.price, 0)};
+    tg.sendData(JSON.stringify(order));
+    cartItems.length = 0;
     updateCartUI();
-    tg.close();
+    alert('✅ Ваш заказ отправлен!');
 });

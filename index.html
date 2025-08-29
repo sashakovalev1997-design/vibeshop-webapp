@@ -3,37 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop</title>
+    <title>VibeShop 👕👜</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+<div class="container">
+    <header>
+        <h1>VibeShop 👕👜</h1>
+        <p>Стильные вещи прямо в Telegram</p>
+    </header>
 
-<h1>VibeShop 👕👜</h1>
-<p>Добавьте товары в корзину и отправьте заказ боту</p>
+    <main class="products">
+        <div class="product" data-name="Футболка" data-price="20">
+            <img src="images/tshirt.jpg" alt="Футболка">
+            <h2>Футболка</h2>
+            <p class="price">20 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+        <div class="product" data-name="Худи" data-price="50">
+            <img src="images/hoodie.jpg" alt="Худи">
+            <h2>Худи</h2>
+            <p class="price">50 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+        <div class="product" data-name="Сумка" data-price="35">
+            <img src="images/bag.jpg" alt="Сумка">
+            <h2>Сумка</h2>
+            <p class="price">35 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+    </main>
 
-<div class="products">
-    <div class="product" data-name="Футболка" data-price="20">
-        <img src="images/tshirt.jpg" alt="Футболка">
-        <p>Футболка — 20 BYN</p>
-        <button class="order-btn">Добавить в корзину</button>
-    </div>
-    <div class="product" data-name="Худи" data-price="50">
-        <img src="images/hoodie.jpg" alt="Худи">
-        <p>Худи — 50 BYN</p>
-        <button class="order-btn">Добавить в корзину</button>
-    </div>
-    <div class="product" data-name="Сумка" data-price="35">
-        <img src="images/bag.jpg" alt="Сумка">
-        <p>Сумка — 35 BYN</p>
-        <button class="order-btn">Добавить в корзину</button>
+    <div id="cart">
+        <h3>Ваша корзина</h3>
+        <ul id="cart-items"></ul>
+        <p>Итого: <span id="cart-total">0</span> BYN</p>
+        <button id="send-order">📩 Отправить заказ</button>
     </div>
 </div>
-
-<h2>Корзина (<span id="cart-count">0</span>)</h2>
-<ul id="cart-items"></ul>
-<p>Итого: <span id="cart-total">0</span> BYN</p>
-<button id="send-order">Отправить заказ</button>
 
 <script src="app.js"></script>
 </body>
