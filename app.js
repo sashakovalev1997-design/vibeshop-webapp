@@ -70,35 +70,32 @@ sendOrderBtn.addEventListener('click', () => {
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    // Отправка через Telegram WebApp
+    // Отправка заказа в WebApp боту
     tg.sendData(orderText);
 
     cartItems = [];
     updateCartUI();
-    document.querySelectorAll('.order-btn').forEach(b => b.classList.remove('in-cart'));
     cart.classList.remove('show');
+    showNotification('✅ Ваш заказ отправлен!');
 });
 
 // --- Контакты ---
-contactToggle.addEventListener('click', () => {
-    contactCard.classList.toggle('show');
-});
+contactToggle.addEventListener('click', () => contactCard.classList.toggle('show'));
 
-// --- Уведомления ---
-function showNotification(text){
+// --- Всплывающие уведомления ---
+function showNotification(text) {
     const notif = document.createElement('div');
-    notif.classList.add('notification');
     notif.textContent = text;
-    document.body.appendChild(notif);
     notif.style.position = 'fixed';
     notif.style.bottom = '20px';
     notif.style.left = '50%';
     notif.style.transform = 'translateX(-50%)';
-    notif.style.background = '#28a745';
+    notif.style.background = '#ff073a';
     notif.style.color = '#fff';
     notif.style.padding = '10px 20px';
     notif.style.borderRadius = '10px';
     notif.style.zIndex = 2000;
     notif.style.opacity = '0.9';
+    document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 2500);
 }
