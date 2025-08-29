@@ -1,8 +1,6 @@
-// Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Элементы
 const cartToggle = document.getElementById('cart-toggle');
 const cart = document.getElementById('cart');
 const cartItemsList = document.getElementById('cart-items');
@@ -15,7 +13,6 @@ const contactCard = document.getElementById('contactCard');
 
 let cartItems = [];
 
-// --- Функции ---
 function updateCartUI() {
     cartItemsList.innerHTML = '';
     let total = 0;
@@ -39,13 +36,11 @@ function updateCartUI() {
     document.getElementById('cart-count').textContent = cartItems.length;
 }
 
-// --- Кнопки "Добавить в корзину" ---
 products.forEach(product => {
     const btn = product.querySelector('.order-btn');
     btn.addEventListener('click', () => {
         const name = product.dataset.name;
         const price = product.dataset.price;
-        // Если товар уже в корзине — не добавляем
         if(cartItems.some(i => i.name === name)) return;
         cartItems.push({name, price});
         btn.classList.add('in-cart');
@@ -54,20 +49,17 @@ products.forEach(product => {
     });
 });
 
-// --- Кнопка открыть/закрыть корзину ---
 cartToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // чтобы клик не закрывал сразу
+    e.stopPropagation();
     cart.classList.toggle('show');
 });
 
-// --- Закрытие корзины при клике вне ---
 document.addEventListener('click', (e) => {
     if(!cart.contains(e.target) && e.target !== cartToggle) {
         cart.classList.remove('show');
     }
 });
 
-// --- Отправка заказа в Telegram ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) {
         showNotification('Корзина пуста!');
@@ -75,7 +67,7 @@ sendOrderBtn.addEventListener('click', () => {
     }
     let orderText = '🛒 Новый заказ:\n';
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
-    tg.sendData(orderText); // Отправка заказа через Telegram WebApp
+    tg.sendData(orderText);
     showNotification('✅ Заказ отправлен!');
     cartItems = [];
     updateCartUI();
@@ -83,12 +75,10 @@ sendOrderBtn.addEventListener('click', () => {
     cart.classList.remove('show');
 });
 
-// --- Контакты ---
 contactToggle.addEventListener('click', () => {
     contactCard.classList.toggle('show');
 });
 
-// --- Уведомления ---
 function showNotification(text) {
     const notif = document.createElement('div');
     notif.classList.add('notification');
