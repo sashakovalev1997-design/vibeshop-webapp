@@ -287,6 +287,20 @@ main.products {
     transform: scale(1.1);
 }
 
+/* Класс для товара в корзине */
+.in-cart {
+    background: #28a745 !important;
+    color: #fff !important;
+    cursor: default !important;
+}
+
+/* Класс для заказанных товаров */
+.ordered {
+    background: #6c757d !important;
+    color: #fff !important;
+    cursor: default !important;
+}
+
 /* Dark theme */
 body.dark {
     --bg-color: #1e1e2f;
