@@ -5,7 +5,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* запрещаем горизонтальный скролл */
+    overflow-x: hidden;
     width: 100%;
     height: 100%;
     font-family: 'Roboto', sans-serif;
@@ -20,7 +20,7 @@ html, body {
     margin: 0 auto;
     padding: 10px;
     height: 100vh;
-    overflow-y: auto; /* вертикальный скролл внутри контейнера */
+    overflow-y: auto;
 }
 
 header {
@@ -48,41 +48,52 @@ header {
     cursor: pointer;
 }
 
+/* --- Карточки товаров --- */
 main.products {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 .product {
     background: #f0f0f0;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%; /* две карточки в ряд на телефоне */
+    max-width: 220px;
 }
 
 .product img {
     width: 100%;
-    border-radius: 10px;
+    height: auto;
+    border-radius: 8px;
 }
 
 .product h2 {
-    margin: 10px 0 5px;
+    font-size: 1em;
+    margin: 8px 0 4px;
     color: #ff073a;
 }
 
 .price {
     font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 0.9em;
+    margin-bottom: 6px;
 }
 
 .order-btn {
     background: #ff073a;
     color: #fff;
     border: none;
-    border-radius: 12px;
-    padding: 10px 15px;
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-size: 0.85em;
     cursor: pointer;
 }
 
@@ -95,6 +106,7 @@ main.products {
     cursor: default;
 }
 
+/* --- Корзина --- */
 #cart {
     position: fixed;
     top: 100px;
@@ -123,6 +135,7 @@ main.products {
     margin-top: 0;
 }
 
+/* --- Контакты --- */
 .contact-floating {
     position: fixed;
     bottom: 20px;
