@@ -48,18 +48,18 @@
     <button id="send-order">📩 Отправить заказ</button>
 </div>
 
-<!-- 📩 Контакты -->
-<footer class="contacts">
-    <h3>📩 Контакты</h3>
-    <div class="contact-buttons">
-        <button class="contact-btn" onclick="window.open('https://t.me/bigdigovich', '_blank')">
-            ✉️ @bigdigovich
-        </button>
-        <button class="contact-btn" onclick="window.open('https://t.me/Amg0101am', '_blank')">
-            ✉️ @Amg0101am
-        </button>
+<!-- 📩 Кнопка-конвертик -->
+<button id="contact-btn" class="contact-icon">✉️</button>
+
+<!-- 📩 Модальное окно -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h3>Связаться с нами</h3>
+        <p>💬 <a href="https://t.me/bigdigovich" target="_blank">@bigdigovich</a></p>
+        <p>💬 <a href="https://t.me/Amg0101am" target="_blank">@Amg0101am</a></p>
     </div>
-</footer>
+</div>
 
 <script src="app.js"></script>
 </body>

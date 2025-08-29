@@ -129,44 +129,65 @@ main.products {
     margin-top: 0;
 }
 
-/* 📩 Контакты */
-footer.contacts {
-    margin: 25px auto 15px;
-    padding: 15px;
-    max-width: 480px;
-    background: #f9f9f9;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-footer.contacts h3 {
-    margin: 0 0 10px;
-    font-size: 1.1em;
-    color: #333;
-}
-
-.contact-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.contact-btn {
+/* 📩 Кнопка-конвертик */
+.contact-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     background: #ff073a;
     color: #fff;
     border: none;
-    padding: 10px 16px;
-    border-radius: 12px;
-    font-size: 0.9em;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    font-size: 1.5em;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     transition: background 0.2s ease;
+    z-index: 1000;
+}
+.contact-icon:hover {
+    background: #e6002e;
 }
 
-.contact-btn:hover {
-    background: #e6002e;
+/* 📩 Модалка */
+.modal {
+    display: none; /* скрыта по умолчанию */
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background: #fff;
+    margin: 20% auto;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: relative;
+}
+.modal-content h3 {
+    margin-top: 0;
+    color: #ff073a;
+}
+.modal-content a {
+    color: #ff073a;
+    font-weight: bold;
+    text-decoration: none;
+}
+.modal-content a:hover {
+    text-decoration: underline;
+}
+.close {
+    position: absolute;
+    top: 10px; right: 20px;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
+}
+.close:hover {
+    color: #333;
 }
