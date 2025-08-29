@@ -60,7 +60,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// --- Отправка заказа в Telegram через переход на @bigdigovich ---
+// --- Отправка заказа в Telegram ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) {
         showNotification('Корзина пуста!');
@@ -70,11 +70,19 @@ sendOrderBtn.addEventListener('click', () => {
     let orderText = "🛒 Новый заказ:\n";
     cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
 
-    // Копируем в буфер обмена
+    // Копируем заказ в буфер
     navigator.clipboard.writeText(orderText).then(() => {
         showNotification('Текст заказа скопирован! Откроется Telegram для отправки.');
-        // Открываем чат с твоим Telegram
-        window.location.href = "tg://resolve?domain=bigdigovich";
+
+        // Определяем устройство
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if(isMobile){
+            // Открываем Telegram приложение на мобильном
+            window.location.href = "tg://resolve?domain=bigdigovich";
+        } else {
+            // Открываем веб-чат на ПК
+            window.open("https://t.me/bigdigovich", "_blank");
+        }
     });
 
     // Очистка корзины
