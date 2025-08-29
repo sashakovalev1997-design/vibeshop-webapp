@@ -12,7 +12,7 @@ const cartList = document.getElementById("cart-items");
 const cartTotalEl = document.getElementById("cart-total");
 const cartCountEl = document.getElementById("cart-count");
 
-cartToggle.addEventListener("click", ()=> cart.classList.toggle("hidden"));
+cartToggle.addEventListener("click", ()=> cart.classList.toggle("show"));
 
 function showNotification(msg){
     const n = document.createElement("div");
@@ -70,5 +70,5 @@ themeToggle.addEventListener("click", ()=>{
 const contactToggle = document.getElementById("contactToggle");
 const contactCard = document.getElementById("contactCard");
 contactToggle.addEventListener("click", ()=>{
-    contactCard.style.display = contactCard.style.display === "block" ? "none" : "block";
+    contactCard.classList.toggle("show");
 });

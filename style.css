@@ -29,9 +29,8 @@ main.products { display:flex; flex-direction:column; gap:20px; padding:20px; }
 .order-btn:hover { background:var(--btn-hover); transform:scale(1.05); }
 
 /* Cart */
-#cart { position: fixed; top: 100px; right: 10px; width: 250px; max-height: 60vh; background: var(--card-bg); color: var(--text-color); border-radius: 15px; box-shadow:0 10px 25px var(--card-shadow); padding:15px; overflow-y:auto; z-index:1000; transition: transform 0.3s ease, opacity 0.3s ease; }
-#cart.hidden { opacity:0; pointer-events:none; }
-#cart:not(.hidden) { opacity:1; transform:translateY(0); }
+#cart { position: fixed; top: 100px; right: 10px; width: 250px; max-height: 60vh; background: var(--card-bg); color: var(--text-color); border-radius: 15px; box-shadow:0 10px 25px var(--card-shadow); padding:15px; overflow-y:auto; z-index:1000; transform:translateX(150%); opacity:0; transition: transform 0.4s ease, opacity 0.4s ease; }
+#cart.show { transform:translateX(0); opacity:1; }
 #cart h3 { text-align:center; color:#6a0dad; }
 #cart ul { list-style:none; padding:0; margin:0; }
 #cart ul li { display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px solid #ccc; padding-bottom:4px; font-size:0.95em; }
@@ -43,12 +42,13 @@ main.products { display:flex; flex-direction:column; gap:20px; padding:20px; }
 @keyframes floatUp {0%{opacity:0;transform:translateY(50px);}20%{opacity:1;transform:translateY(0);}80%{opacity:1;transform:translateY(-10px);}100%{opacity:0;transform:translateY(-50px);}}
 
 /* Floating contacts */
-.contact-floating { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
-.contact-floating button { background: linear-gradient(90deg,#6a0dad,#b76efb); color:#fff; border:none; border-radius:50%; width:50px; height:50px; font-size:1.5em; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.3); transition:transform 0.2s; }
-.contact-floating button:hover { transform:scale(1.1); }
-.contact-card { display:none; background:#fff; color:#333; padding:15px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2); margin-bottom:10px; text-align:left; }
+.contact-floating { position: fixed; bottom: 20px; right: 20px; display:flex; flex-direction:column; align-items:flex-end; gap:10px; z-index: 1000; }
+.contact-card { display: flex; flex-direction: column; align-items: flex-start; background: #fff; color: #333; padding: 15px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: translateX(150%); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
+.contact-card.show { transform: translateX(0); opacity: 1; }
 .contact-card a { display:block; color:#6a0dad; margin-bottom:8px; text-decoration:none; font-weight:bold; }
 .contact-card a:hover { text-decoration:underline; }
+.contact-floating button { background: linear-gradient(90deg,#6a0dad,#b76efb); color:#fff; border:none; border-radius:50%; width:50px; height:50px; font-size:1.5em; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.3); }
+.contact-floating button:hover { transform:scale(1.1); }
 
 /* Dark theme */
 body.dark { --bg-color:#1e1e2f; --text-color:#fff; --header-bg:linear-gradient(90deg,#45008b,#8f2cf3); --card-bg:#2a2a3d; --card-shadow:rgba(0,0,0,0.5); --btn-bg:linear-gradient(90deg,#6a0dad,#b76efb); --btn-hover:linear-gradient(90deg,#45008b,#8f2cf3); }
