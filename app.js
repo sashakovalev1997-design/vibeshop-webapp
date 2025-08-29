@@ -54,14 +54,15 @@ document.addEventListener('click', (e) => {
     if(!cart.contains(e.target) && e.target !== cartToggle) cart.classList.remove('show');
 });
 
-// --- Отправка заказа ---
+// --- Отправка заказа в бот ---
 sendOrderBtn.addEventListener('click', () => {
     if(cartItems.length === 0) return;
 
-    let orderText = "🛒 Новый заказ:\n";
-    cartItems.forEach(item => orderText += `${item.name} — ${item.price} BYN\n`);
-
-    tg.sendData(orderText); // отправка боту
+    // Отправка данных в формате JSON
+    tg.sendData(JSON.stringify({
+        items: cartItems,
+        total: cartItems.reduce((sum, i) => sum + Number(i.price), 0)
+    }));
 
     cartItems = [];
     updateCartUI();
