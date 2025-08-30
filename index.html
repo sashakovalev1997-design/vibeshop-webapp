@@ -6,6 +6,7 @@
     <title>VibeShop 👕👜</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -20,34 +21,99 @@
     </header>
 
     <main class="products">
-        <div class="product" data-name="Футболка" data-price="20">
-            <img src="images/tshirt.jpg" alt="Футболка" onerror="this.src='https://via.placeholder.com/150?text=Футболка'">
-            <h2>Футболка</h2>
-            <p class="price">20 BYN</p>
+        <!-- Футболки -->
+        <div class="product" data-name="Футболка базовая" data-price="25">
+            <img src="images/tshirt.jpg" alt="Футболка базовая" onerror="this.src='https://via.placeholder.com/200x200/ff6b6b/ffffff?text=Футболка'">
+            <h2>Футболка базовая</h2>
+            <p class="price">25 BYN</p>
             <button class="order-btn">Добавить в корзину</button>
         </div>
-        <div class="product" data-name="Худи" data-price="50">
-            <img src="images/hoodie.jpg" alt="Худи" onerror="this.src='https://via.placeholder.com/150?text=Худи'">
-            <h2>Худи</h2>
-            <p class="price">50 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-        <div class="product" data-name="Сумка" data-price="35">
-            <img src="images/bag.jpg" alt="Сумка" onerror="this.src='https://via.placeholder.com/150?text=Сумка'">
-            <h2>Сумка</h2>
+
+        <div class="product" data-name="Футболка премиум" data-price="35">
+            <img src="images/tshirt2.jpg" alt="Футболка премиум" onerror="this.src='https://via.placeholder.com/200x200/4ecdc4/ffffff?text=Футболка+'">
+            <h2>Футболка премиум</h2>
             <p class="price">35 BYN</p>
             <button class="order-btn">Добавить в корзину</button>
         </div>
+
+        <!-- Худи -->
+        <div class="product" data-name="Худи классическое" data-price="55">
+            <img src="images/hoodie.jpg" alt="Худи классическое" onerror="this.src='https://via.placeholder.com/200x200/45b7d1/ffffff?text=Худи'">
+            <h2>Худи классическое</h2>
+            <p class="price">55 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+
+        <div class="product" data-name="Худи с капюшоном" data-price="65">
+            <img src="images/hoodie2.jpg" alt="Худи с капюшоном" onerror="this.src='https://via.placeholder.com/200x200/96ceb4/ffffff?text=Худи+'">
+            <h2>Худи с капюшоном</h2>
+            <p class="price">65 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+
+        <!-- Сумки -->
+        <div class="product" data-name="Сумка городская" data-price="40">
+            <img src="images/bag.jpg" alt="Сумка городская" onerror="this.src='https://via.placeholder.com/200x200/feca57/ffffff?text=Сумка'">
+            <h2>Сумка городская</h2>
+            <p class="price">40 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+
+        <div class="product" data-name="Рюкзак спортивный" data-price="75">
+            <img src="images/backpack.jpg" alt="Рюкзак спортивный" onerror="this.src='https://via.placeholder.com/200x200/ff9ff3/ffffff?text=Рюкзак'">
+            <h2>Рюкзак спортивный</h2>
+            <p class="price">75 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+
+        <!-- Аксессуары -->
+        <div class="product" data-name="Кепка бейсболка" data-price="20">
+            <img src="images/cap.jpg" alt="Кепка бейсболка" onerror="this.src='https://via.placeholder.com/200x200/54a0ff/ffffff?text=Кепка'">
+            <h2>Кепка бейсболка</h2>
+            <p class="price">20 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
+
+        <div class="product" data-name="Носки набор" data-price="15">
+            <img src="images/socks.jpg" alt="Носки набор" onerror="this.src='https://via.placeholder.com/200x200/5f27cd/ffffff?text=Носки'">
+            <h2>Носки набор</h2>
+            <p class="price">15 BYN</p>
+            <button class="order-btn">Добавить в корзину</button>
+        </div>
     </main>
+
+    <footer>
+        <div class="footer-info">
+            <p>🚚 Бесплатная доставка от 100 BYN</p>
+            <p>↩️ Возврат в течение 14 дней</p>
+            <p>📞 Поддержка: @vibeshop_support</p>
+        </div>
+    </footer>
 </div>
 
+<!-- Корзина -->
 <div id="cart">
-    <h3>🛒 Ваша корзина</h3>
-    <ul id="cart-items"></ul>
-    <p><strong>Итого: <span id="cart-total">0</span> BYN</strong></p>
-    <button id="send-order">📩 Отправить заказ</button>
-    <button id="close-cart">✖️ Закрыть</button>
+    <div class="cart-header">
+        <h3>🛒 Ваша корзина</h3>
+        <button id="close-cart">✖️</button>
+    </div>
+    <div class="cart-content">
+        <div id="cart-empty" class="cart-empty">
+            <p>Корзина пуста</p>
+            <p>Добавьте товары из магазина</p>
+        </div>
+        <ul id="cart-items"></ul>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <p>Итого: <span id="cart-total">0</span> BYN</p>
+        </div>
+        <button id="send-order" class="send-order-btn">📩 Отправить заказ</button>
+    </div>
 </div>
+
+<!-- Overlay для корзины -->
+<div id="overlay" class="overlay"></div>
 
 <script src="app.js"></script>
 </body>
