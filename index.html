@@ -7,54 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        /* Стили для 2 карточек в ряд */
-        .products-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1rem !important;
-        }
-
-        .product-card {
-            margin-bottom: 1rem;
-        }
-
-        /* Адаптация для очень маленьких экранов (<360px) */
-        @media (max-width: 360px) {
-            .products-grid {
-                gap: 0.5rem !important;
-            }
-            .product-card {
-                transform: scale(0.9);
-                transform-origin: top center;
-            }
-            .product-image {
-                height: 160px !important;
-            }
-            .product-info h4 {
-                font-size: 1rem !important;
-            }
-            .price {
-                font-size: 1rem !important;
-            }
-        }
-
-        /* Улучшенный внешний вид карточек */
-        .product-image {
-            height: 200px !important;
-        }
-
-        .product-info {
-            padding: 1rem !important;
-        }
-
-        .product-info h4 {
-            font-size: 1.1rem !important;
-        }
-
-        .price {
-            font-size: 1.2rem !important;
-        }
-    </style>
 </head>
 <body>
 <!-- Preloader -->
@@ -114,8 +66,7 @@
         <!-- Product 1 -->
         <div class="product-card" data-name="Лонгслив Guess" data-price="35">
             <div class="product-image">
-                <img src="images/tshirt.jpg" alt="Лонгслив Guess"
-                     onerror="this.src=''">
+                <img src="images/tshirt.jpg" alt="Лонгслив Guess" onerror="this.src=''">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
@@ -135,15 +86,14 @@
         <!-- Product 2 -->
         <div class="product-card" data-name="Зипка Corteiz" data-price="75">
             <div class="product-image">
-                <img src="images/hoodie.jpg" alt="Зипка Corteiz"
-                     onerror="this.src='hoodie.jpg'">
+                <img src="images/hoodie.jpg" alt="Зипка Corteiz" onerror="this.src='hoodie.jpg'">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
                 <h4>Зипка Corteiz</h4>
-                <p class="product-desc">Уютное зипка </p>
+                <p class="product-desc">Уютное зипка</p>
                 <div class="product-footer">
                     <span class="price">75 BYN</span>
                     <button class="add-to-cart-btn">
@@ -156,8 +106,7 @@
         <!-- Product 3 -->
         <div class="product-card" data-name="Сумка Nike" data-price="45">
             <div class="product-image">
-                <img src="images/bag.jpg" alt="Сумка Nike"
-                     onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop'">
+                <img src="images/bag.jpg" alt="Сумка Nike" onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop'">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
@@ -173,105 +122,10 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </main>
 
-<!-- Contact Modal -->
-<div id="contact-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="contact-info">
-                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
-
-                <div class="contact-cards">
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>@bigdigovich</h4>
-                            <p>Менеджер</p>
-                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>@Amg0101am</h4>
-                            <p>Техническая поддержка</p>
-                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="replica-notice">
-                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
-                    <ul>
-                        <li>✅ Все бирки и ярлыки как в оригинале</li>
-                        <li>✅ Качество материалов 1:1</li>
-                        <li>✅ Полное визуальное соответствие</li>
-                        <li>✅ Проверка каждой единицы товара</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Cart Sidebar -->
-<div id="cart-sidebar" class="cart-sidebar">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
-        <button id="close-cart" class="close-btn">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <div class="cart-content">
-        <div id="cart-empty" class="cart-empty">
-            <i class="fas fa-shopping-basket"></i>
-            <p>Корзина пуста</p>
-            <small>Добавьте товары из каталога</small>
-        </div>
-
-        <div id="cart-items" class="cart-items"></div>
-    </div>
-
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Итого:</span>
-            <span id="cart-total">0 BYN</span>
-        </div>
-
-        <button id="send-order" class="order-btn">
-            <i class="fas fa-paper-plane"></i> Оформить заказ
-        </button>
-
-        <button id="copy-order" class="copy-btn">
-            <i class="fas fa-copy"></i> Скопировать заказ
-        </button>
-    </div>
-</div>
-
-<!-- Overlay -->
-<div id="overlay" class="overlay"></div>
-
-<!-- Toast Notifications -->
-<div id="toast" class="toast"></div>
-
+<!-- Подключение JS -->
 <script src="app.js"></script>
 </body>
 </html>
