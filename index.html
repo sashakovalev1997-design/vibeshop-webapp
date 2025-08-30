@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         /* Reset и базовые стили */
         * {
@@ -212,7 +211,7 @@
             font-size: 1.1rem;
         }
 
-        /* Сетка товаров - 2 в ряд */
+        /* Products Grid - 2 товара в ряд */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -496,20 +495,20 @@
             color: #666;
             margin-bottom: 1rem;
             line-height: 1.5;
+            margin-bottom: 1rem;
         }
 
         .replica-notice ul {
             list-style: none;
-            margin-top: 1rem;
         }
 
         .replica-notice li {
-            padding: 0.5rem 0;
+            padding: 0.3rem 0;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             color: #555;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .replica-notice li:before {
@@ -736,6 +735,7 @@
             font-weight: 600;
             text-align: center;
             max-width: 90%;
+            word-break: break-word;
         }
 
         .toast.show {
@@ -769,17 +769,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
             }
         }
 
@@ -939,6 +928,10 @@
                 padding: 0.8rem 1.5rem;
                 font-size: 0.9rem;
             }
+
+            .product-image {
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -1000,7 +993,7 @@
         <!-- Лонгслив Guess -->
         <div class="product-card" data-name="Лонгслив Guess" data-price="85">
             <div class="product-image">
-                <img src="tshirt.jpg" alt="Лонгслив Guess">
+                <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=400&h=400&fit=crop" alt="Лонгслив Guess">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
@@ -1020,7 +1013,7 @@
         <!-- Зипка Corteiz -->
         <div class="product-card" data-name="Зипка Corteiz" data-price="120">
             <div class="product-image">
-                <img src="hoodie.jpg" alt="Зипка Corteiz">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop" alt="Зипка Corteiz">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
@@ -1040,7 +1033,7 @@
         <!-- Сумка Nike -->
         <div class="product-card" data-name="Сумка Nike" data-price="65">
             <div class="product-image">
-                <img src="bag.jpg" alt="Сумка Nike">
+                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop" alt="Сумка Nike">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
@@ -1050,6 +1043,26 @@
                 <p class="product-desc">Стильная сумка Nike, вместительная</p>
                 <div class="product-footer">
                     <span class="price">65 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Дополнительный товар -->
+        <div class="product-card" data-name="Футболка Oversize" data-price="55">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop" alt="Футболка Oversize">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Футболка Oversize</h4>
+                <p class="product-desc">Свободный крой, хлопок 100%</p>
+                <div class="product-footer">
+                    <span class="price">55 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -1099,7 +1112,7 @@
                 </div>
 
                 <div class="replica-notice">
-                    
+                    <h4>🔥 Ультра мега реплики 1:1</h4>
                     <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
                     <ul>
                         <li>✅ Все бирки и ярлыки как в оригинале</li>
@@ -1155,6 +1168,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
+    // JavaScript код остается без изменений
     const tg = window.Telegram.WebApp;
     tg.expand();
 
