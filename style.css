@@ -128,3 +128,26 @@ main.products {
 #cart h3 {
     margin-top: 0;
 }
+
+#send-order, #copy-order {
+    background: #ff073a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    width: 100%;
+}
+
+#copy-order {
+    background: #28a745;
+}
+
+#send-order:hover {
+    background: #e6002e;
+}
+
+#copy-order:hover {
+    background: #218838;
+}
