@@ -7,6 +7,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        /* Стили для 2 карточек в ряд */
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
+        }
+
+        .product-card {
+            margin-bottom: 1rem;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Улучшенный внешний вид карточек */
+        .product-image {
+            height: 200px !important;
+        }
+
+        .product-info {
+            padding: 1rem !important;
+        }
+
+        .product-info h4 {
+            font-size: 1.1rem !important;
+        }
+
+        .price {
+            font-size: 1.2rem !important;
+        }
+    </style>
 </head>
 <body>
 <!-- Preloader -->
@@ -51,37 +86,6 @@
                 <i class="fas fa-tag"></i>
                 <span>Лучшие цены</span>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Premium Replicas Section -->
-<section class="premium-section">
-    <div class="section-header">
-        <h3>🔥 УЛЬТРА МЕGA РЕПЛИКИ</h3>
-        <p>Качество 1:1 как оригинал • Все бирки и детали</p>
-    </div>
-
-    <div class="premium-cards">
-        <div class="premium-card">
-            <div class="premium-badge">1:1 КАЧЕСТВО</div>
-            <i class="fas fa-certificate"></i>
-            <h4>Идеальное соответствие</h4>
-            <p>Все бирки, лейблы и детали как в оригинале</p>
-        </div>
-
-        <div class="premium-card">
-            <div class="premium-badge">ПРЕМИУМ МАТЕРИАЛЫ</div>
-            <i class="fas fa-gem"></i>
-            <h4>Качественные материалы</h4>
-            <p>Только лучшие ткани и фурнитура</p>
-        </div>
-
-        <div class="premium-card">
-            <div class="premium-badge">ГАРАНТИЯ</div>
-            <i class="fas fa-shield-alt"></i>
-            <h4>Проверено качество</h4>
-            <p>Каждая вещь тщательно проверяется</p>
         </div>
     </div>
 </section>
@@ -150,6 +154,27 @@
                 <p class="product-desc">Стильная сумка Nike</p>
                 <div class="product-footer">
                     <span class="price">45 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card" data-name="Футболка Classic" data-price="30">
+            <div class="product-image">
+                <img src="images/tshirt2.jpg" alt="Футболка Classic"
+                     onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Футболка Classic</h4>
+                <p class="product-desc">Классический крой, комфорт</p>
+                <div class="product-footer">
+                    <span class="price">30 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
