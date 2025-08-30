@@ -1,16 +1,11 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Включаем кнопку отправки
-tg.MainButton.setText("Отправить заказ");
-tg.MainButton.show();
-
 const cartToggle = document.getElementById('cart-toggle');
 const cart = document.getElementById('cart');
 const cartItemsList = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
 const sendOrderBtn = document.getElementById('send-order');
-const closeCartBtn = document.getElementById('close-cart');
 const products = document.querySelectorAll('.product');
 
 let cartItems = [];
@@ -49,7 +44,6 @@ function updateCartUI() {
                 }
             });
             updateCartUI();
-            updateMainButton();
         };
 
         li.appendChild(itemText);
@@ -60,17 +54,6 @@ function updateCartUI() {
 
     cartTotal.textContent = total;
     document.getElementById('cart-count').textContent = cartItems.length;
-}
-
-// Обновляем кнопку отправки
-function updateMainButton() {
-    if (cartItems.length > 0) {
-        tg.MainButton.setText(`Отправить заказ (${cartItems.length} товаров)`);
-        tg.MainButton.enable();
-        tg.MainButton.show();
-    } else {
-        tg.MainButton.hide();
-    }
 }
 
 // Добавление товаров в корзину
@@ -89,7 +72,6 @@ products.forEach(product => {
         btn.classList.add('in-cart');
         btn.textContent = '✓ В корзине';
         updateCartUI();
-        updateMainButton();
 
         // Показать корзину при добавлении первого товара
         if (cartItems.length === 1) {
@@ -104,28 +86,14 @@ cartToggle.addEventListener('click', (e) => {
     cart.classList.toggle('show');
 });
 
-closeCartBtn.addEventListener('click', () => {
-    cart.classList.remove('show');
-});
-
 document.addEventListener('click', (e) => {
     if (!cart.contains(e.target) && e.target !== cartToggle) {
         cart.classList.remove('show');
     }
 });
 
-// ОБРАБОТЧИК ОТПРАВКИ ЗАКАЗА - ГЛАВНОЕ ИЗМЕНЕНИЕ!
-tg.MainButton.onClick(() => {
-    sendOrder();
-});
-
-// Также оставляем кнопку в интерфейсе на случай чего
+// Отправка заказа
 sendOrderBtn.addEventListener('click', () => {
-    sendOrder();
-});
-
-// Функция отправки заказа
-function sendOrder() {
     if (cartItems.length === 0) {
         alert('Корзина пуста!');
         return;
@@ -146,19 +114,14 @@ function sendOrder() {
 
     console.log('Отправляем заказ:', orderText);
 
-    // ✅ ПРАВИЛЬНЫЙ способ отправки данных в Telegram Mini App
-    // Просто текст, без JSON
+    // Отправляем данные в бота
     tg.sendData(orderText);
 
-    // Показываем уведомление пользователю
-    tg.showAlert('✅ Заказ отправлен! Спасибо за покупку!');
+    // Очистка корзины
+    cartItems = [];
+    updateCartUI();
+    cart.classList.remove('show');
 
-    // Закрываем WebApp через 2 секунды
-    setTimeout(() => {
-        tg.close();
-    }, 2000);
-}
-
-// Инициализация при загрузке
-updateMainButton();
-console.log('WebApp инициализирован, user:', user);
+    // Показываем уведомление (НЕ закрываем WebApp)
+    alert('✅ Заказ отправлен! Спасибо за покупку!');
+});
