@@ -329,6 +329,429 @@
             background: var(--success);
         }
 
+        /* Contact Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--error);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1.5rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-cards {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-details h4 {
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-details p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-link {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+
+        .replica-notice {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--gold);
+            margin-top: 1.5rem;
+        }
+
+        .replica-notice h4 {
+            color: var(--premium);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .replica-notice p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .replica-notice ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .replica-notice li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .replica-notice li:before {
+            content: "✅";
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--error);
+        }
+
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #999;
+        }
+
+        .cart-empty i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .cart-empty p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-empty small {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray);
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .cart-item:hover {
+            background: var(--light);
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .remove-item {
+            background: var(--error);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .remove-item:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray);
+            background: var(--light);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .cart-total span:last-child {
+            color: var(--primary);
+        }
+
+        .order-btn, .copy-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .order-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .order-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .copy-btn {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .copy-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1001;
+            font-weight: 600;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .toast.warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .toast.info {
+            background: var(--secondary);
+        }
+
         /* Анимации */
         @keyframes fadeIn {
             from {
@@ -425,6 +848,16 @@
             .feature {
                 padding: 0.6rem 1rem;
                 font-size: 0.9rem;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
             }
         }
 
@@ -597,6 +1030,101 @@
     </div>
 </main>
 
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="contact-info">
+                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
+
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>@bigdigovich</h4>
+                            <p>Основной менеджер</p>
+                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>@Amg0101am</h4>
+                            <p>Техническая поддержка</p>
+                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="replica-notice">
+                    <h4>🔥 Ультра мега реплики 1:1</h4>
+                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
+                    <ul>
+                        <li>✅ Все бирки и ярлыки как в оригинале</li>
+                        <li>✅ Качество материалов 1:1</li>
+                        <li>✅ Полное визуальное соответствие</li>
+                        <li>✅ Проверка каждой единицы товара</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+        <button id="close-cart" class="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="cart-content">
+        <div id="cart-empty" class="cart-empty">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Корзина пуста</p>
+            <small>Добавьте товары из каталога</small>
+        </div>
+
+        <div id="cart-items" class="cart-items"></div>
+    </div>
+
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span id="cart-total">0 BYN</span>
+        </div>
+
+        <button id="send-order" class="order-btn">
+            <i class="fas fa-paper-plane"></i> Оформить заказ
+        </button>
+
+        <button id="copy-order" class="copy-btn">
+            <i class="fas fa-copy"></i> Скопировать заказ
+        </button>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Toast Notifications -->
+<div id="toast" class="toast"></div>
+
 <script>
     // Упрощенный JavaScript для быстрой загрузки
     document.addEventListener('DOMContentLoaded', function() {
@@ -615,20 +1143,31 @@
         const addButtons = document.querySelectorAll('.add-to-cart-btn');
         const contactBtn = document.getElementById('contact-btn');
         const cartToggle = document.getElementById('cart-toggle');
+        const closeCart = document.getElementById('close-cart');
+        const contactModal = document.getElementById('contact-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const overlay = document.getElementById('overlay');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartEmpty = document.getElementById('cart-empty');
+        const cartTotal = document.getElementById('cart-total');
+        const sendOrder = document.getElementById('send-order');
+        const copyOrder = document.getElementById('copy-order');
 
         // Функция добавления в корзину
         function addToCart() {
             const productCard = this.closest('.product-card');
             const name = productCard.dataset.name;
             const price = productCard.dataset.price;
+            const image = productCard.querySelector('img').src;
 
             if (cartItems.some(item => item.name === name)) {
                 showNotification('Этот товар уже в корзине!', 'warning');
                 return;
             }
 
-            cartItems.push({ name, price });
-            cartBadge.textContent = cartItems.length;
+            cartItems.push({ name, price, image });
+            updateCartUI();
 
             this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
             this.classList.add('added');
@@ -641,28 +1180,159 @@
             showNotification('Товар добавлен в корзину!', 'success');
         }
 
+        // Обновление UI корзины
+        function updateCartUI() {
+            cartBadge.textContent = cartItems.length;
+            cartItemsContainer.innerHTML = '';
+
+            if (cartItems.length === 0) {
+                cartEmpty.style.display = 'block';
+                cartTotal.textContent = '0 BYN';
+                return;
+            }
+
+            cartEmpty.style.display = 'none';
+            let total = 0;
+
+            cartItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} BYN</div>
+                    </div>
+                    <button class="remove-item" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+                total += parseInt(item.price);
+            });
+
+            cartTotal.textContent = `${total} BYN`;
+
+            // Добавляем обработчики для кнопок удаления
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    cartItems.splice(index, 1);
+                    updateCartUI();
+                    showNotification('Товар удален из корзины', 'info');
+                });
+            });
+        }
+
         // Функция показа уведомления
         function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: ${type === 'success' ? '#00b894' : type === 'warning' ? '#fdcb6e' : '#667eea'};
-                color: ${type === 'warning' ? '#2d3436' : 'white'};
-                padding: 12px 24px;
-                border-radius: 8px;
-                z-index: 1000;
-                font-weight: 600;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
 
             setTimeout(() => {
-                document.body.removeChild(notification);
+                toast.classList.remove('show');
             }, 3000);
+        }
+
+        // Открытие Telegram
+        function openTelegram(username) {
+            window.open(`https://t.me/${username}`, '_blank');
+            closeAllModals();
+            showNotification(`Открываю Telegram: @${username}`, 'success');
+        }
+
+        // Открытие/закрытие модальных окон
+        function openContactModal() {
+            contactModal.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            contactModal.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function toggleCart() {
+            cartSidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = cartSidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeAllModals() {
+            closeContactModal();
+            cartSidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Отправка заказа
+        function sendOrderToTelegram() {
+            if (cartItems.length === 0) {
+                showNotification('Корзина пуста!', 'error');
+                return;
+            }
+
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
+            orderText += "📦 Состав заказа:\n";
+
+            let total = 0;
+            cartItems.forEach(item => {
+                orderText += `• ${item.name} — ${item.price} BYN\n`;
+                total += parseInt(item.price);
+            });
+
+            orderText += `\n💰 Итого: ${total} BYN`;
+            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n\n🔥 *УЛЬТРА МЕГА РЕПЛИКИ 1:1*`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+            orderText += `\n✅ Качество материалов 1:1`;
+            orderText += `\n✅ Полное визуальное соответствие`;
+
+            const encodedOrder = encodeURIComponent(orderText);
+            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`;
+
+            window.open(telegramUrl, '_blank');
+            showToast('Открываю Telegram...', 'success');
+
+            // Очищаем корзину
+            setTimeout(() => {
+                cartItems = [];
+                updateCartUI();
+                closeAllModals();
+            }, 2000);
+        }
+
+        // Копирование заказа
+        function copyOrderToClipboard() {
+            if (cartItems.length === 0) {
+                showNotification('Корзина пуста!', 'error');
+                return;
+            }
+
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
+            orderText += "📦 Состав заказа:\n";
+
+            let total = 0;
+            cartItems.forEach(item => {
+                orderText += `• ${item.name} — ${item.price} BYN\n`;
+                total += parseInt(item.price);
+            });
+
+            orderText += `\n💰 Итого: ${total} BYN`;
+            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n\n🔥 *УЛЬТРА МЕГА РЕПЛИКИ 1:1*`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+            orderText += `\n✅ Качество материалов 1:1`;
+            orderText += `\n✅ Полное визуальное соответствие`;
+
+            navigator.clipboard.writeText(orderText).then(() => {
+                showNotification('Заказ скопирован в буфер!', 'success');
+            }).catch(err => {
+                showNotification('Ошибка копирования', 'error');
+            });
         }
 
         // Обработчики событий
@@ -670,14 +1340,13 @@
             btn.addEventListener('click', addToCart);
         });
 
-        contactBtn.addEventListener('click', function() {
-            showNotification('Контакты: @bigdigovich (менеджер), @Amg0101am (поддержка)');
-        });
-
-        cartToggle.addEventListener('click', function() {
-            showNotification('Корзина: ' + cartItems.length + ' товаров на сумму ' +
-                cartItems.reduce((total, item) => total + parseInt(item.price), 0) + ' BYN');
-        });
+        contactBtn.addEventListener('click', openContactModal);
+        closeModal.addEventListener('click', closeContactModal);
+        cartToggle.addEventListener('click', toggleCart);
+        closeCart.addEventListener('click', closeAllModals);
+        overlay.addEventListener('click', closeAllModals);
+        sendOrder.addEventListener('click', sendOrderToTelegram);
+        copyOrder.addEventListener('click', copyOrderToClipboard);
 
         // Быстрый просмотр
         document.querySelectorAll('.quick-view').forEach(btn => {
