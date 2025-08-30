@@ -3,51 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜</title>
+    <title>VibeShop 👕👜 | Стильная одежда</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-<div class="container">
-    <header>
-        <div class="header-left">
-            <h1>VibeShop 👕👜</h1>
-            <p>Стильные вещи прямо в Telegram</p>
-        </div>
-        <div class="header-right">
-            <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
-        </div>
-    </header>
-
-    <main class="products">
-        <div class="product" data-name="Футболка" data-price="20">
-            <img src="images/tshirt.jpg" alt="Футболка" onerror="this.src='https://via.placeholder.com/150?text=Футболка'">
-            <h2>Футболка</h2>
-            <p class="price">20 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-        <div class="product" data-name="Худи" data-price="50">
-            <img src="images/hoodie.jpg" alt="Худи" onerror="this.src='https://via.placeholder.com/150?text=Худи'">
-            <h2>Худи</h2>
-            <p class="price">50 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-        <div class="product" data-name="Сумка" data-price="35">
-            <img src="images/bag.jpg" alt="Сумка" onerror="this.src='https://via.placeholder.com/150?text=Сумка'">
-            <h2>Сумка</h2>
-            <p class="price">35 BYN</p>
-            <button class="order-btn">Добавить в корзину</button>
-        </div>
-    </main>
+<!-- Preloader -->
+<div id="preloader">
+    <div class="loader"></div>
 </div>
 
-<div id="cart">
-    <h3>🛒 Ваша корзина</h3>
-    <ul id="cart-items"></ul>
-    <p>Итого: <span id="cart-total">0</span> BYN</p>
-    <button id="send-order">📩 Отправить заказ в Telegram</button>
-    <button id="copy-order" style="margin-top: 10px; background: #28a745;">📋 Скопировать заказ</button>
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <h1><i class="fas fa-shirt"></i> VibeShop</h1>
+            <p>Стиль в каждом моменте</p>
+        </div>
+        <div class="header-actions">
+            <button id="cart-toggle" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count" class="cart-badge">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h2>Обнови свой стиль</h2>
+        <p>Качественная одежда и аксессуары по доступным ценам</p>
+        <div class="hero-features">
+            <div class="feature">
+                <i class="fas fa-truck-fast"></i>
+                <span>Быстрая доставка</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-medal"></i>
+                <span>Качество</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-tag"></i>
+                <span>Лучшие цены</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<main class="products-section">
+    <div class="section-header">
+        <h3>Наша коллекция</h3>
+        <p>Выбери то, что подходит именно тебе</p>
+    </div>
+
+    <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card" data-name="Футболка Premium" data-price="35">
+            <div class="product-image">
+                <img src="images/tshirt.jpg" alt="Футболка Premium"
+                     onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Футболка Premium</h4>
+                <p class="product-desc">Хлопок 100%, премиальное качество</p>
+                <div class="product-footer">
+                    <span class="price">35 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card" data-name="Худи Oversize" data-price="75">
+            <div class="product-image">
+                <img src="images/hoodie.jpg" alt="Худи Oversize"
+                     onerror="this.src='https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Худи Oversize</h4>
+                <p class="product-desc">Уютное худи оверсайз</p>
+                <div class="product-footer">
+                    <span class="price">75 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card" data-name="Сумка Urban" data-price="45">
+            <div class="product-image">
+                <img src="images/bag.jpg" alt="Сумка Urban"
+                     onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Сумка Urban</h4>
+                <p class="product-desc">Стильная городская сумка</p>
+                <div class="product-footer">
+                    <span class="price">45 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card" data-name="Кепка Street" data-price="25">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=400&h=400&fit=crop" alt="Кепка Street">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Кепка Street</h4>
+                <p class="product-desc">Уличная кепка с принтом</p>
+                <div class="product-footer">
+                    <span class="price">25 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+        <button id="close-cart" class="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="cart-content">
+        <div id="cart-empty" class="cart-empty">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Корзина пуста</p>
+            <small>Добавьте товары из каталога</small>
+        </div>
+
+        <div id="cart-items" class="cart-items"></div>
+    </div>
+
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span id="cart-total">0 BYN</span>
+        </div>
+
+        <button id="send-order" class="order-btn">
+            <i class="fas fa-paper-plane"></i> Оформить заказ
+        </button>
+
+        <button id="copy-order" class="copy-btn">
+            <i class="fas fa-copy"></i> Скопировать заказ
+        </button>
+    </div>
 </div>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Toast Notifications -->
+<div id="toast" class="toast"></div>
 
 <script src="app.js"></script>
 </body>
