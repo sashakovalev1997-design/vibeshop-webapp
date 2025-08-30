@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜 | Стильная одежда</title>
+    <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -22,6 +22,9 @@
             <p>Стиль в каждом моменте</p>
         </div>
         <div class="header-actions">
+            <button id="contact-btn" class="contact-btn">
+                <i class="fas fa-envelope"></i> Контакты
+            </button>
             <button id="cart-toggle" class="cart-btn">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">0</span>
@@ -34,7 +37,7 @@
 <section class="hero">
     <div class="hero-content">
         <h2>Обнови свой стиль</h2>
-        <p>Качественная одежда и аксессуары по доступным ценам</p>
+        <p>Качественная одежда и премиальные реплики 1:1</p>
         <div class="hero-features">
             <div class="feature">
                 <i class="fas fa-truck-fast"></i>
@@ -42,12 +45,43 @@
             </div>
             <div class="feature">
                 <i class="fas fa-medal"></i>
-                <span>Качество</span>
+                <span>Качество 1:1</span>
             </div>
             <div class="feature">
                 <i class="fas fa-tag"></i>
                 <span>Лучшие цены</span>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Premium Replicas Section -->
+<section class="premium-section">
+    <div class="section-header">
+        <h3>🔥 УЛЬТРА МЕGA РЕПЛИКИ</h3>
+        <p>Качество 1:1 как оригинал • Все бирки и детали</p>
+    </div>
+
+    <div class="premium-cards">
+        <div class="premium-card">
+            <div class="premium-badge">1:1 КАЧЕСТВО</div>
+            <i class="fas fa-certificate"></i>
+            <h4>Идеальное соответствие</h4>
+            <p>Все бирки, лейблы и детали как в оригинале</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-badge">ПРЕМИУМ МАТЕРИАЛЫ</div>
+            <i class="fas fa-gem"></i>
+            <h4>Качественные материалы</h4>
+            <p>Только лучшие ткани и фурнитура</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-badge">ГАРАНТИЯ</div>
+            <i class="fas fa-shield-alt"></i>
+            <h4>Проверено качество</h4>
+            <p>Каждая вещь тщательно проверяется</p>
         </div>
     </div>
 </section>
@@ -61,7 +95,7 @@
 
     <div class="products-grid">
         <!-- Product 1 -->
-        <div class="product-card" data-name="Лонг" data-price="35">
+        <div class="product-card" data-name="Футболка Premium" data-price="35">
             <div class="product-image">
                 <img src="images/tshirt.jpg" alt="Футболка Premium"
                      onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop'">
@@ -84,7 +118,7 @@
         <!-- Product 2 -->
         <div class="product-card" data-name="Худи Oversize" data-price="75">
             <div class="product-image">
-                <img src="images/hoodie.jpg" alt="Зипка"
+                <img src="images/hoodie.jpg" alt="Худи Oversize"
                      onerror="this.src='https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop'">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
@@ -113,7 +147,7 @@
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
-                <p class="product-desc"> сумка Nike</p>
+                <p class="product-desc">Стильная сумка Nike</p>
                 <div class="product-footer">
                     <span class="price">45 BYN</span>
                     <button class="add-to-cart-btn">
@@ -122,7 +156,62 @@
                 </div>
             </div>
         </div>
-        
+    </div>
+</main>
+
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="contact-info">
+                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
+
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>@bigdigovich</h4>
+                            <p>Основной менеджер</p>
+                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>@Amg0101am</h4>
+                            <p>Техническая поддержка</p>
+                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="replica-notice">
+                    <h4>🔥 Ультра мега реплики 1:1</h4>
+                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
+                    <ul>
+                        <li>✅ Все бирки и ярлыки как в оригинале</li>
+                        <li>✅ Качество материалов 1:1</li>
+                        <li>✅ Полное визуальное соответствие</li>
+                        <li>✅ Проверка каждой единицы товара</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Cart Sidebar -->
 <div id="cart-sidebar" class="cart-sidebar">

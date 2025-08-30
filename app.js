@@ -4,6 +4,8 @@ tg.expand();
 // Элементы DOM
 const elements = {
     preloader: document.getElementById('preloader'),
+    contactBtn: document.getElementById('contact-btn'),
+    contactModal: document.getElementById('contact-modal'),
     cartToggle: document.getElementById('cart-toggle'),
     cartSidebar: document.getElementById('cart-sidebar'),
     closeCart: document.getElementById('close-cart'),
@@ -13,7 +15,8 @@ const elements = {
     cartTotal: document.getElementById('cart-total'),
     sendOrder: document.getElementById('send-order'),
     copyOrder: document.getElementById('copy-order'),
-    toast: document.getElementById('toast')
+    toast: document.getElementById('toast'),
+    closeModal: document.querySelector('.close-modal')
 };
 
 let cartItems = [];
@@ -39,9 +42,11 @@ function hidePreloader() {
 
 // Настройка обработчиков событий
 function setupEventListeners() {
+    elements.contactBtn.addEventListener('click', openContactModal);
+    elements.closeModal.addEventListener('click', closeContactModal);
+    elements.overlay.addEventListener('click', closeAllModals);
     elements.cartToggle.addEventListener('click', toggleCart);
     elements.closeCart.addEventListener('click', closeCart);
-    elements.overlay.addEventListener('click', closeCart);
     elements.sendOrder.addEventListener('click', sendOrder);
     elements.copyOrder.addEventListener('click', copyOrder);
 
@@ -60,6 +65,34 @@ function setupEventListeners() {
             showQuickView(productCard);
         });
     });
+}
+
+// Открытие модального окна контактов
+function openContactModal() {
+    elements.contactModal.classList.add('active');
+    elements.overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Закрытие модального окна контактов
+function closeContactModal() {
+    elements.contactModal.classList.remove('active');
+    elements.overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Закрытие всех модальных окон
+function closeAllModals() {
+    closeContactModal();
+    closeCart();
+}
+
+// Открытие Telegram
+function openTelegram(username) {
+    const telegramUrl = `https://t.me/${username}`;
+    window.open(telegramUrl, '_blank');
+    closeContactModal();
+    showToast(`Открываю Telegram: @${username}`, 'success');
 }
 
 // Загрузка информации о пользователе
@@ -174,6 +207,10 @@ function sendOrder() {
 
     orderText += `\n💰 Итого: ${total} BYN`;
     orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+    orderText += `\n\n🔥 *УЛЬТРА МЕГА РЕПЛИКИ 1:1*`;
+    orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+    orderText += `\n✅ Качество материалов 1:1`;
+    orderText += `\n✅ Полное визуальное соответствие`;
 
     // Кодируем текст заказа для URL
     const encodedOrder = encodeURIComponent(orderText);
@@ -189,7 +226,6 @@ function sendOrder() {
         cartItems = [];
         updateCartUI();
         closeCart();
-        tg.close();
     }, 2000);
 }
 
@@ -212,6 +248,10 @@ function copyOrder() {
 
     orderText += `\n💰 Итого: ${total} BYN`;
     orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+    orderText += `\n\n🔥 *УЛЬТРА МЕГА РЕПЛИКИ 1:1*`;
+    orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+    orderText += `\n✅ Качество материалов 1:1`;
+    orderText += `\n✅ Полное визуальное соответствие`;
 
     navigator.clipboard.writeText(orderText).then(() => {
         showToast('Заказ скопирован в буфер!', 'success');
@@ -222,7 +262,6 @@ function copyOrder() {
 
 // Быстрый просмотр
 function showQuickView(productCard) {
-    // Здесь можно добавить модальное окно с деталями товара
     const name = productCard.dataset.name;
     showToast(`Просмотр: ${name}`, 'info');
 }
@@ -240,6 +279,7 @@ function showToast(message, type = 'info') {
 
 // Глобальные функции для HTML
 window.removeFromCart = removeFromCart;
+window.openTelegram = openTelegram;
 
 // Запуск приложения
 document.addEventListener('DOMContentLoaded', init);
