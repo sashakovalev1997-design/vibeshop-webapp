@@ -3,129 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>VibeShop 👕👜</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
 </head>
 <body>
 <!-- Preloader -->
-<div id="preloader">
-    <div class="loader"></div>
-</div>
+<div id="preloader"><div class="loader"></div></div>
 
 <!-- Header -->
 <header class="header">
     <div class="header-content">
-        <div class="logo">
-            <h1><i class="fas fa-shirt"></i> VibeShop</h1>
-            <p>Стиль в каждом моменте</p>
-        </div>
+        <div class="logo"><h1>VibeShop</h1></div>
         <div class="header-actions">
-            <button id="contact-btn" class="contact-btn">
-                <i class="fas fa-envelope"></i> Контакты
-            </button>
-            <button id="cart-toggle" class="cart-btn">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count" class="cart-badge">0</span>
-            </button>
+            <button class="contact-btn">Контакты</button>
+            <button class="cart-btn">Корзина <span id="cart-count">0</span></button>
         </div>
     </div>
 </header>
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content">
-        <h2>Обнови свой стиль</h2>
-        <p>Качественная одежда и премиальные реплики 1:1</p>
-        <div class="hero-features">
-            <div class="feature">
-                <i class="fas fa-truck-fast"></i>
-                <span>Быстрая доставка</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-medal"></i>
-                <span>Качество 1:1</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-tag"></i>
-                <span>Лучшие цены</span>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Products Section -->
 <main class="products-section">
-    <div class="section-header">
-        <h3>Наша коллекция</h3>
-        <p>Выбери то, что подходит именно тебе</p>
-    </div>
-
+    <div class="section-header"><h3>Наша коллекция</h3></div>
     <div class="products-grid">
-        <!-- Product 1 -->
-        <div class="product-card" data-name="Лонгслив Guess" data-price="35">
-            <div class="product-image">
-                <img src="images/tshirt.jpg" alt="Лонгслив Guess" onerror="this.src=''">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Лонгслив Guess</h4>
-                <p class="product-desc">Хлопок 100%, премиальное качество</p>
-                <div class="product-footer">
-                    <span class="price">35 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="product-card" data-name="Зипка Corteiz" data-price="75">
-            <div class="product-image">
-                <img src="images/hoodie.jpg" alt="Зипка Corteiz" onerror="this.src='hoodie.jpg'">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Зипка Corteiz</h4>
-                <p class="product-desc">Уютное зипка</p>
-                <div class="product-footer">
-                    <span class="price">75 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 3 -->
-        <div class="product-card" data-name="Сумка Nike" data-price="45">
-            <div class="product-image">
-                <img src="images/bag.jpg" alt="Сумка Nike" onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop'">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Сумка Nike</h4>
-                <p class="product-desc">Стильная сумка Nike</p>
-                <div class="product-footer">
-                    <span class="price">45 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div class="product-card"><div class="product-info"><h4>Товар 1</h4></div></div>
+        <div class="product-card"><div class="product-info"><h4>Товар 2</h4></div></div>
+        <div class="product-card"><div class="product-info"><h4>Товар 3</h4></div></div>
+        <div class="product-card"><div class="product-info"><h4>Товар 4</h4></div></div>
     </div>
 </main>
 
-<!-- Подключение JS -->
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 </body>
 </html>
