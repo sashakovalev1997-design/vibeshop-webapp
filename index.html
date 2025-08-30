@@ -3,228 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜 | Стильная одежда</title>
+    <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Стили для 2 карточек в ряд */
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
         }
 
-        :root {
-            --primary: #ff3b5c;
-            --primary-dark: #e02e4d;
-            --secondary: #667eea;
-            --dark: #2d3436;
-            --light: #f8f9fa;
-            --radius: 16px;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo h1 {
-            color: var(--primary);
-            font-size: 1.8rem;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .contact-btn, .cart-btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-        }
-
-        .cart-btn {
-            background: var(--primary);
-        }
-
-        .cart-badge {
-            background: #d63031;
-            color: white;
-            border-radius: 50%;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.8rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-        }
-
-        .hero-content h2 {
-            font-size: 2rem;
+        .product-card {
             margin-bottom: 1rem;
         }
 
-        /* Products Section */
-        .products-section {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        /* Адаптивность для мобильных */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr !important;
+            }
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: white;
-        }
-
-        /* Products Grid - 2 товара в ряд */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Product Card */
-        .product-card {
-            background: white;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
+        /* Улучшенный внешний вид карточек */
         .product-image {
-            height: 250px;
-            overflow: hidden;
-            background-color: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: 200px !important;
         }
 
         .product-info {
-            padding: 1rem;
+            padding: 1rem !important;
         }
 
         .product-info h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-desc {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-size: 1.1rem !important;
         }
 
         .price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .add-to-cart-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .add-to-cart-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero-content h2 {
-                font-size: 1.5rem;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: center;
-            }
+            font-size: 1.2rem !important;
         }
     </style>
 </head>
 <body>
+<!-- Preloader -->
+<div id="preloader">
+    <div class="loader"></div>
+</div>
+
 <!-- Header -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
             <h1><i class="fas fa-shirt"></i> VibeShop</h1>
+            <p>Стиль в каждом моменте</p>
         </div>
         <div class="header-actions">
-            <button class="contact-btn">
+            <button id="contact-btn" class="contact-btn">
                 <i class="fas fa-envelope"></i> Контакты
             </button>
-            <button class="cart-btn">
+            <button id="cart-toggle" class="cart-btn">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge">0</span>
+                <span id="cart-count" class="cart-badge">0</span>
             </button>
         </div>
     </div>
@@ -235,6 +73,20 @@
     <div class="hero-content">
         <h2>Обнови свой стиль</h2>
         <p>Качественная одежда и премиальные реплики 1:1</p>
+        <div class="hero-features">
+            <div class="feature">
+                <i class="fas fa-truck-fast"></i>
+                <span>Быстрая доставка</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-medal"></i>
+                <span>Качество 1:1</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-tag"></i>
+                <span>Лучшие цены</span>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -246,16 +98,20 @@
     </div>
 
     <div class="products-grid">
-        <!-- Лонгслив Guess -->
-        <div class="product-card">
+        <!-- Product 1 -->
+        <div class="product-card" data-name="Лонгслив Guess" data-price="35">
             <div class="product-image">
-                <img src="https://cdn4.telegram-cdn.org/file/ks1n_3D1Yz6S1f3t3p3V3j3x3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3c3d3e3f3g3h3i3j3k3l3m3n3o3p3q3r3s3t3u3v3w3x3y3z3A3B3C3D3E3F3G3H3I3J3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3c3d3e3f3g3h3i3j3k3l3m3n3o3p3q3r3s3t3u3v3w3x3y3z3A3B3C3D3E3F3G3H3I3J3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3c3d3e3f3g3h3i3j3k3l3m3n3o3p3q3r3s3t3u3v3w3x3y3z.jpg" alt="Лонгслив Guess" onerror="this.src='https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=400&h=400&fit=crop'">
+                <img src="images/tshirt.jpg" alt="Лонгслив Guess"
+                     onerror="this.src=''">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
             </div>
             <div class="product-info">
                 <h4>Лонгслив Guess</h4>
-                <p class="product-desc">Премиальное качество, логотип Guess</p>
+                <p class="product-desc">Хлопок 100%, премиальное качество</p>
                 <div class="product-footer">
-                    <span class="price">85 BYN</span>
+                    <span class="price">35 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -263,16 +119,20 @@
             </div>
         </div>
 
-        <!-- Зипка Corteiz -->
-        <div class="product-card">
+        <!-- Product 2 -->
+        <div class="product-card" data-name="Зипка Corteiz" data-price="75">
             <div class="product-image">
-                <img src="https://cdn4.telegram-cdn.org/file/ks1n_3D1Yz6S1f3t3p3V3j3x3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3c3d3e3f3g3h3i3j3k3l3m3n3o3p3q3r3s3t3u3v3w3x3y3z3A3B3C3D3E3F3G3H3I3J3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3c3d3e3f3g3h3i3j3k3l3m3n3o3p3q3r3s3t3u3v3w3x3y3z3A3B3C3D3E3F3G3H3I3J3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3c3d3e3f3g3h3i3j3k3l3m3n3o3p3q3r3s3t3u3v3w3x3y3z.jpg" alt="Зипка Corteiz" onerror="this.src='https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop'">
+                <img src="images/hoodie.jpg" alt="Зипка Corteiz"
+                     onerror="this.src='hoodie.jpg'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
             </div>
             <div class="product-info">
                 <h4>Зипка Corteiz</h4>
-                <p class="product-desc">Оверсайз, качественный хлопок</p>
+                <p class="product-desc">Уютное зипка </p>
                 <div class="product-footer">
-                    <span class="price">120 BYN</span>
+                    <span class="price">75 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -280,16 +140,20 @@
             </div>
         </div>
 
-        <!-- Сумка Nike -->
-        <div class="product-card">
+        <!-- Product 3 -->
+        <div class="product-card" data-name="Сумка Nike" data-price="45">
             <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop" alt="Сумка Nike">
+                <img src="images/bag.jpg" alt="Сумка Nike"
+                     onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
-                <p class="product-desc">Стильная сумка Nike, вместительная</p>
+                <p class="product-desc">Стильная сумка Nike</p>
                 <div class="product-footer">
-                    <span class="price">65 BYN</span>
+                    <span class="price">45 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -297,16 +161,20 @@
             </div>
         </div>
 
-        <!-- Футболка Oversize -->
-        <div class="product-card">
+        <!-- Product 4 -->
+        <div class="product-card" data-name="Футболка Classic" data-price="30">
             <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop" alt="Футболка Oversize">
+                <img src="images/tshirt2.jpg" alt="Футболка Classic"
+                     onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop'">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
             </div>
             <div class="product-info">
-                <h4>Футболка Oversize</h4>
-                <p class="product-desc">Свободный крой, хлопок 100%</p>
+                <h4>Футболка Classic</h4>
+                <p class="product-desc">Классический крой, комфорт</p>
                 <div class="product-footer">
-                    <span class="price">55 BYN</span>
+                    <span class="price">30 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -316,30 +184,100 @@
     </div>
 </main>
 
-<script>
-    // Простой скрипт для добавления в корзину
-    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const badge = document.querySelector('.cart-badge');
-            const currentCount = parseInt(badge.textContent);
-            badge.textContent = currentCount + 1;
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="contact-info">
+                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
 
-            this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-            this.style.background = '#00b894';
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>@bigdigovich</h4>
+                            <p>Менеджер</p>
+                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
 
-            setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-plus"></i> В корзину';
-                this.style.background = '';
-            }, 2000);
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>@Amg0101am</h4>
+                            <p>Техническая поддержка</p>
+                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-            alert('Товар добавлен в корзину!');
-        });
-    });
+                <div class="replica-notice">
+                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
+                    <ul>
+                        <li>✅ Все бирки и ярлыки как в оригинале</li>
+                        <li>✅ Качество материалов 1:1</li>
+                        <li>✅ Полное визуальное соответствие</li>
+                        <li>✅ Проверка каждой единицы товара</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    // Контакты
-    document.querySelector('.contact-btn').addEventListener('click', function() {
-        alert('Контакты:\n@bigdigovich - Основной менеджер\n@Amg0101am - Техподдержка');
-    });
-</script>
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+        <button id="close-cart" class="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="cart-content">
+        <div id="cart-empty" class="cart-empty">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Корзина пуста</p>
+            <small>Добавьте товары из каталога</small>
+        </div>
+
+        <div id="cart-items" class="cart-items"></div>
+    </div>
+
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span id="cart-total">0 BYN</span>
+        </div>
+
+        <button id="send-order" class="order-btn">
+            <i class="fas fa-paper-plane"></i> Оформить заказ
+        </button>
+
+        <button id="copy-order" class="copy-btn">
+            <i class="fas fa-copy"></i> Скопировать заказ
+        </button>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Toast Notifications -->
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
 </body>
 </html>
