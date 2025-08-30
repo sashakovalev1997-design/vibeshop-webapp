@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
+    <title>VibeShop 👕👜 | Стильная одежда</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset и базовые стили */
         * {
             margin: 0;
             padding: 0;
@@ -17,18 +16,9 @@
             --primary: #ff3b5c;
             --primary-dark: #e02e4d;
             --secondary: #667eea;
-            --accent: #ff6b6b;
             --dark: #2d3436;
             --light: #f8f9fa;
-            --gray: #dfe6e9;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --error: #d63031;
-            --gold: #ffd700;
-            --premium: #ff6b35;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --radius: 16px;
-            --transition: all 0.3s ease;
         }
 
         body {
@@ -39,43 +29,13 @@
             min-height: 100vh;
         }
 
-        /* Preloader */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: var(--transition);
-        }
-
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--gray);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Header */
         .header {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -90,22 +50,14 @@
         .logo h1 {
             color: var(--primary);
             font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo p {
-            color: var(--dark);
-            font-size: 0.9rem;
-            opacity: 0.8;
         }
 
         .header-actions {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
 
-        .contact-btn {
+        .contact-btn, .cart-btn {
             background: var(--secondary);
             color: white;
             border: none;
@@ -116,35 +68,14 @@
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .contact-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
         }
 
         .cart-btn {
             background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .cart-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
         }
 
         .cart-badge {
-            background: var(--error);
+            background: #d63031;
             color: white;
             border-radius: 50%;
             padding: 0.2rem 0.6rem;
@@ -156,36 +87,12 @@
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
             color: white;
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 2rem 1rem;
         }
 
         .hero-content h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-        }
-
-        .hero-features {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--radius);
-            backdrop-filter: blur(10px);
         }
 
         /* Products Section */
@@ -197,18 +104,8 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h3 {
-            font-size: 2.2rem;
+            margin-bottom: 2rem;
             color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-header p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
         }
 
         /* Products Grid - 2 товара в ряд */
@@ -216,7 +113,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         /* Product Card */
@@ -224,19 +121,16 @@
             background: white;
             border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
         }
 
         .product-image {
-            position: relative;
-            height: 220px;
+            height: 200px;
             overflow: hidden;
         }
 
@@ -244,49 +138,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
-        }
-
-        .product-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .product-card:hover .product-overlay {
-            opacity: 1;
-        }
-
-        .quick-view {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
         }
 
         .product-info {
-            padding: 1.2rem;
+            padding: 1rem;
         }
 
         .product-info h4 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 0.5rem;
-            color: var(--dark);
         }
 
         .product-desc {
@@ -302,7 +162,7 @@
         }
 
         .price {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--primary);
         }
@@ -311,516 +171,13 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .add-to-cart-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .add-to-cart-btn.added {
-            background: var(--success);
-        }
-
-        /* Contact Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1002;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: var(--radius);
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow);
-            transform: translateY(-50px);
-            transition: var(--transition);
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: var(--error);
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .contact-info p {
-            margin-bottom: 1.5rem;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .contact-cards {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-card {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-
-        .contact-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .contact-avatar {
-            width: 60px;
-            height: 60px;
-            background: var(--secondary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .contact-details {
-            flex: 1;
-        }
-
-        .contact-details h4 {
-            color: var(--dark);
-            margin-bottom: 0.3rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-details p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .contact-link {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-
-        .contact-link:hover {
-            background: #5a6fd8;
-            transform: translateY(-1px);
-        }
-
-        .replica-notice {
-            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            border-left: 4px solid var(--gold);
-            margin-top: 1.5rem;
-        }
-
-        .replica-notice h4 {
-            color: var(--premium);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .replica-notice p {
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .replica-notice ul {
-            list-style: none;
-        }
-
-        .replica-notice li {
-            padding: 0.3rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #555;
-            font-size: 0.9rem;
-        }
-
-        .replica-notice li:before {
-            content: "✅";
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        /* Cart Sidebar */
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 380px;
-            height: 100vh;
-            background: white;
-            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-sidebar.open {
-            right: 0;
-        }
-
-        .cart-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: #666;
-            transition: var(--transition);
-        }
-
-        .close-btn:hover {
-            color: var(--error);
-        }
-
-        .cart-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-
-        .cart-empty {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #999;
-        }
-
-        .cart-empty i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .cart-empty p {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .cart-empty small {
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray);
-            gap: 1rem;
-            transition: var(--transition);
-        }
-
-        .cart-item:hover {
-            background: var(--light);
-        }
-
-        .cart-item img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            color: var(--dark);
-        }
-
-        .cart-item-price {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .remove-item {
-            background: var(--error);
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            flex-shrink: 0;
-        }
-
-        .remove-item:hover {
-            background: #c0392b;
-            transform: scale(1.1);
-        }
-
-        .cart-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--gray);
-            background: var(--light);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .cart-total span:last-child {
-            color: var(--primary);
-        }
-
-        .order-btn, .copy-btn {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .order-btn {
-            background: var(--primary);
-            color: white;
-        }
-
-        .order-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .copy-btn {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .copy-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 999;
-            backdrop-filter: blur(5px);
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--success);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            opacity: 0;
-            transition: var(--transition);
-            z-index: 1001;
-            font-weight: 600;
-            text-align: center;
-            max-width: 90%;
-            word-break: break-word;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast.success {
-            background: var(--success);
-        }
-
-        .toast.error {
-            background: var(--error);
-        }
-
-        .toast.warning {
-            background: var(--warning);
-            color: var(--dark);
-        }
-
-        .toast.info {
-            background: var(--secondary);
-        }
-
-        /* Анимации */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .product-card {
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        .product-card:nth-child(1) { animation-delay: 0.1s; }
-        .product-card:nth-child(2) { animation-delay: 0.2s; }
-        .product-card:nth-child(3) { animation-delay: 0.3s; }
-
-        /* Плавная прокрутка */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Стили для скроллбара */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--light);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--secondary);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
-
-        /* Selection styles */
-        ::selection {
-            background: var(--primary);
-            color: white;
-        }
-
-        ::-moz-selection {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Focus styles для доступности */
-        button:focus,
-        input:focus,
-        textarea:focus {
-            outline: 2px solid var(--secondary);
-            outline-offset: 2px;
         }
 
         /* Адаптивность */
@@ -829,132 +186,31 @@
                 grid-template-columns: 1fr;
             }
 
-            .hero-content h2 {
-                font-size: 2rem;
-            }
-
-            .cart-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-
-            .hero-features {
+            .header-content {
                 flex-direction: column;
                 gap: 1rem;
             }
 
-            .feature {
-                justify-content: center;
-            }
-
-            .header-actions {
-                gap: 0.5rem;
-            }
-
-            .contact-btn span {
-                display: none;
-            }
-
-            .contact-btn {
-                padding: 0.8rem;
-            }
-
-            .modal-content {
-                width: 95%;
-                margin: 1rem;
-            }
-
-            .contact-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 1rem;
-            }
-
-            .contact-avatar {
-                margin-bottom: 0.5rem;
-            }
-
-            .contact-details {
-                text-align: center;
-            }
-
-            .section-header h3 {
-                font-size: 1.8rem;
-            }
-
-            .logo h1 {
+            .hero-content h2 {
                 font-size: 1.5rem;
-            }
-
-            .product-info h4 {
-                font-size: 1.1rem;
-            }
-
-            .price {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-content {
-                padding: 0.8rem;
-            }
-
-            .hero {
-                padding: 2rem 1rem;
-            }
-
-            .products-section {
-                margin: 1rem auto;
-            }
-
-            .modal-header {
-                padding: 1rem;
-            }
-
-            .modal-body {
-                padding: 1rem;
-            }
-
-            .cart-header {
-                padding: 1rem;
-            }
-
-            .cart-footer {
-                padding: 1rem;
-            }
-
-            .toast {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.9rem;
-            }
-
-            .product-image {
-                height: 180px;
             }
         }
     </style>
 </head>
 <body>
-<!-- Preloader -->
-<div id="preloader">
-    <div class="loader"></div>
-</div>
-
 <!-- Header -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
             <h1><i class="fas fa-shirt"></i> VibeShop</h1>
-            <p>Стиль в каждом моменте</p>
         </div>
         <div class="header-actions">
-            <button id="contact-btn" class="contact-btn">
+            <button class="contact-btn">
                 <i class="fas fa-envelope"></i> Контакты
             </button>
-            <button id="cart-toggle" class="cart-btn">
+            <button class="cart-btn">
                 <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count" class="cart-badge">0</span>
+                <span class="cart-badge">0</span>
             </button>
         </div>
     </div>
@@ -965,20 +221,6 @@
     <div class="hero-content">
         <h2>Обнови свой стиль</h2>
         <p>Качественная одежда и премиальные реплики 1:1</p>
-        <div class="hero-features">
-            <div class="feature">
-                <i class="fas fa-truck-fast"></i>
-                <span>Быстрая доставка</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-medal"></i>
-                <span>Качество 1:1</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-tag"></i>
-                <span>Лучшие цены</span>
-            </div>
-        </div>
     </div>
 </section>
 
@@ -991,12 +233,9 @@
 
     <div class="products-grid">
         <!-- Лонгслив Guess -->
-        <div class="product-card" data-name="Лонгслив Guess" data-price="85">
+        <div class="product-card">
             <div class="product-image">
                 <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=400&h=400&fit=crop" alt="Лонгслив Guess">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
             </div>
             <div class="product-info">
                 <h4>Лонгслив Guess</h4>
@@ -1011,12 +250,9 @@
         </div>
 
         <!-- Зипка Corteiz -->
-        <div class="product-card" data-name="Зипка Corteiz" data-price="120">
+        <div class="product-card">
             <div class="product-image">
                 <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop" alt="Зипка Corteiz">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
             </div>
             <div class="product-info">
                 <h4>Зипка Corteiz</h4>
@@ -1031,12 +267,9 @@
         </div>
 
         <!-- Сумка Nike -->
-        <div class="product-card" data-name="Сумка Nike" data-price="65">
+        <div class="product-card">
             <div class="product-image">
                 <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop" alt="Сумка Nike">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
@@ -1050,13 +283,10 @@
             </div>
         </div>
 
-        <!-- Дополнительный товар -->
-        <div class="product-card" data-name="Футболка Oversize" data-price="55">
+        <!-- Футболка Oversize -->
+        <div class="product-card">
             <div class="product-image">
                 <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop" alt="Футболка Oversize">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
             </div>
             <div class="product-info">
                 <h4>Футболка Oversize</h4>
@@ -1072,388 +302,30 @@
     </div>
 </main>
 
-<!-- Contact Modal -->
-<div id="contact-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="contact-info">
-                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
-
-                <div class="contact-cards">
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>@bigdigovich</h4>
-                            <p>Основной менеджер</p>
-                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>@Amg0101am</h4>
-                            <p>Техническая поддержка</p>
-                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="replica-notice">
-                    <h4>🔥 Ультра мега реплики 1:1</h4>
-                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
-                    <ul>
-                        <li>✅ Все бирки и ярлыки как в оригинале</li>
-                        <li>✅ Качество материалов 1:1</li>
-                        <li>✅ Полное визуальное соответствие</li>
-                        <li>✅ Проверка каждой единицы товара</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Cart Sidebar -->
-<div id="cart-sidebar" class="cart-sidebar">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
-        <button id="close-cart" class="close-btn">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <div class="cart-content">
-        <div id="cart-empty" class="cart-empty">
-            <i class="fas fa-shopping-basket"></i>
-            <p>Корзина пуста</p>
-            <small>Добавьте товары из каталога</small>
-        </div>
-
-        <div id="cart-items" class="cart-items"></div>
-    </div>
-
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Итого:</span>
-            <span id="cart-total">0 BYN</span>
-        </div>
-
-        <button id="send-order" class="order-btn">
-            <i class="fas fa-paper-plane"></i> Оформить заказ
-        </button>
-
-        <button id="copy-order" class="copy-btn">
-            <i class="fas fa-copy"></i> Скопировать заказ
-        </button>
-    </div>
-</div>
-
-<!-- Overlay -->
-<div id="overlay" class="overlay"></div>
-
-<!-- Toast Notifications -->
-<div id="toast" class="toast"></div>
-
 <script>
-    // JavaScript код остается без изменений
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    // Простой скрипт для добавления в корзину
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const badge = document.querySelector('.cart-badge');
+            const currentCount = parseInt(badge.textContent);
+            badge.textContent = currentCount + 1;
 
-    // Элементы DOM
-    const elements = {
-        preloader: document.getElementById('preloader'),
-        contactBtn: document.getElementById('contact-btn'),
-        contactModal: document.getElementById('contact-modal'),
-        cartToggle: document.getElementById('cart-toggle'),
-        cartSidebar: document.getElementById('cart-sidebar'),
-        closeCart: document.getElementById('close-cart'),
-        overlay: document.getElementById('overlay'),
-        cartItems: document.getElementById('cart-items'),
-        cartEmpty: document.getElementById('cart-empty'),
-        cartTotal: document.getElementById('cart-total'),
-        sendOrder: document.getElementById('send-order'),
-        copyOrder: document.getElementById('copy-order'),
-        toast: document.getElementById('toast'),
-        closeModal: document.querySelector('.close-modal')
-    };
+            this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+            this.style.background = '#00b894';
 
-    let cartItems = [];
-    const user = tg.initDataUnsafe.user;
-    let userInfo = '';
-
-    // Инициализация
-    function init() {
-        setupEventListeners();
-        loadUserInfo();
-        hidePreloader();
-    }
-
-    // Скрытие прелоадера
-    function hidePreloader() {
-        setTimeout(() => {
-            elements.preloader.style.opacity = '0';
             setTimeout(() => {
-                elements.preloader.style.display = 'none';
-            }, 300);
-        }, 1000);
-    }
+                this.innerHTML = '<i class="fas fa-plus"></i> В корзину';
+                this.style.background = '';
+            }, 2000);
 
-    // Настройка обработчиков событий
-    function setupEventListeners() {
-        elements.contactBtn.addEventListener('click', openContactModal);
-        elements.closeModal.addEventListener('click', closeContactModal);
-        elements.overlay.addEventListener('click', closeAllModals);
-        elements.cartToggle.addEventListener('click', toggleCart);
-        elements.closeCart.addEventListener('click', closeCart);
-        elements.sendOrder.addEventListener('click', sendOrder);
-        elements.copyOrder.addEventListener('click', copyOrder);
-
-        // Обработчики для кнопок добавления в корзину
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const productCard = e.target.closest('.product-card');
-                addToCart(productCard);
-            });
+            alert('Товар добавлен в корзину!');
         });
+    });
 
-        // Быстрый просмотр
-        document.querySelectorAll('.quick-view').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const productCard = e.target.closest('.product-card');
-                showQuickView(productCard);
-            });
-        });
-    }
-
-    // Открытие модального окна контактов
-    function openContactModal() {
-        elements.contactModal.classList.add('active');
-        elements.overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    // Закрытие модального окна контактов
-    function closeContactModal() {
-        elements.contactModal.classList.remove('active');
-        elements.overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Закрытие всех модальных окон
-    function closeAllModals() {
-        closeContactModal();
-        closeCart();
-    }
-
-    // Открытие Telegram
-    function openTelegram(username) {
-        const telegramUrl = `https://t.me/${username}`;
-        window.open(telegramUrl, '_blank');
-        closeContactModal();
-        showToast(`Открываю Telegram: @${username}`, 'success');
-    }
-
-    // Загрузка информации о пользователе
-    function loadUserInfo() {
-        if (user) {
-            userInfo = `👤 Пользователь: ${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`;
-            if (user.username) userInfo += ` (@${user.username})`;
-            userInfo += `\n🆔 ID: ${user.id}\n`;
-        } else {
-            userInfo = '👤 Пользователь: Гость\n';
-        }
-    }
-
-    // Добавление в корзину
-    function addToCart(productCard) {
-        const name = productCard.dataset.name;
-        const price = productCard.dataset.price;
-        const image = productCard.querySelector('img').src;
-
-        if (cartItems.some(item => item.name === name)) {
-            showToast('Этот товар уже в корзине!', 'warning');
-            return;
-        }
-
-        cartItems.push({ name, price, image });
-
-        // Обновляем UI кнопки
-        const addBtn = productCard.querySelector('.add-to-cart-btn');
-        addBtn.classList.add('added');
-        addBtn.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-
-        setTimeout(() => {
-            addBtn.classList.remove('added');
-            addBtn.innerHTML = '<i class="fas fa-plus"></i> В корзину';
-        }, 2000);
-
-        updateCartUI();
-        showToast('Товар добавлен в корзину!', 'success');
-    }
-
-    // Обновление UI корзины
-    function updateCartUI() {
-        elements.cartItems.innerHTML = '';
-        let total = 0;
-
-        if (cartItems.length === 0) {
-            elements.cartEmpty.style.display = 'block';
-            elements.cartTotal.textContent = '0 BYN';
-            document.getElementById('cart-count').textContent = '0';
-            return;
-        }
-
-        elements.cartEmpty.style.display = 'none';
-
-        cartItems.forEach((item, index) => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'cart-item';
-            itemElement.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">${item.price} BYN</div>
-                </div>
-                <button class="remove-item" onclick="removeFromCart(${index})">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            elements.cartItems.appendChild(itemElement);
-            total += Number(item.price);
-        });
-
-        elements.cartTotal.textContent = `${total} BYN`;
-        document.getElementById('cart-count').textContent = cartItems.length;
-    }
-
-    // Удаление из корзины
-    function removeFromCart(index) {
-        cartItems.splice(index, 1);
-        updateCartUI();
-        showToast('Товар удален из корзины', 'info');
-    }
-
-    // Открытие/закрытие корзины
-    function toggleCart() {
-        elements.cartSidebar.classList.toggle('open');
-        elements.overlay.classList.toggle('active');
-        document.body.style.overflow = elements.cartSidebar.classList.contains('open') ? 'hidden' : '';
-    }
-
-    function closeCart() {
-        elements.cartSidebar.classList.remove('open');
-        elements.overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Отправка заказа
-    function sendOrder() {
-        if (cartItems.length === 0) {
-            showToast('Корзина пуста!', 'error');
-            return;
-        }
-
-        let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
-        orderText += userInfo + "\n";
-        orderText += "📦 Состав заказа:\n";
-
-        let total = 0;
-        cartItems.forEach(item => {
-            orderText += `• ${item.name} — ${item.price} BYN\n`;
-            total += Number(item.price);
-        });
-
-        orderText += `\n💰 Итого: ${total} BYN`;
-        orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
-        orderText += `\n\n🔥 *УЛЬТРА МЕГА РЕПЛИКИ 1:1*`;
-        orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
-        orderText += `\n✅ Качество материалов 1:1`;
-        orderText += `\n✅ Полное визуальное соответствие`;
-
-        // Кодируем текст заказа для URL
-        const encodedOrder = encodeURIComponent(orderText);
-        const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`;
-
-        // Открываем Telegram
-        window.open(telegramUrl, '_blank');
-
-        showToast('Открываю Telegram...', 'success');
-
-        // Очищаем корзину
-        setTimeout(() => {
-            cartItems = [];
-            updateCartUI();
-            closeCart();
-        }, 2000);
-    }
-
-    // Копирование заказа
-    function copyOrder() {
-        if (cartItems.length === 0) {
-            showToast('Корзина пуста!', 'error');
-            return;
-        }
-
-        let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
-        orderText += userInfo + "\n";
-        orderText += "📦 Состав заказа:\n";
-
-        let total = 0;
-        cartItems.forEach(item => {
-            orderText += `• ${item.name} — ${item.price} BYN\n`;
-            total += Number(item.price);
-        });
-
-        orderText += `\n💰 Итого: ${total} BYN`;
-        orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
-        orderText += `\n\n🔥 *УЛЬТРА МЕГА РЕПЛИКИ 1:1*`;
-        orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
-        orderText += `\n✅ Качество материалов 1:1`;
-        orderText += `\n✅ Полное визуальное соответствие`;
-
-        navigator.clipboard.writeText(orderText).then(() => {
-            showToast('Заказ скопирован в буфер!', 'success');
-        }).catch(err => {
-            showToast('Ошибка копирования', 'error');
-        });
-    }
-
-    // Быстрый просмотр
-    function showQuickView(productCard) {
-        const name = productCard.dataset.name;
-        showToast(`Просмотр: ${name}`, 'info');
-    }
-
-    // Toast уведомления
-    function showToast(message, type = 'info') {
-        elements.toast.textContent = message;
-        elements.toast.className = `toast ${type}`;
-        elements.toast.classList.add('show');
-
-        setTimeout(() => {
-            elements.toast.classList.remove('show');
-        }, 3000);
-    }
-
-    // Глобальные функции для HTML
-    window.removeFromCart = removeFromCart;
-    window.openTelegram = openTelegram;
-
-    // Запуск приложения
-    document.addEventListener('DOMContentLoaded', init);
+    // Контакты
+    document.querySelector('.contact-btn').addEventListener('click', function() {
+        alert('Контакты:\n@bigdigovich - Основной менеджер\n@Amg0101am - Техподдержка');
+    });
 </script>
 </body>
 </html>
