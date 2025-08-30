@@ -3,115 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
+    <title>OSNOVNOY SHOP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Стили для 2 карточек в ряд */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8;
+        }
+
+        header {
+            background: black;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
         .products-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1rem !important;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
         }
 
         .product-card {
-            margin-bottom: 1rem;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
         }
 
-        /* Адаптивность для мобильных */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr !important;
-            }
+        .product-card:hover {
+            transform: translateY(-5px);
         }
 
-        /* Улучшенный внешний вид карточек */
         .product-image {
-            height: 200px !important;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+
+        .quick-view {
+            background: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         .product-info {
-            padding: 1rem !important;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0.8rem;
         }
 
         .product-info h4 {
-            font-size: 1.1rem !important;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .product-desc {
+            color: gray;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+            flex: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
         }
 
         .price {
-            font-size: 1.2rem !important;
+            font-weight: bold;
+            color: black;
+        }
+
+        .add-to-cart-btn {
+            background: black;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-<!-- Preloader -->
-<div id="preloader">
-    <div class="loader"></div>
-</div>
 
-<!-- Header -->
-<header class="header">
-    <div class="header-content">
-        <div class="logo">
-            <h1><i class="fas fa-shirt"></i> VibeShop</h1>
-            <p>Стиль в каждом моменте</p>
-        </div>
-        <div class="header-actions">
-            <button id="contact-btn" class="contact-btn">
-                <i class="fas fa-envelope"></i> Контакты
-            </button>
-            <button id="cart-toggle" class="cart-btn">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count" class="cart-badge">0</span>
-            </button>
-        </div>
-    </div>
-</header>
+<header>OSNOVNOY SHOP</header>
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content">
-        <h2>Обнови свой стиль</h2>
-        <p>Качественная одежда и премиальные реплики 1:1</p>
-        <div class="hero-features">
-            <div class="feature">
-                <i class="fas fa-truck-fast"></i>
-                <span>Быстрая доставка</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-medal"></i>
-                <span>Качество 1:1</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-tag"></i>
-                <span>Лучшие цены</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Products Section -->
-<main class="products-section">
-    <div class="section-header">
-        <h3>Наша коллекция</h3>
-        <p>Выбери то, что подходит именно тебе</p>
-    </div>
-
+<main>
     <div class="products-grid">
+
         <!-- Product 1 -->
-        <div class="product-card" data-name="Лонгслив Guess" data-price="35">
+        <div class="product-card" data-name="Лонгслив Guess" data-price="120">
             <div class="product-image">
-                <img src="images/tshirt.jpg" alt="Лонгслив Guess"
-                     onerror="this.src=''">
+                <img src="images/longsleeve.jpg" alt="Лонгслив Guess"
+                     onerror="this.src='https://images.unsplash.com/photo-1520975918318-3fbbbd5473d4?w=400&h=400&fit=crop'">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
                 <h4>Лонгслив Guess</h4>
-                <p class="product-desc">Хлопок 100%, премиальное качество</p>
+                <p class="product-desc">Уютный и стильный</p>
                 <div class="product-footer">
-                    <span class="price">35 BYN</span>
+                    <span class="price">120 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -120,19 +160,19 @@
         </div>
 
         <!-- Product 2 -->
-        <div class="product-card" data-name="Зипка Corteiz" data-price="75">
+        <div class="product-card" data-name="Зипка Corteiz" data-price="350">
             <div class="product-image">
-                <img src="images/hoodie.jpg" alt="Зипка Corteiz"
-                     onerror="this.src='hoodie.jpg'">
+                <img src="images/zipka.jpg" alt="Зипка Corteiz"
+                     onerror="this.src='https://images.unsplash.com/photo-1618354691797-75b3e22e25a6?w=400&h=400&fit=crop'">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
                 <h4>Зипка Corteiz</h4>
-                <p class="product-desc">Уютное зипка </p>
+                <p class="product-desc">Лимитированная коллекция</p>
                 <div class="product-footer">
-                    <span class="price">75 BYN</span>
+                    <span class="price">350 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -141,19 +181,19 @@
         </div>
 
         <!-- Product 3 -->
-        <div class="product-card" data-name="Сумка Nike" data-price="45">
+        <div class="product-card" data-name="Сумка Nike" data-price="90">
             <div class="product-image">
                 <img src="images/bag.jpg" alt="Сумка Nike"
-                     onerror="this.src='https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop'">
+                     onerror="this.src='https://images.unsplash.com/photo-1618354691797-75b3e22e25a6?w=400&h=400&fit=crop'">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
-                <p class="product-desc">Стильная сумка Nike</p>
+                <p class="product-desc">Практичная и стильная</p>
                 <div class="product-footer">
-                    <span class="price">45 BYN</span>
+                    <span class="price">90 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -161,123 +201,8 @@
             </div>
         </div>
 
-        <!-- Product 4 -->
-        <div class="product-card" data-name="Футболка Classic" data-price="30">
-            <div class="product-image">
-                <img src="images/tshirt2.jpg" alt="Футболка Classic"
-                     onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop'">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Футболка Classic</h4>
-                <p class="product-desc">Классический крой, комфорт</p>
-                <div class="product-footer">
-                    <span class="price">30 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 </main>
 
-<!-- Contact Modal -->
-<div id="contact-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="contact-info">
-                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
-
-                <div class="contact-cards">
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>@bigdigovich</h4>
-                            <p>Менеджер</p>
-                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>@Amg0101am</h4>
-                            <p>Техническая поддержка</p>
-                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="replica-notice">
-                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
-                    <ul>
-                        <li>✅ Все бирки и ярлыки как в оригинале</li>
-                        <li>✅ Качество материалов 1:1</li>
-                        <li>✅ Полное визуальное соответствие</li>
-                        <li>✅ Проверка каждой единицы товара</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Cart Sidebar -->
-<div id="cart-sidebar" class="cart-sidebar">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
-        <button id="close-cart" class="close-btn">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <div class="cart-content">
-        <div id="cart-empty" class="cart-empty">
-            <i class="fas fa-shopping-basket"></i>
-            <p>Корзина пуста</p>
-            <small>Добавьте товары из каталога</small>
-        </div>
-
-        <div id="cart-items" class="cart-items"></div>
-    </div>
-
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Итого:</span>
-            <span id="cart-total">0 BYN</span>
-        </div>
-
-        <button id="send-order" class="order-btn">
-            <i class="fas fa-paper-plane"></i> Оформить заказ
-        </button>
-
-        <button id="copy-order" class="copy-btn">
-            <i class="fas fa-copy"></i> Скопировать заказ
-        </button>
-    </div>
-</div>
-
-<!-- Overlay -->
-<div id="overlay" class="overlay"></div>
-
-<!-- Toast Notifications -->
-<div id="toast" class="toast"></div>
-
-<script src="app.js"></script>
 </body>
 </html>
