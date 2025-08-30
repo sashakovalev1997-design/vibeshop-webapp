@@ -10,39 +10,45 @@
 <body>
 <div class="container">
     <header>
-        <h1>VibeShop 👕👜</h1>
-        <p>Стильные вещи прямо в Telegram</p>
-        <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
+        <div class="header-left">
+            <h1>VibeShop 👕👜</h1>
+            <p>Стильные вещи прямо в Telegram</p>
+        </div>
+        <div class="header-right">
+            <button id="cart-toggle">🛒 <span id="cart-count">0</span></button>
+        </div>
     </header>
 
     <main class="products">
         <div class="product" data-name="Футболка" data-price="20">
-            <img src="images/tshirt.jpg" alt="Футболка">
+            <img src="images/tshirt.jpg" alt="Футболка" onerror="this.src='https://via.placeholder.com/150?text=Футболка'">
             <h2>Футболка</h2>
             <p class="price">20 BYN</p>
             <button class="order-btn">Добавить в корзину</button>
         </div>
         <div class="product" data-name="Худи" data-price="50">
-            <img src="images/hoodie.jpg" alt="Худи">
+            <img src="images/hoodie.jpg" alt="Худи" onerror="this.src='https://via.placeholder.com/150?text=Худи'">
             <h2>Худи</h2>
             <p class="price">50 BYN</p>
             <button class="order-btn">Добавить в корзину</button>
         </div>
         <div class="product" data-name="Сумка" data-price="35">
-            <img src="images/bag.jpg" alt="Сумка">
+            <img src="images/bag.jpg" alt="Сумка" onerror="this.src='https://via.placeholder.com/150?text=Сумка'">
             <h2>Сумка</h2>
             <p class="price">35 BYN</p>
             <button class="order-btn">Добавить в корзину</button>
         </div>
     </main>
-
-    <div id="cart">
-        <h3>Ваша корзина</h3>
-        <ul id="cart-items"></ul>
-        <p>Итого: <span id="cart-total">0</span> BYN</p>
-        <button id="send-order">📩 Отправить заказ</button>
-    </div>
 </div>
+
+<div id="cart">
+    <h3>🛒 Ваша корзина</h3>
+    <ul id="cart-items"></ul>
+    <p><strong>Итого: <span id="cart-total">0</span> BYN</strong></p>
+    <button id="send-order">📩 Отправить заказ</button>
+    <button id="close-cart">✖️ Закрыть</button>
+</div>
+
 <script src="app.js"></script>
 </body>
 </html>
