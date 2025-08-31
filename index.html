@@ -1084,38 +1084,58 @@
         </div>
     </div>
 </div>
-<!-- Cart Sidebar -->
-<div id="cart-sidebar" class="cart-sidebar">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
-        <button id="close-cart" class="close-btn">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <div class="cart-content">
-        <div id="cart-empty" class="cart-empty">
-            <i class="fas fa-shopping-basket"></i>
-            <p>Корзина пуста</p>
-            <small>Добавьте товары из каталога</small>
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
+            <button class="close-modal">&times;</button>
         </div>
+        <div class="modal-body">
+            <div class="contact-info">
+                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
 
-        <div id="cart-items" class="cart-items"></div>
-    </div>
+                <div class="contact-cards">
+                    <!-- Владислав -->
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Владислав</h4>
+                            <p>Менеджер</p>
+                            <button class="contact-link" data-telegram="bigdigovich">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
 
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Итого:</span>
-            <span id="cart-total">0 BYN</span>
+                    <!-- Александр -->
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Александр</h4>
+                            <p>Техническая поддержка</p>
+                            <button class="contact-link" data-telegram="Amg0101am">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="replica-notice">
+                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
+                    <ul>
+                        <li>✅ Все бирки и ярлыки как в оригинале</li>
+                        <li>✅ Качество материалов 1:1</li>
+                        <li>✅ Полное визуальное соответствие</li>
+                        <li>✅ Проверка каждой единицы товара</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <button id="send-order" class="order-btn">
-            <i class="fas fa-paper-plane"></i> Оформить заказ
-        </button>
-
-        <button id="copy-order" class="copy-btn">
-            <i class="fas fa-copy"></i> Скопировать заказ
-        </button>
     </div>
 </div>
 
@@ -1127,25 +1147,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Скрытие прелоадера
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 300);
-        }, 1000);
-
-        // Инициализация переменных
+        // ==========================
+        // Переменные
+        // ==========================
         let cartItems = [];
         const cartBadge = document.getElementById('cart-count');
         const addButtons = document.querySelectorAll('.add-to-cart-btn');
-        const contactBtn = document.getElementById('contact-btn');
         const cartToggle = document.getElementById('cart-toggle');
         const closeCart = document.getElementById('close-cart');
-        const contactModal = document.getElementById('contact-modal');
-        const closeModal = document.querySelector('.close-modal');
-        const overlay = document.getElementById('overlay');
         const cartSidebar = document.getElementById('cart-sidebar');
         const cartItemsContainer = document.getElementById('cart-items');
         const cartEmpty = document.getElementById('cart-empty');
@@ -1153,7 +1162,14 @@
         const sendOrder = document.getElementById('send-order');
         const copyOrder = document.getElementById('copy-order');
 
-        // Функция добавления в корзину
+        const contactModal = document.getElementById('contact-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const overlay = document.getElementById('overlay');
+        const contactLinks = document.querySelectorAll('.contact-link');
+
+        // ==========================
+        // Функции корзины
+        // ==========================
         function addToCart() {
             const productCard = this.closest('.product-card');
             const name = productCard.dataset.name;
@@ -1179,7 +1195,6 @@
             showNotification('Товар добавлен в корзину!', 'success');
         }
 
-        // Обновление UI корзины
         function updateCartUI() {
             cartBadge.textContent = cartItems.length;
             cartItemsContainer.innerHTML = '';
@@ -1212,7 +1227,6 @@
 
             cartTotal.textContent = `${total} BYN`;
 
-            // Добавляем обработчики для кнопок удаления
             document.querySelectorAll('.remove-item').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
@@ -1223,48 +1237,11 @@
             });
         }
 
-        // Функция показа уведомления
         function showNotification(message, type = 'info') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.className = `toast ${type} show`;
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Открытие Telegram для конкретного менеджера
-        function openTelegram(username) {
-            let tgUsername = '';
-
-            if (username === 'Vladislav') {
-                tgUsername = 'bigdigovich'; // Владислав
-            } else if (username === 'Alexander') {
-                tgUsername = 'Amg0101am'; // Александр
-            } else {
-                tgUsername = username; // на всякий случай
-            }
-
-            const telegramUrl = `https://t.me/${tgUsername}`;
-            window.open(telegramUrl, '_blank');
-
-            closeAllModals();
-            showNotification(`Открываю Telegram: @${tgUsername}`, 'success');
-        }
-
-
-        // Открытие/закрытие модальных окон
-        function openContactModal() {
-            contactModal.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeContactModal() {
-            contactModal.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         function toggleCart() {
@@ -1274,41 +1251,61 @@
         }
 
         function closeAllModals() {
-            closeContactModal();
+            contactModal.classList.remove('active');
             cartSidebar.classList.remove('open');
             overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
 
-        // Отправка заказа
+        // ==========================
+        // Контакты / Telegram
+        // ==========================
+        contactLinks.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const username = this.dataset.telegram;
+                if (username) {
+                    const url = `https://t.me/${username}`;
+                    window.open(url, '_blank');
+                }
+                closeAllModals();
+            });
+        });
+
+        closeModal.addEventListener('click', closeAllModals);
+        overlay.addEventListener('click', closeAllModals);
+
+        window.openContactModal = function() {
+            contactModal.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        // ==========================
+        // Отправка заказа Telegram
+        // ==========================
         function sendOrderToTelegram() {
             if (cartItems.length === 0) {
                 showNotification('Корзина пуста!', 'error');
                 return;
             }
 
-            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
-            orderText += "📦 Состав заказа:\n";
-
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n📦 Состав заказа:\n";
             let total = 0;
+
             cartItems.forEach(item => {
                 orderText += `• ${item.name} — ${item.price} BYN\n`;
                 total += parseInt(item.price);
             });
 
-            orderText += `\n💰 Итого: ${total} BYN`;
-            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
-            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
-            orderText += `\n✅ Качество материалов 1:1`;
-            orderText += `\n✅ Полное визуальное соответствие`;
+            orderText += `\n💰 Итого: ${total} BYN\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале\n✅ Качество материалов 1:1\n✅ Полное визуальное соответствие`;
 
             const encodedOrder = encodeURIComponent(orderText);
-            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`; // Заказ отправляем Владиславу
+            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`;
 
             window.open(telegramUrl, '_blank');
             showNotification('Открываю Telegram...', 'success');
 
-            // Очищаем корзину
             setTimeout(() => {
                 cartItems = [];
                 updateCartUI();
@@ -1316,27 +1313,22 @@
             }, 2000);
         }
 
-        // Копирование заказа
         function copyOrderToClipboard() {
             if (cartItems.length === 0) {
                 showNotification('Корзина пуста!', 'error');
                 return;
             }
 
-            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
-            orderText += "📦 Состав заказа:\n";
-
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n📦 Состав заказа:\n";
             let total = 0;
+
             cartItems.forEach(item => {
                 orderText += `• ${item.name} — ${item.price} BYN\n`;
                 total += parseInt(item.price);
             });
 
-            orderText += `\n💰 Итого: ${total} BYN`;
-            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
-            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
-            orderText += `\n✅ Качество материалов 1:1`;
-            orderText += `\n✅ Полное визуальное соответствие`;
+            orderText += `\n💰 Итого: ${total} BYN\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале\n✅ Качество материалов 1:1\n✅ Полное визуальное соответствие`;
 
             navigator.clipboard.writeText(orderText).then(() => {
                 showNotification('Заказ скопирован в буфер!', 'success');
@@ -1345,25 +1337,15 @@
             });
         }
 
-        // Обработчики событий
+        // ==========================
+        // Обработчики
+        // ==========================
         addButtons.forEach(btn => btn.addEventListener('click', addToCart));
-        contactBtn.addEventListener('click', openContactModal);
-        closeModal.addEventListener('click', closeContactModal);
         cartToggle.addEventListener('click', toggleCart);
         closeCart.addEventListener('click', closeAllModals);
-        overlay.addEventListener('click', closeAllModals);
         sendOrder.addEventListener('click', sendOrderToTelegram);
         copyOrder.addEventListener('click', copyOrderToClipboard);
 
-        // Быстрый просмотр
-        document.querySelectorAll('.quick-view').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const productCard = this.closest('.product-card');
-                const name = productCard.dataset.name;
-                showNotification('Быстрый просмотр: ' + name, 'info');
-            });
-        });
     });
 </script>
 
