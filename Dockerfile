@@ -1,5 +1,5 @@
 # Используем официальный образ Maven с Java для сборки
-FROM maven:3.8.6-openjdk-17 AS build
+FROM maven:3.8.6-openjdk-17-slim AS build
 WORKDIR /app
 # Копируем исходный код и файл pom.xml
 COPY src ./src
