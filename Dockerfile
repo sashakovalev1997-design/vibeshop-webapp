@@ -10,7 +10,7 @@ RUN mvn clean package -DskipTests
 # Используем образ только с JRE для запуска (он легче)
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-# Копируем собранный JAR-файл из стадии сборки
-COPY --from=build /app/target/*.jar app.jar
+# Копируем собранный FAT JAR-файл из стадии сборки
+COPY --from=build /app/target/*-jar-with-dependencies.jar app.jar
 # Команда для запуска приложения
 CMD ["java", "-jar", "app.jar"]
