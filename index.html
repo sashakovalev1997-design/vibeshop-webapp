@@ -372,6 +372,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1.2rem;
         }
 
         .close-modal {
@@ -1049,7 +1050,7 @@
                         <div class="contact-details">
                             <h4>Владислав</h4>
                             <p>Менеджер</p>
-                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
+                            <button class="contact-link" data-telegram="bigdigovich">
                                 <i class="fab fa-telegram"></i> Написать в Telegram
                             </button>
                         </div>
@@ -1062,7 +1063,7 @@
                         <div class="contact-details">
                             <h4>Александр</h4>
                             <p>Техническая поддержка</p>
-                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
+                            <button class="contact-link" data-telegram="Amg0101am">
                                 <i class="fab fa-telegram"></i> Написать в Telegram
                             </button>
                         </div>
@@ -1125,6 +1126,13 @@
 <div id="toast" class="toast"></div>
 
 <script>
+    // Глобальная функция для открытия Telegram
+    function openTelegram(username) {
+        window.open(`https://t.me/${username}`, '_blank');
+        closeAllModals();
+        showNotification(`Открываю Telegram: @${username}`, 'success');
+    }
+
     // Упрощенный JavaScript для быстрой загрузки
     document.addEventListener('DOMContentLoaded', function() {
         // Скрытие прелоадера
@@ -1152,6 +1160,7 @@
         const cartTotal = document.getElementById('cart-total');
         const sendOrder = document.getElementById('send-order');
         const copyOrder = document.getElementById('copy-order');
+        const telegramButtons = document.querySelectorAll('.contact-link');
 
         // Функция добавления в корзину
         function addToCart() {
@@ -1193,7 +1202,7 @@
             cartEmpty.style.display = 'none';
             let total = 0;
 
-            cartItems.forEach((item, index) => {
+            cartItems.forEach((item, index) {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'cart-item';
                 itemElement.innerHTML = `
@@ -1232,13 +1241,6 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
-        }
-
-        // Открытие Telegram
-        function openTelegram(username) {
-            window.open(`https://t.me/${username}`, '_blank');
-            closeAllModals();
-            showNotification(`Открываю Telegram: @${username}`, 'success');
         }
 
         // Открытие/закрытие модальных окон
@@ -1344,6 +1346,14 @@
         overlay.addEventListener('click', closeAllModals);
         sendOrder.addEventListener('click', sendOrderToTelegram);
         copyOrder.addEventListener('click', copyOrderToClipboard);
+
+        // Обработчики для кнопок Telegram
+        telegramButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const username = this.getAttribute('data-telegram');
+                openTelegram(username);
+            });
+        });
 
         // Быстрый просмотр
         document.querySelectorAll('.quick-view').forEach(btn => {
