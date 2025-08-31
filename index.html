@@ -1235,19 +1235,24 @@
         }
 
         // Открытие Telegram для конкретного менеджера
-        function openTelegram(manager) {
+        function openTelegram(username) {
             let tgUsername = '';
-            if (manager === 'Vladislav') tgUsername = '@bigdigovich';
-            if (manager === 'Alexander') tgUsername = '@Amg0101am';
 
-            if (tgUsername) {
-                window.open(`https://t.me/${tgUsername}`, '_blank');
-                closeAllModals();
-                showNotification(`Открываю Telegram: @${tgUsername}`, 'success');
+            if (username === 'Vladislav') {
+                tgUsername = 'bigdigovich'; // Владислав
+            } else if (username === 'Alexander') {
+                tgUsername = 'Amg0101am'; // Александр
             } else {
-                showNotification('Неизвестный пользователь Telegram', 'error');
+                tgUsername = username; // на всякий случай
             }
+
+            const telegramUrl = `https://t.me/${tgUsername}`;
+            window.open(telegramUrl, '_blank');
+
+            closeAllModals();
+            showNotification(`Открываю Telegram: @${tgUsername}`, 'success');
         }
+
 
         // Открытие/закрытие модальных окон
         function openContactModal() {
