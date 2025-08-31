@@ -434,6 +434,8 @@
 
         .contact-details {
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .contact-details h4 {
@@ -461,6 +463,7 @@
             font-size: 0.9rem;
             transition: var(--transition);
             text-decoration: none;
+            width: fit-content;
         }
 
         .contact-link:hover {
@@ -685,6 +688,7 @@
         .copy-btn {
             background: var(--secondary);
             color: white;
+            border: none;
         }
 
         .copy-btn:hover {
@@ -1126,13 +1130,6 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // Глобальная функция для открытия Telegram
-    function openTelegram(username) {
-        window.open(`https://t.me/${username}`, '_blank');
-        closeAllModals();
-        showNotification(`Открываю Telegram: @${username}`, 'success');
-    }
-
     // Упрощенный JavaScript для быстрой загрузки
     document.addEventListener('DOMContentLoaded', function() {
         // Скрытие прелоадера
@@ -1161,6 +1158,13 @@
         const sendOrder = document.getElementById('send-order');
         const copyOrder = document.getElementById('copy-order');
         const telegramButtons = document.querySelectorAll('.contact-link');
+
+        // Функция открытия Telegram
+        function openTelegram(username) {
+            window.open(`https://t.me/${username}`, '_blank');
+            closeAllModals();
+            showNotification(`Открываю Telegram: @${username}`, 'success');
+        }
 
         // Функция добавления в корзину
         function addToCart() {
@@ -1202,7 +1206,7 @@
             cartEmpty.style.display = 'none';
             let total = 0;
 
-            cartItems.forEach((item, index) {
+            cartItems.forEach((item, index) => {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'cart-item';
                 itemElement.innerHTML = `
