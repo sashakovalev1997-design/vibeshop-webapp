@@ -1042,7 +1042,6 @@
                 <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
 
                 <div class="contact-cards">
-                    <!-- Владислав -->
                     <div class="contact-card">
                         <div class="contact-avatar">
                             <i class="fas fa-user"></i>
@@ -1050,13 +1049,12 @@
                         <div class="contact-details">
                             <h4>Владислав</h4>
                             <p>Менеджер</p>
-                            <button class="contact-link" onclick="openTelegram('Vladislav')">
+                            <button class="contact-link" onclick="openTelegram('bigdigovich')">
                                 <i class="fab fa-telegram"></i> Написать в Telegram
                             </button>
                         </div>
                     </div>
 
-                    <!-- Александр -->
                     <div class="contact-card">
                         <div class="contact-avatar">
                             <i class="fas fa-user"></i>
@@ -1064,7 +1062,7 @@
                         <div class="contact-details">
                             <h4>Александр</h4>
                             <p>Техническая поддержка</p>
-                            <button class="contact-link" onclick="openTelegram('Alexander')">
+                            <button class="contact-link" onclick="openTelegram('Amg0101am')">
                                 <i class="fab fa-telegram"></i> Написать в Telegram
                             </button>
                         </div>
@@ -1084,6 +1082,7 @@
         </div>
     </div>
 </div>
+
 <!-- Cart Sidebar -->
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
@@ -1126,6 +1125,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
+    // Упрощенный JavaScript для быстрой загрузки
     document.addEventListener('DOMContentLoaded', function() {
         // Скрытие прелоадера
         setTimeout(() => {
@@ -1197,15 +1197,15 @@
                 const itemElement = document.createElement('div');
                 itemElement.className = 'cart-item';
                 itemElement.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">${item.price} BYN</div>
-                </div>
-                <button class="remove-item" data-index="${index}">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} BYN</div>
+                    </div>
+                    <button class="remove-item" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
                 cartItemsContainer.appendChild(itemElement);
                 total += parseInt(item.price);
             });
@@ -1234,25 +1234,12 @@
             }, 3000);
         }
 
-        // Открытие Telegram для конкретного менеджера
+        // Открытие Telegram
         function openTelegram(username) {
-            let tgUsername = '';
-
-            if (username === 'Vladislav') {
-                tgUsername = 'bigdigovich'; // Владислав
-            } else if (username === 'Alexander') {
-                tgUsername = 'Amg0101am'; // Александр
-            } else {
-                tgUsername = username; // на всякий случай
-            }
-
-            const telegramUrl = `https://t.me/${tgUsername}`;
-            window.open(telegramUrl, '_blank');
-
+            window.open(`https://t.me/${username}`, '_blank');
             closeAllModals();
-            showNotification(`Открываю Telegram: @${tgUsername}`, 'success');
+            showNotification(`Открываю Telegram: @${username}`, 'success');
         }
-
 
         // Открытие/закрытие модальных окон
         function openContactModal() {
@@ -1303,7 +1290,7 @@
             orderText += `\n✅ Полное визуальное соответствие`;
 
             const encodedOrder = encodeURIComponent(orderText);
-            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`; // Заказ отправляем Владиславу
+            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`;
 
             window.open(telegramUrl, '_blank');
             showNotification('Открываю Telegram...', 'success');
@@ -1346,7 +1333,10 @@
         }
 
         // Обработчики событий
-        addButtons.forEach(btn => btn.addEventListener('click', addToCart));
+        addButtons.forEach(btn => {
+            btn.addEventListener('click', addToCart);
+        });
+
         contactBtn.addEventListener('click', openContactModal);
         closeModal.addEventListener('click', closeContactModal);
         cartToggle.addEventListener('click', toggleCart);
@@ -1366,6 +1356,5 @@
         });
     });
 </script>
-
 </body>
 </html>
