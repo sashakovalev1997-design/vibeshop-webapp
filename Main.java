@@ -1,7 +1,6 @@
 package vibeshopbot;
 
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SetWebhook;
 import com.google.gson.Gson;
@@ -68,29 +67,13 @@ public class Main {
             e.printStackTrace();
         }
 
-        // Старый режим getUpdates (как fallback) - ИСПРАВЛЕННАЯ ВЕРСИЯ
-        bot.setUpdatesListener(new UpdatesListener() {
-            @Override
-            public int process(java.util.List<Update> updates) {
-                System.out.println("📞 getUpdates mode activated. Updates: " + updates.size());
-                for (Update update : updates) {
-                    try {
-                        botHandler.handleUpdate(update);
-                    } catch (Exception e) {
-                        System.err.println("Ошибка обработки update: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                return UpdatesListener.CONFIRMED_UPDATES_ALL;
-            }
-        });
-
-        System.out.println("✅ Бот запущен! Порт: " + port);
+        System.out.println("✅ Бот запущен в WEBHOOK режиме! Порт: " + port);
         System.out.println("🌐 Health check: " + RENDER_URL + "/health");
         System.out.println("🤖 Webhook: " + RENDER_URL + "/webhook");
         System.out.println("⏰ Start time: " + Instant.now());
+        System.out.println("💡 Режим: Только Webhook (getUpdates отключен)");
 
-        // Добавляем обработку исключений для всего приложения
+        // Обработчик ошибок инициализации
         initExceptionHandler((e) -> {
             System.err.println("❌ Spark initialization failed: " + e.getMessage());
             e.printStackTrace();
