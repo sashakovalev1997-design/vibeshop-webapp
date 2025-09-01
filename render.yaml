@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: worker  # вместо web - не требует открытого порта
     name: vibeshop-bot
     env: docker
     plan: free
