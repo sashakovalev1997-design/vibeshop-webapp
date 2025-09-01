@@ -23,8 +23,8 @@ public class Main {
         System.out.println("ADMIN_IDS: " + Arrays.toString(ADMIN_IDS));
         System.out.println("=====================");
 
-        // Запуск HTTP сервера
-        port(10000);
+        // Запуск HTTP сервера на порту от Render
+        port(Integer.parseInt(System.getenv().getOrDefault("PORT", "443")));
 
         // Health check для UptimeRobot
         get("/health", (req, res) -> {
@@ -35,7 +35,6 @@ public class Main {
         // Webhook endpoint для Telegram
         post("/webhook", (req, res) -> {
             try {
-                // Парсим Update вручную из JSON
                 Update update = gson.fromJson(req.body(), Update.class);
                 botHandler.handleUpdate(update);
                 return "ok";
@@ -59,9 +58,8 @@ public class Main {
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
 
-        System.out.println("✅ Бот запущен! Режим: Webhook + GetUpdates fallback");
+        System.out.println("✅ Бот запущен! Порт: " + System.getenv().getOrDefault("PORT", "443"));
         System.out.println("Health check: " + RENDER_URL + "/health");
-        System.out.println("Webhook: " + RENDER_URL + "/webhook");
     }
 
     public static long[] getAdminIds() {
