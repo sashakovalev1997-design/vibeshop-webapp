@@ -3,11 +3,17 @@ package vibeshopbot;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.SetWebhook;
+import com.google.gson.Gson;
+import static spark.Spark.*;
+
 import java.util.Arrays;
 
 public class Main {
-    private static final String BOT_TOKEN = "8022862088:AAG9eMG_UV5Pcle0S5OXh1h2V6aV5PSxUV0";
+    private static final String BOT_TOKEN = System.getenv().getOrDefault("BOT_TOKEN", "default_token");
     private static final long[] ADMIN_IDS = {614049235L, 1079109244L};
+    private static final String RENDER_URL = "https://vibeshop-webapp-1.onrender.com";
+    private static final Gson gson = new Gson();
 
     public static void main(String[] args) {
         TelegramBot bot = new TelegramBot(BOT_TOKEN);
@@ -17,6 +23,30 @@ public class Main {
         System.out.println("ADMIN_IDS: " + Arrays.toString(ADMIN_IDS));
         System.out.println("=====================");
 
+        // Запуск HTTP сервера
+        port(10000);
+
+        // Health check для UptimeRobot
+        get("/health", (req, res) -> {
+            System.out.println("🔄 Health check received");
+            return "✅ Bot is alive!";
+        });
+
+        // Webhook endpoint для Telegram
+        post("/webhook", (req, res) -> {
+            try {
+                // Парсим Update вручную из JSON
+                Update update = gson.fromJson(req.body(), Update.class);
+                botHandler.handleUpdate(update);
+                return "ok";
+            } catch (Exception e) {
+                System.err.println("❌ Webhook error: " + e.getMessage());
+                e.printStackTrace();
+                return "error";
+            }
+        });
+
+        // Старый режим getUpdates (как fallback)
         bot.setUpdatesListener(updates -> {
             for (Update update : updates) {
                 try {
@@ -29,7 +59,9 @@ public class Main {
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
 
-        System.out.println("✅ Бот запущен! Ожидаем сообщения...");
+        System.out.println("✅ Бот запущен! Режим: Webhook + GetUpdates fallback");
+        System.out.println("Health check: " + RENDER_URL + "/health");
+        System.out.println("Webhook: " + RENDER_URL + "/webhook");
     }
 
     public static long[] getAdminIds() {
