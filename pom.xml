@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.vibeshopbot</groupId>
-    <artifactId>vibeshopbot</artifactId>
+    <artifactId>VibeShopbot</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -23,6 +23,7 @@
 
     <build>
         <plugins>
+            <!-- Собираем JAR с Main-Class -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

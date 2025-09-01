@@ -1,14 +1,13 @@
-# Используем официальный образ OpenJDK 17
+# Используем JDK 17
 FROM eclipse-temurin:17-jdk
 
-# Рабочая директория в контейнере
+# Рабочая директория
 WORKDIR /app
 
-# Копируем собранный JAR из target
+# Копируем JAR в контейнер
 COPY target/VibeShopbot-1.0-SNAPSHOT.jar app.jar
 
-# Переменная окружения для токена Telegram
-# В Railway добавь в Environment Variables: BOT_TOKEN = твой токен
+# Переменная окружения для токена бота
 ENV BOT_TOKEN=$BOT_TOKEN
 
 # Запуск бота
