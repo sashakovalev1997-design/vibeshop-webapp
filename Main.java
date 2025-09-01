@@ -5,23 +5,9 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.DeleteWebhook;
-import static spark.Spark.*;
-
-import java.time.Instant;
 
 public class Main {
     public static void main(String[] args) {
-        // Используем порт из переменной окружения Render
-        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "10000"));
-        port(port);
-        ipAddress("0.0.0.0");
-
-        get("/health", (req, res) -> {
-            String status = "✅ Bot is alive! " + Instant.now();
-            System.out.println("🔄 " + status);
-            return status;
-        });
-
         TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
 
         try {
@@ -37,6 +23,8 @@ public class Main {
                     String text = update.message().text();
                     Long chatId = update.message().chat().id();
 
+                    System.out.println("📩 Received: " + text);
+
                     if ("/start".equals(text)) {
                         bot.execute(new SendMessage(chatId, "🚀 Бот запущен!"));
                     } else {
@@ -47,10 +35,15 @@ public class Main {
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
 
-        System.out.println("✅ Бот запущен на порту: " + port);
+        System.out.println("✅ Бот запущен в режиме polling");
 
+        // Бесконечный цикл
         while (true) {
-            try { Thread.sleep(1000); } catch (InterruptedException e) { break; }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                break;
+            }
         }
     }
 }

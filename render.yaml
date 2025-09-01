@@ -1,5 +1,5 @@
 services:
-  - type: worker  # именно worker, а не web
+  - type: worker  # обязательно worker!
     name: vibeshop-bot
     env: docker
     plan: free
