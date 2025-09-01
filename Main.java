@@ -21,8 +21,12 @@ public class Main {
     private static final Gson gson = new Gson();
 
     public static void main(String[] args) throws IOException {
-        // Сначала запускаем HTTP сервер
+        // Получаем порт от Render
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "10000"));
+
+        System.out.println("🚀 Starting HTTP server on port: " + port);
+
+        // Запускаем простой HTTP сервер
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         // Health endpoint
@@ -30,18 +34,21 @@ public class Main {
             @Override
             public void handle(HttpExchange exchange) throws IOException {
                 String response = "✅ Bot is alive! Time: " + Instant.now();
-                exchange.sendResponseHeaders(200, response.length());
+                exchange.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = exchange.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
-                System.out.println("🔄 Health check handled");
+                System.out.println("🔄 Health check handled at: " + Instant.now());
             }
         });
 
+        server.setExecutor(null); // Используем default executor
         server.start();
-        System.out.println("🚀 HTTP Server started on port: " + port);
 
-        // Теперь инициализируем бота
+        System.out.println("✅ HTTP Server started successfully on port: " + port);
+        System.out.println("🌐 Health check available at: http://0.0.0.0:" + port + "/health");
+
+        // Инициализируем бота
         TelegramBot bot = new TelegramBot(BOT_TOKEN);
         BotHandler botHandler = new BotHandler(bot);
 
@@ -51,7 +58,16 @@ public class Main {
         System.out.println("RENDER_URL: " + RENDER_URL);
         System.out.println("=====================");
 
-        System.out.println("✅ Бот запущен! Health check доступен на порту: " + port);
+        System.out.println("✅ Бот полностью запущен и готов к работе!");
+
+        // Бесконечный цикл чтобы процесс не завершался
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 
     public static long[] getAdminIds() {
