@@ -3,10 +3,10 @@ services:
     name: vibeshop-bot
     env: docker
     plan: free
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: Dockerfile
     envVars:
       - key: BOT_TOKEN
         sync: false
       - key: PORT
-        value: 10000
+        value: "10000"
     healthCheckPath: /health
