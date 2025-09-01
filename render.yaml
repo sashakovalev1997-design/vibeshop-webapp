@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: vibeshop-bot
+    env: docker
+    plan: free
+    docker:
+      dockerfile: Dockerfile
+    envVars:
+      - key: BOT_TOKEN
+        fromSecret: BOT_TOKEN
+    healthCheckPath: /health
