@@ -3,9 +3,10 @@ services:
     name: vibeshop-bot
     env: docker
     plan: free
-    docker:
-      dockerfile: Dockerfile
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: BOT_TOKEN
-        fromSecret: BOT_TOKEN
+        sync: false # задашь через Render Dashboard
+      - key: RENDER_EXTERNAL_URL
+        sync: false # Render сам подставит URL после создания сервиса
     healthCheckPath: /health

@@ -1,6 +1,7 @@
 package vibeshopbot;
 
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 
@@ -12,16 +13,30 @@ public class BotHandler {
     }
 
     public void handleUpdate(Update update) {
-        if (update.message() != null && update.message().text() != null) {
-            String messageText = update.message().text();
-            Long chatId = update.message().chat().id();
+        if (update == null) return;
 
-            System.out.println("📩 Received: " + messageText);
+        Message message = update.message();
+        if (message != null && message.text() != null) {
+            String text = message.text().trim();
+            Long chatId = message.chat().id();
 
-            if ("/start".equals(messageText)) {
-                sendMessage(chatId, "🚀 Бот запущен!");
-            } else {
-                sendMessage(chatId, "📨 Echo: " + messageText);
+            System.out.println("📩 Received from " + chatId + ": " + text);
+
+            switch (text) {
+                case "/start" -> sendMessage(chatId,
+                        "👋 Привет! Это VibeShop Bot.\n" +
+                                "🛍 Напиши товар, который хочешь найти.\n" +
+                                "❓ Или просто напиши сообщение, и я его повторю.");
+                case "/help" -> sendMessage(chatId,
+                        "📖 Доступные команды:\n" +
+                                "/start – начать работу\n" +
+                                "/help – помощь\n" +
+                                "/about – информация о боте");
+                case "/about" -> sendMessage(chatId,
+                        "🤖 VibeShop Bot v1.0\n" +
+                                "Сделан на Java + Telegram API.\n" +
+                                "Автор: ты 😎");
+                default -> sendMessage(chatId, "📨 Echo: " + text);
             }
         }
     }
@@ -30,7 +45,7 @@ public class BotHandler {
         try {
             SendMessage request = new SendMessage(chatId, text);
             bot.execute(request);
-            System.out.println("📤 Sent to " + chatId);
+            System.out.println("📤 Sent to " + chatId + ": " + text);
         } catch (Exception e) {
             System.err.println("❌ Send error: " + e.getMessage());
         }
