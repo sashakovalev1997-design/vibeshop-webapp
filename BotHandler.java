@@ -9,10 +9,6 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import vibeshopbot.services.OrderService;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-
 public class BotHandler {
     private final TelegramBot bot;
     private static final String SHOP_URL = "https://sashakovalev1997-design.github.io/vibeshop-webapp/";
@@ -25,15 +21,12 @@ public class BotHandler {
     public void handleUpdate(Update update) {
         System.out.println("=== НОВЫЙ UPDATE ===");
 
-        // Сначала проверяем WebApp data
         if (update.message() != null && update.message().webAppData() != null) {
-            System.out.println("ОБРАБАТЫВАЕМ WebApp data!");
             handleWebAppData(update);
             System.out.println("=== КОНЕЦ UPDATE ===\n");
             return;
         }
 
-        // Затем обрабатываем текстовые сообщения
         if (update.message() != null && update.message().text() != null) {
             handleTextMessage(update);
         }
@@ -52,9 +45,6 @@ public class BotHandler {
                 break;
             case "/help":
                 sendHelp(chatId);
-                break;
-            case "/orders":
-                showOrders(chatId);
                 break;
             default:
                 bot.execute(new SendMessage(chatId,
@@ -75,12 +65,10 @@ public class BotHandler {
             System.out.println("От: " + chatId + " (@" + username + ")");
             System.out.println("Данные: " + orderData);
 
-            // Сохраняем заказ
             String customerName = username != null ? "@" + username : firstName + (lastName != null ? " " + lastName : "");
             String orderToSave = "Заказ от " + customerName + " (ID: " + chatId + "):\n" + orderData;
             OrderService.saveOrder(orderToSave);
 
-            // Отправляем инструкцию пользователю
             String userMessage = "✅ *Ваш заказ принят!*\n\n" +
                     "📋 *Чтобы завершить оформление:*\n\n" +
                     "1. Нажмите кнопку ниже чтобы перейти в мой Telegram\n" +
@@ -125,43 +113,10 @@ public class BotHandler {
         String helpText = "🤖 *Команды бота:*\n\n" +
                 "/start - начать работу с ботом\n" +
                 "/shop - открыть магазин\n" +
-                "/help - показать справку\n" +
-                "/orders - посмотреть заказы (только для админов)";
+                "/help - показать справку";
 
         SendMessage message = new SendMessage(chatId, helpText)
                 .parseMode(ParseMode.Markdown);
         bot.execute(message);
-    }
-
-    private void showOrders(long chatId) {
-        // Проверяем права админа
-        boolean isAdmin = false;
-        for (long adminId : Main.getAdminIds()) {
-            if (adminId == chatId) {
-                isAdmin = true;
-                break;
-            }
-        }
-
-        if (!isAdmin) {
-            bot.execute(new SendMessage(chatId, "⛔ У вас нет прав для просмотра заказов"));
-            return;
-        }
-
-        var orders = OrderService.getOrders();
-        if (orders.isEmpty()) {
-            bot.execute(new SendMessage(chatId, "📦 Пока заказов нет."));
-        } else {
-            SendMessage titleMessage = new SendMessage(chatId, "📦 *Все заказы:* (" + orders.size() + ")")
-                    .parseMode(ParseMode.Markdown);
-            bot.execute(titleMessage);
-
-            for (int i = 0; i < orders.size(); i++) {
-                String orderText = "🔹 *Заказ #" + (i + 1) + "*\n" + orders.get(i);
-                SendMessage orderMessage = new SendMessage(chatId, orderText)
-                        .parseMode(ParseMode.Markdown);
-                bot.execute(orderMessage);
-            }
-        }
     }
 }

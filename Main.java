@@ -3,19 +3,16 @@ package vibeshopbot;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
-import vibeshopbot.services.OrderService;
-
 import java.util.Arrays;
 
 public class Main {
     private static final String BOT_TOKEN = System.getenv("BOT_TOKEN");
     private static final String ADMIN_IDS_ENV = System.getenv("ADMIN_IDS");
-
     private static long[] ADMIN_IDS = {};
 
     public static void main(String[] args) {
         if (BOT_TOKEN == null || BOT_TOKEN.isEmpty()) {
-            System.err.println("❌ Ошибка: BOT_TOKEN не задан! Установите переменную окружения.");
+            System.err.println("❌ Ошибка: BOT_TOKEN не задан!");
             return;
         }
 
