@@ -20,9 +20,8 @@ WORKDIR /app
 # Копируем JAR из этапа сборки
 COPY --from=build /app/target/VibeShopbot-1.0-SNAPSHOT.jar app.jar
 
-# Переменная окружения для токена
-# На Railway лучше задать переменную BOT_TOKEN в Settings > Variables
+# Токен бота (задать в Railway Environment Variables)
 ENV BOT_TOKEN=${BOT_TOKEN}
 
-# Команда запуска
+# Запуск бота
 CMD ["java", "-jar", "app.jar"]
