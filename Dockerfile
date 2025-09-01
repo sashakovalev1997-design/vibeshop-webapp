@@ -1,15 +1,11 @@
-# Этап сборки
-FROM maven:3.8.5-openjdk-17 AS build
+FROM maven:3.8.6-openjdk-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Этап запуска
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY --from=build /app/target/*-jar-with-dependencies.jar app.jar
-
-# Render пробрасывает переменную PORT
+COPY --from=build /app/target/VibeShopbot-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
 EXPOSE 10000
 CMD ["java", "-jar", "app.jar"]

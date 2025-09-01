@@ -6,7 +6,7 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: BOT_TOKEN
-        sync: false # задашь через Render Dashboard
-      - key: RENDER_EXTERNAL_URL
-        sync: false # Render сам подставит URL после создания сервиса
+        sync: false
+      - key: PORT
+        value: 10000
     healthCheckPath: /health
