@@ -12,7 +12,7 @@ import java.time.Instant;
 public class Main {
     private static final String BOT_TOKEN = System.getenv().getOrDefault("BOT_TOKEN", "default_token");
     private static final long[] ADMIN_IDS = {614049235L, 1079109244L};
-    private static final String RENDER_URL = "https://vibeshop-webapp.onrender.com";
+    private static final String RENDER_URL = "https://vibeshop-webapp.onrender.com"; // ОБНОВЛЕНО!
     private static final Gson gson = new Gson();
 
     public static void main(String[] args) {
@@ -31,11 +31,7 @@ public class Main {
         // Явно указываем порт для Spark
         port(port);
 
-        // Ждем пока сервер запустится
-        awaitInitialization();
-
-        System.out.println("🚀 Server started successfully on port: " + port);
-        System.out.println("✅ Spark initialized");
+        System.out.println("🚀 Server starting on port: " + port);
 
         // Health check для UptimeRobot
         get("/health", (req, res) -> {
@@ -78,12 +74,6 @@ public class Main {
         System.out.println("🌐 Health check: " + RENDER_URL + "/health");
         System.out.println("🤖 Webhook: " + RENDER_URL + "/webhook");
         System.out.println("⏰ Start time: " + Instant.now());
-
-        // Добавляем shutdown hook для чистого завершения
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("🛑 Shutting down server...");
-            stop();
-        }));
     }
 
     public static long[] getAdminIds() {
