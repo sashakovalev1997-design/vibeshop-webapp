@@ -12,23 +12,26 @@ import java.time.Instant;
 public class Main {
     private static final String BOT_TOKEN = System.getenv().getOrDefault("BOT_TOKEN", "default_token");
     private static final long[] ADMIN_IDS = {614049235L, 1079109244L};
-    private static final String RENDER_URL = "https://vibeshop-webapp.onrender.com"; // замените на ваш URL
+    private static final String RENDER_URL = "https://vibeshop-bot.onrender.com";
     private static final Gson gson = new Gson();
 
     public static void main(String[] args) {
-        // Первым делом запускаем сервер
+        // Получаем порт из переменной окружения
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "10000"));
-        port(port);
 
-        // Немедленно добавляем health check
+        // Явно указываем host 0.0.0.0 для Render
+        port(port);
+        ipAddress("0.0.0.0"); // ← ВАЖНОЕ ИЗМЕНЕНИЕ!
+
+        // Health check
         get("/health", (req, res) -> {
             System.out.println("🔄 Health check received");
             return "✅ Bot is alive! Time: " + Instant.now();
         });
 
-        System.out.println("🚀 Server started on port: " + port);
+        System.out.println("🚀 Server started on port: " + port + " on 0.0.0.0");
 
-        // Затем инициализируем бота
+        // Инициализация бота
         TelegramBot bot = new TelegramBot(BOT_TOKEN);
         BotHandler botHandler = new BotHandler(bot);
 
@@ -62,13 +65,6 @@ public class Main {
         });
 
         System.out.println("✅ Бот запущен! Health: " + RENDER_URL + "/health");
-        System.out.println("✅ Webhook: " + RENDER_URL + "/webhook");
-
-        // Добавляем shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("🛑 Shutting down server...");
-            stop();
-        }));
     }
 
     public static long[] getAdminIds() {

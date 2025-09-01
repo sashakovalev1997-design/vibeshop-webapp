@@ -1,12 +1,11 @@
-FROM openjdk:17-jdk-slim
+FROM maven:3.8.7-openjdk-17 AS build
 WORKDIR /app
-
-# Копируем исходники
-COPY . .
-
-# Собираем проект
-RUN apt-get update && apt-get install -y maven
+COPY pom.xml .
+COPY src ./src
 RUN mvn clean package -DskipTests
 
+FROM openjdk:17-slim
+WORKDIR /app
+COPY --from=build /app/target/VibeShopbot-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
 EXPOSE 10000
-CMD ["java", "-jar", "target/VibeShopbot-1.0-SNAPSHOT-jar-with-dependencies.jar"]
+CMD ["java", "-jar", "app.jar"]
