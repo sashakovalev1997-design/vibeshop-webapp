@@ -25,10 +25,17 @@ public class Main {
         System.out.println("RENDER_URL: " + RENDER_URL);
         System.out.println("=====================");
 
-        // Запуск HTTP сервера на порту от Render
+        // Получаем порт от Render
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "10000"));
+
+        // Явно указываем порт для Spark
         port(port);
-        System.out.println("🚀 Server starting on port: " + port);
+
+        // Ждем пока сервер запустится
+        awaitInitialization();
+
+        System.out.println("🚀 Server started successfully on port: " + port);
+        System.out.println("✅ Spark initialized");
 
         // Health check для UptimeRobot
         get("/health", (req, res) -> {
@@ -67,17 +74,16 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println("✅ Бот запущен в WEBHOOK режиме! Порт: " + port);
+        System.out.println("✅ Бот запущен! Порт: " + port);
         System.out.println("🌐 Health check: " + RENDER_URL + "/health");
         System.out.println("🤖 Webhook: " + RENDER_URL + "/webhook");
         System.out.println("⏰ Start time: " + Instant.now());
-        System.out.println("💡 Режим: Только Webhook (getUpdates отключен)");
 
-        // Обработчик ошибок инициализации
-        initExceptionHandler((e) -> {
-            System.err.println("❌ Spark initialization failed: " + e.getMessage());
-            e.printStackTrace();
-        });
+        // Добавляем shutdown hook для чистого завершения
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("🛑 Shutting down server...");
+            stop();
+        }));
     }
 
     public static long[] getAdminIds() {
