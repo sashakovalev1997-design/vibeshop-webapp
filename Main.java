@@ -12,7 +12,7 @@ import java.time.Instant;
 public class Main {
     private static final String BOT_TOKEN = System.getenv().getOrDefault("BOT_TOKEN", "default_token");
     private static final long[] ADMIN_IDS = {614049235L, 1079109244L};
-    private static final String RENDER_URL = "https://vibeshop-web.onrender.com";
+    private static final String RENDER_URL = "https://vibeshop-webapp.onrender.com";
     private static final Gson gson = new Gson();
 
     public static void main(String[] args) {
