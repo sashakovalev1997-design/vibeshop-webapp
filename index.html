@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         /* Reset и базовые стили */
         * {
@@ -14,23 +15,23 @@
         }
 
         :root {
-            --primary: #6A11CB;
-            --primary-dark: #4A0BAF;
-            --secondary: #FF6B6B;
-            --accent: #FFD166;
-            --dark: #2D3436;
-            --light: #F8F9FA;
-            --gray: #DFE6E9;
-            --success: #00B894;
-            --warning: #FFE66D;
-            --error: #FF6B6B;
-            --gold: #FFD700;
-            --premium: #6A11CB;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --radius: 20px;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --gradient: linear-gradient(135deg, #6A11CB 0%, #2575FC 100%);
-            --gradient-secondary: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --primary: #ff3b5c;
+            --primary-dark: #e02e4d;
+            --secondary: #667eea;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --gray: #dfe6e9;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --error: #d63031;
+            --gold: #ffd700;
+            --premium: #ff6b35;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+            --neon-red: #ff3131;
+            --neon-pink: #ff44cc;
         }
 
         body {
@@ -39,6 +40,7 @@
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
+            padding-top: 80px; /* Отступ для фиксированной шапки */
         }
 
         /* Preloader */
@@ -57,13 +59,12 @@
         }
 
         .loader {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid var(--primary);
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray);
+            border-top: 3px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            box-shadow: 0 0 20px rgba(106, 17, 203, 0.5);
         }
 
         @keyframes spin {
@@ -71,41 +72,65 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Header */
+        /* Header - Обновленная шапка */
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(15px);
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            z-index: 100;
-            box-shadow: var(--shadow);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 0;
         }
 
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo h1 {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            color: #fff;
+            text-shadow:
+                    0 0 5px var(--neon-red),
+                    0 0 10px var(--neon-red),
+                    0 0 15px var(--neon-red),
+                    0 0 20px var(--neon-pink),
+                    0 0 35px var(--neon-pink),
+                    0 0 40px var(--neon-pink);
+            letter-spacing: 1px;
+            animation: neon-flicker 2s infinite alternate;
+        }
+
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                        0 0 5px var(--neon-red),
+                        0 0 10px var(--neon-red),
+                        0 0 15px var(--neon-red),
+                        0 0 20px var(--neon-pink),
+                        0 0 35px var(--neon-pink),
+                        0 0 40px var(--neon-pink);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
         }
 
         .logo p {
-            color: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
-            opacity: 0.8;
-            font-weight: 500;
+            margin-top: -5px;
+            letter-spacing: 1.5px;
         }
 
         .header-actions {
@@ -115,92 +140,77 @@
         }
 
         .contact-btn {
-            background: var(--gradient);
+            background: linear-gradient(135deg, var(--secondary) 0%, #764ba2 100%);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            border-radius: 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .contact-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
         .cart-btn {
-            background: var(--gradient-secondary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            border-radius: 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 59, 92, 0.3);
+            position: relative;
         }
 
         .cart-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 59, 92, 0.4);
         }
 
         .cart-badge {
-            background: white;
-            color: var(--secondary);
+            background: var(--error);
+            color: white;
             border-radius: 50%;
             padding: 0.2rem 0.6rem;
             font-size: 0.8rem;
-            font-weight: 700;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            box-shadow: 0 2px 8px rgba(214, 48, 49, 0.5);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.9) 0%, rgba(37, 117, 252, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
             color: white;
             text-align: center;
-            padding: 6rem 1rem 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.3;
+            padding: 3rem 1rem;
+            margin-top: -20px;
         }
 
         .hero-content h2 {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-weight: 700;
         }
 
         .hero-content p {
-            font-size: 1.4rem;
-            opacity: 0.95;
-            margin-bottom: 2.5rem;
-            font-weight: 500;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
         }
 
         .hero-features {
@@ -208,37 +218,23 @@
             justify-content: center;
             gap: 2rem;
             flex-wrap: wrap;
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .feature {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 1rem 2rem;
-            border-radius: 50px;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-        }
-
-        .feature:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-        }
-
-        .feature i {
-            font-size: 1.2rem;
-            color: var(--accent);
         }
 
         /* Categories */
         .categories-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 1.5rem;
             position: relative;
         }
 
@@ -246,7 +242,7 @@
             display: flex;
             gap: 1.5rem;
             overflow-x: auto;
-            padding: 1rem 0.5rem;
+            padding: 0.5rem;
             scrollbar-width: none;
             -ms-overflow-style: none;
             scroll-behavior: smooth;
@@ -261,67 +257,37 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: transform .3s ease;
+            transition: transform .2s ease;
             flex-shrink: 0;
-            position: relative;
-        }
-
-        .category::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            background: var(--gradient);
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .category:hover::before {
-            opacity: 1;
         }
 
         .category img {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid white;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            z-index: 1;
-        }
-
-        .category:hover img {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid #ddd;
         }
 
         .category span {
-            margin-top: 0.8rem;
-            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
+            color: #fff;
         }
 
-        .category:hover span {
-            color: var(--accent);
+        .category:hover {
+            transform: scale(1.05);
         }
 
         .scroll-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.8);
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -330,21 +296,18 @@
             z-index: 10;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            color: var(--primary);
-            font-weight: bold;
         }
 
         .scroll-btn:hover {
             background: white;
-            transform: translateY(-50%) scale(1.1);
         }
 
         .scroll-left {
-            left: 5px;
+            left: 10px;
         }
 
         .scroll-right {
-            right: 5px;
+            right: 10px;
         }
 
         /* Products Section */
@@ -356,30 +319,26 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         .section-header h3 {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             color: white;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.5rem;
         }
 
         .section-header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
         }
 
-        /* Products Grid */
+        /* Products Grid - 2 карточки в ряд на всех устройствах */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 4rem;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         /* Product Card */
@@ -394,13 +353,13 @@
         }
 
         .product-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
 
         .product-image {
             position: relative;
-            height: 250px;
+            height: 220px;
             overflow: hidden;
         }
 
@@ -412,7 +371,7 @@
         }
 
         .product-card:hover .product-image img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .product-overlay {
@@ -421,13 +380,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to top, rgba(106, 17, 203, 0.8), transparent);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
             opacity: 0;
             transition: var(--transition);
-            padding: 2rem;
         }
 
         .product-card:hover .product-overlay {
@@ -435,43 +393,30 @@
         }
 
         .quick-view {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: var(--transition);
-            transform: translateY(20px);
-        }
-
-        .product-card:hover .quick-view {
-            transform: translateY(0);
-        }
-
-        .quick-view:hover {
-            background: var(--accent);
+            background: var(--primary);
             color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
         }
 
         .product-info {
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: white;
         }
 
         .product-info h4 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: var(--dark);
-            font-weight: 700;
         }
 
         .product-desc {
             color: #666;
-            margin-bottom: 1.2rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
         .product-footer {
@@ -481,46 +426,32 @@
         }
 
         .price {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .price::before {
-            content: '₽';
-            font-size: 1.2rem;
-            opacity: 0.8;
         }
 
         .add-to-cart-btn {
-            background: var(--gradient);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
         }
 
         .add-to-cart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+            background: var(--primary-dark);
         }
 
         .add-to-cart-btn.added {
             background: var(--success);
-            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
         }
-
-        /* Остальные стили остаются практически без изменений, только адаптированы под новую цветовую схему */
 
         /* Product Detail Page */
         .product-detail-page {
@@ -549,11 +480,11 @@
         }
 
         .back-btn {
-            background: var(--gradient);
+            background: var(--secondary);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -561,12 +492,11 @@
             font-weight: 600;
             margin-bottom: 2rem;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
         }
 
         .back-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+            background: #5a6fd8;
+            transform: translateY(-2px);
         }
 
         .product-detail-content {
@@ -581,85 +511,60 @@
 
         .main-product-image {
             width: 100%;
-            height: 450px;
+            height: 400px;
             object-fit: cover;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            transition: var(--transition);
         }
 
         .product-thumbnails {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .thumbnail {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
             opacity: 0.7;
-            border: 2px solid transparent;
         }
 
         .thumbnail:hover, .thumbnail.active {
             opacity: 1;
             transform: scale(1.05);
-            border-color: var(--primary);
         }
 
         .product-detail-info h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--dark);
             margin-bottom: 1rem;
-            font-weight: 800;
         }
 
         .product-detail-price {
-            font-size: 2.2rem;
-            color: var(--primary);
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .product-detail-price::before {
-            content: '₽';
             font-size: 1.8rem;
-            opacity: 0.8;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
         }
 
         .product-detail-desc {
             color: #666;
-            line-height: 1.7;
+            line-height: 1.6;
             margin-bottom: 1.5rem;
-            font-size: 1.1rem;
         }
 
         .product-features {
-            margin-bottom: 2.5rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 1.5rem;
-            border-radius: var(--radius);
+            margin-bottom: 2rem;
         }
 
         .product-features h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1.2rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .product-features h3::before {
-            content: '✨';
             font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
         }
 
         .features-list {
@@ -667,25 +572,23 @@
         }
 
         .features-list li {
-            padding: 0.7rem 0;
+            padding: 0.5rem 0;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
             color: #555;
-            font-size: 1rem;
         }
 
         .features-list li:before {
             content: "✅";
             color: var(--success);
             font-weight: bold;
-            font-size: 1.1rem;
         }
 
         .detail-actions {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         .size-selector {
@@ -693,61 +596,53 @@
         }
 
         .size-selector h4 {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: var(--dark);
-            font-size: 1.2rem;
-            font-weight: 600;
         }
 
         .size-options {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .size-option {
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border: 2px solid var(--gray);
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
-            font-weight: 700;
-            min-width: 60px;
-            text-align: center;
+            font-weight: 600;
         }
 
         .size-option:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
+            border-color: var(--secondary);
         }
 
         .size-option.selected {
-            background: var(--gradient);
+            background: var(--secondary);
             color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+            border-color: var(--secondary);
         }
 
         .detail-add-to-cart {
-            background: var(--gradient);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
-            font-weight: 700;
-            font-size: 1.2rem;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
             transition: var(--transition);
-            box-shadow: 0 4px 20px rgba(106, 17, 203, 0.3);
         }
 
         .detail-add-to-cart:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(106, 17, 203, 0.4);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
         /* Contact Modal */
@@ -773,100 +668,84 @@
         .modal-content {
             background: white;
             border-radius: var(--radius);
-            max-width: 550px;
+            max-width: 500px;
             width: 90%;
-            max-height: 85vh;
+            max-height: 80vh;
             overflow-y: auto;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .modal-header {
-            padding: 1.8rem;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--gray);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--gradient);
-            color: white;
-            border-radius: var(--radius) var(--radius) 0 0;
         }
 
         .modal-header h3 {
-            color: white;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1.4rem;
-            font-weight: 700;
+            gap: 0.5rem;
+            font-size: 1.2rem;
         }
 
         .close-modal {
-            background: rgba(255, 255, 255, 0.2);
+            background: none;
             border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
             font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
             transition: var(--transition);
         }
 
         .close-modal:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
+            color: var(--error);
         }
 
         .modal-body {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .contact-info p {
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             color: #666;
-            line-height: 1.7;
-            font-size: 1.1rem;
-            text-align: center;
+            line-height: 1.6;
         }
 
         .contact-cards {
             display: grid;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .contact-card {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            padding: 1.8rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light);
             border-radius: var(--radius);
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .contact-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
 
         .contact-avatar {
-            width: 70px;
-            height: 70px;
-            background: var(--gradient);
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
         }
 
         .contact-details {
@@ -877,94 +756,90 @@
 
         .contact-details h4 {
             color: var(--dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-            font-weight: 700;
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .contact-details p {
             color: #666;
-            font-size: 1rem;
-            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
         }
 
         .contact-link {
-            background: var(--gradient);
+            background: var(--secondary);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: var(--transition);
             text-decoration: none;
             width: fit-content;
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
         }
 
         .contact-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+            background: #5a6fd8;
+            transform: translateY(-1px);
         }
 
         .replica-notice {
             background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--radius);
-            border-left: 4px solid var(--accent);
-            margin-top: 2rem;
+            border-left: 4px solid var(--gold);
+            margin-top: 1.5rem;
         }
 
         .replica-notice h4 {
             color: var(--premium);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1.3rem;
-            font-weight: 700;
+            gap: 0.5rem;
+            font-size: 1.2rem;
         }
 
         .replica-notice p {
             color: #666;
-            margin-bottom: 1.2rem;
-            line-height: 1.6;
-            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
 
         .replica-notice ul {
             list-style: none;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .replica-notice li {
-            padding: 0.7rem 0;
+            padding: 0.5rem 0;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
             color: #555;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .replica-notice li:before {
             content: "✅";
             color: var(--success);
             font-weight: bold;
-            font-size: 1.1rem;
         }
 
         /* Cart Sidebar */
         .cart-sidebar {
             position: fixed;
             top: 0;
-            right: -450px;
-            width: 400px;
+            right: -400px;
+            width: 380px;
             height: 100vh;
             background: white;
-            box-shadow: -5px 0 35px rgba(0, 0, 0, 0.15);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
             z-index: 1000;
             display: flex;
@@ -976,98 +851,73 @@
         }
 
         .cart-header {
-            padding: 1.8rem;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--gray);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--gradient);
-            color: white;
-        }
-
-        .cart-header h3 {
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 1.4rem;
-            font-weight: 700;
         }
 
         .close-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: none;
             border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
             font-size: 1.2rem;
+            cursor: pointer;
+            color: #666;
             transition: var(--transition);
         }
 
         .close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
+            color: var(--error);
         }
 
         .cart-content {
             flex: 1;
             overflow-y: auto;
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .cart-empty {
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 3rem 1rem;
             color: #999;
         }
 
         .cart-empty i {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             opacity: 0.5;
-            color: var(--primary);
         }
 
         .cart-empty p {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
         }
 
         .cart-empty small {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #999;
         }
 
         .cart-item {
             display: flex;
             align-items: center;
-            padding: 1.5rem;
+            padding: 1rem;
             border-bottom: 1px solid var(--gray);
-            gap: 1.2rem;
+            gap: 1rem;
             transition: var(--transition);
-            border-radius: 12px;
-            margin-bottom: 0.8rem;
         }
 
         .cart-item:hover {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            transform: translateX(-5px);
+            background: var(--light);
         }
 
         .cart-item img {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 8px;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .cart-item-info {
@@ -1075,33 +925,23 @@
         }
 
         .cart-item-name {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
             color: var(--dark);
-            font-size: 1.1rem;
         }
 
         .cart-item-price {
             color: var(--primary);
-            font-weight: 800;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .cart-item-price::before {
-            content: '₽';
+            font-weight: 700;
             font-size: 1.1rem;
-            opacity: 0.8;
         }
 
         .remove-item {
-            background: var(--gradient-secondary);
+            background: var(--error);
             color: white;
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -1109,75 +949,71 @@
             justify-content: center;
             transition: var(--transition);
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
         }
 
         .remove-item:hover {
+            background: #c0392b;
             transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
         }
 
         .cart-footer {
-            padding: 1.8rem;
+            padding: 1.5rem;
             border-top: 1px solid var(--gray);
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: var(--light);
         }
 
         .cart-total {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.8rem;
-        }
-
-        .cart-total span {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--dark);
-            font-size: 1.2rem;
         }
 
-        .cart-total-price {
-            font-size: 1.8rem;
-            font-weight: 800;
+        .cart-total span:last-child {
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
         }
 
-        .cart-total-price::before {
-            content: '₽';
-            font-size: 1.4rem;
-            opacity: 0.8;
-        }
-
-        .checkout-btn {
-            background: var(--gradient);
-            color: white;
+        .order-btn, .copy-btn {
+            width: 100%;
+            padding: 1rem;
             border: none;
-            padding: 1.2rem 2rem;
-            border-radius: 50px;
+            border-radius: var(--radius);
             cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
-            font-weight: 700;
-            font-size: 1.2rem;
-            width: 100%;
-            transition: var(--transition);
-            box-shadow: 0 4px 20px rgba(106, 17, 203, 0.3);
+            gap: 0.5rem;
+            font-size: 1rem;
         }
 
-        .checkout-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(106, 17, 203, 0.4);
+        .order-btn {
+            background: var(--primary);
+            color: white;
         }
 
-        .checkout-btn:active {
-            transform: translateY(0);
+        .order-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
+        .copy-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+        }
+
+        .copy-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -1185,131 +1021,189 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-            display: none;
             opacity: 0;
+            visibility: hidden;
             transition: var(--transition);
+            z-index: 999;
+            backdrop-filter: blur(5px);
         }
 
         .overlay.active {
-            display: block;
             opacity: 1;
+            visibility: visible;
         }
 
-        /* Footer */
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-logo h2 {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .footer-logo p {
-            color: #666;
-            line-height: 1.7;
-            font-size: 1.1rem;
-        }
-
-        .footer-links h3 {
-            color: var(--dark);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links a {
-            color: #666;
-            text-decoration: none;
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            opacity: 0;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(5px);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid var(--gray);
+            z-index: 1001;
+            font-weight: 600;
             text-align: center;
-            color: #999;
-            font-size: 0.95rem;
+            max-width: 90%;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 992px) {
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .toast.warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .toast.info {
+            background: var(--secondary);
+        }
+
+        /* Size Modal Styles */
+        .size-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            min-width: 80px;
+        }
+
+        .size-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Адаптивность для очень маленьких экранов */
+        @media (max-width: 768px) {
             .product-detail-content {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-content h2 {
-                font-size: 2.8rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .feature {
-                padding: 0.8rem 1.5rem;
+            .main-product-image {
+                height: 300px;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
             .header-content {
+                padding: 0.8rem;
                 flex-direction: column;
                 gap: 1rem;
             }
 
-            .hero-content h2 {
-                font-size: 2.3rem;
+            .logo h1 {
+                font-size: 1.8rem;
             }
 
-            .hero-features {
-                flex-direction: column;
-                align-items: center;
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .products-section {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-info {
+                padding: 0.8rem;
+            }
+
+            .product-info h4 {
+                font-size: 1rem;
+            }
+
+            .price {
+                font-size: 1.1rem;
+            }
+
+            .add-to-cart-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .contact-btn span, .cart-btn span:not(.cart-badge) {
+                display: none;
+            }
+
+            .contact-btn, .cart-btn {
+                padding: 0.8rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-header h3 {
+                font-size: 1.6rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section-header p {
+                font-size: 1rem;
             }
 
             .feature {
-                width: 100%;
-                max-width: 300px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
 
             .cart-sidebar {
@@ -1317,112 +1211,74 @@
                 right: -100%;
             }
 
-            .section-header h3 {
-                font-size: 2.2rem;
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
             }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .footer-links a:hover {
-                transform: none;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .header-actions {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .contact-btn, .cart-btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .hero-content h2 {
-                font-size: 2rem;
-            }
-
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-
-            .product-info h4 {
-                font-size: 1.2rem;
-            }
-
-            .price {
-                font-size: 1.3rem;
-            }
-
-            .add-to-cart-btn {
-                padding: 0.7rem 1.2rem;
+            .size-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                min-width: 70px;
             }
 
             .product-detail-info h2 {
-                font-size: 2rem;
-            }
-
-            .product-detail-price {
                 font-size: 1.8rem;
             }
 
-            .detail-add-to-cart {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
+            .product-detail-price {
+                font-size: 1.5rem;
             }
 
             .size-options {
                 flex-wrap: wrap;
-                justify-content: center;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .scroll-btn {
+                display: none;
             }
         }
 
-        /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @media (max-width: 360px) {
+            .products-grid {
+                gap: 0.6rem;
+            }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
-        }
+            .product-image {
+                height: 140px;
+            }
 
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
-        .delay-5 { animation-delay: 1s; }
+            .product-info {
+                padding: 0.6rem;
+            }
 
-        /* Toast уведомления */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--success);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            z-index: 1001;
-            opacity: 0;
-            transition: var(--transition);
-        }
+            .product-info h4 {
+                font-size: 0.9rem;
+            }
 
-        .toast.show {
-            opacity: 1;
-            bottom: 30px;
-        }
+            .price {
+                font-size: 1rem;
+            }
 
-        .toast.error {
-            background: var(--error);
+            .add-to-cart-btn {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.7rem;
+            }
+
+            .product-desc {
+                font-size: 0.8rem;
+            }
+
+            .size-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: 60px;
+            }
         }
     </style>
 </head>
@@ -1436,18 +1292,16 @@
 <header class="header">
     <div class="header-content">
         <div class="logo">
-            <h1>VibeShop</h1>
-            <p>Стильная одежда и качественные реплики</p>
+            <h1><i class="fas fa-shirt"></i> VibeShop</h1>
+            <p>Стиль в каждом моменте</p>
         </div>
         <div class="header-actions">
-            <button class="contact-btn" id="contact-btn">
-                <i class="fas fa-headset"></i>
-                Связаться с нами
+            <button id="contact-btn" class="contact-btn">
+                <i class="fas fa-envelope"></i> Контакты
             </button>
-            <button class="cart-btn" id="cart-btn">
+            <button id="cart-toggle" class="cart-btn">
                 <i class="fas fa-shopping-cart"></i>
-                Корзина
-                <span class="cart-badge" id="cart-count">0</span>
+                <span id="cart-count" class="cart-badge">0</span>
             </button>
         </div>
     </div>
@@ -1456,59 +1310,36 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="hero-content">
-        <h2>Стиль, который говорит за тебя</h2>
-        <p>Качественные реплики брендовой одежды с доставкой по всей России</p>
+        <h2>Обнови свой стиль</h2>
+        <p>Качественная одежда и премиальные реплики 1:1</p>
         <div class="hero-features">
-            <div class="feature fade-in">
-                <i class="fas fa-check-circle"></i>
-                <span>Высокое качество материалов</span>
-            </div>
-            <div class="feature fade-in delay-1">
-                <i class="fas fa-truck"></i>
+            <div class="feature">
+                <i class="fas fa-truck-fast"></i>
                 <span>Быстрая доставка</span>
             </div>
-            <div class="feature fade-in delay-2">
-                <i class="fas fa-shield-alt"></i>
-                <span>Гарантия возврата</span>
+            <div class="feature">
+                <i class="fas fa-medal"></i>
+                <span>Качество 1:1</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-tag"></i>
+                <span>Лучшие цены</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Categories -->
+<!-- Категории -->
 <div class="categories-container">
     <button class="scroll-btn scroll-left">
         <i class="fas fa-chevron-left"></i>
     </button>
     <div class="categories">
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Футболки">
-            <span>Футболки</span>
-        </div>
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Худи">
-            <span>Худи</span>
-        </div>
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Джинсы">
-            <span>Джинсы</span>
-        </div>
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Кроссовки">
-            <span>Кроссовки</span>
-        </div>
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Аксессуары">
-            <span>Аксессуары</span>
-        </div>
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1582142306909-195724d3a58c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Штаны">
-            <span>Штаны</span>
-        </div>
-        <div class="category">
-            <img src="https://images.unsplash.com/photo-1582142306909-195724d3a58c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Куртки">
-            <span>Куртки</span>
-        </div>
+        <div class="category" data-category="все"><img src="all.jpg" alt="Все"><span>Все</span></div>
+        <div class="category" data-category="лонгсливы"><img src="longsleeve.jpg" alt="Лонгсливы"><span>Лонгсливы</span></div>
+        <div class="category" data-category="зипки"><img src="zip.jpg" alt="Зипки"><span>Зипки</span></div>
+        <div class="category" data-category="жилетки"><img src="vest.jpg" alt="Жилетки"><span>Жилетки</span></div>
+        <div class="category" data-category="сумки"><img src="bag.jpg" alt="Сумки"><span>Сумки</span></div>
     </div>
     <button class="scroll-btn scroll-right">
         <i class="fas fa-chevron-right"></i>
@@ -1516,140 +1347,137 @@
 </div>
 
 <!-- Products Section -->
-<section class="products-section">
+<main class="products-section">
     <div class="section-header">
-        <h3>Популярные товары</h3>
-        <p>Самые востребованные позиции этого сезона</p>
+        <h3>Наша коллекция</h3>
+        <p>Выбери то, что подходит именно тебе</p>
     </div>
 
     <div class="products-grid">
-        <!-- Product 1 -->
-        <div class="product-card fade-in">
+        <!-- Лонгслив Guess -->
+        <div class="product-card" data-category="лонгсливы" data-name="Лонгслив Guess" data-price="85" data-id="1">
             <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Футболка Oversized">
+                <img src="tshirt.jpg" alt="Лонгслив Guess">
                 <div class="product-overlay">
-                    <button class="quick-view" data-id="1">Быстрый просмотр</button>
+                    <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Футболка Oversized</h4>
-                <p class="product-desc">Ультрамодная футболка оверсайз с принтом. Хлопок высшего качества.</p>
+                <h4>Лонгслив Guess</h4>
+                <p class="product-desc">Премиальное качество</p>
                 <div class="product-footer">
-                    <div class="price">3 499</div>
-                    <button class="add-to-cart-btn" data-id="1" data-name="Футболка Oversized" data-price="3499" data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
-                        <i class="fas fa-shopping-cart"></i> В корзину
+                    <span class="price">85 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Product 2 -->
-        <div class="product-card fade-in delay-1">
+        <!-- Зипка Corteiz -->
+        <div class="product-card" data-category="зипки" data-name="Зипка Corteiz" data-price="120" data-id="2">
             <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Худи Supreme">
+                <img src="hoodie.jpg" alt="Зипка Corteiz">
                 <div class="product-overlay">
-                    <button class="quick-view" data-id="2">Быстрый просмотр</button>
+                    <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Худи Supreme Box Logo</h4>
-                <p class="product-desc">Теплое и стильное худи с капюшоном. Плотный хлопок, утепленный флис.</p>
+                <h4>Зипка Corteiz</h4>
+                <p class="product-desc">Оверсайз, качественный хлопок</p>
                 <div class="product-footer">
-                    <div class="price">8 999</div>
-                    <button class="add-to-cart-btn" data-id="2" data-name="Худи Supreme Box Logo" data-price="8999" data-img="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
-                        <i class="fas fa-shopping-cart"></i> В корзину
+                    <span class="price">120 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Product 3 -->
-        <div class="product-card fade-in delay-2">
+        <!-- Сумка Nike -->
+        <div class="product-card" data-category="сумки" data-name="Сумка Nike" data-price="65" data-id="3">
             <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Джинсы Destroyed">
+                <img src="bag.jpg" alt="Сумка Nike">
                 <div class="product-overlay">
-                    <button class="quick-view" data-id="3">Быстрый просмотр</button>
+                    <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Джинсы Destroyed</h4>
-                <p class="product-desc">Стильные джинсы с эффектом разрушения. Ультрамодный крой и высокая посадка.</p>
+                <h4>Сумка Nike</h4>
+                <p class="product-desc">Стильная сумка Nike, вместительная</p>
                 <div class="product-footer">
-                    <div class="price">5 799</div>
-                    <button class="add-to-cart-btn" data-id="3" data-name="Джинсы Destroyed" data-price="5799" data-img="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
-                        <i class="fas fa-shopping-cart"></i> В корзину
+                    <span class="price">65 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Product 4 -->
-        <div class="product-card fade-in delay-3">
+        <!-- Жилетка Nike -->
+        <div class="product-card" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
             <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Кроссовки Nike">
+                <img src="jiletka.jpg" alt="Жилетка Nike">
                 <div class="product-overlay">
-                    <button class="quick-view" data-id="4">Быстрый просмотр</button>
+                    <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Кроссовки Nike Air Force</h4>
-                <p class="product-desc">Классические кроссовки белого цвета. Удобные и стильные для любого образа.</p>
+                <h4>Жилетка Nike</h4>
+                <p class="product-desc">Свободный крой, хлопок 100%</p>
                 <div class="product-footer">
-                    <div class="price">9 499</div>
-                    <button class="add-to-cart-btn" data-id="4" data-name="Кроссовки Nike Air Force" data-price="9499" data-img="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
-                        <i class="fas fa-shopping-cart"></i> В корзину
+                    <span class="price">55 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
                     </button>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</main>
 
 <!-- Product Detail Page -->
-<div class="product-detail-page" id="product-detail">
+<div id="product-detail-page" class="product-detail-page">
     <div class="product-detail-container">
-        <button class="back-btn" id="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Назад к товарам
+        <button id="back-to-products" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к каталогу
         </button>
+
         <div class="product-detail-content">
             <div class="product-gallery">
-                <img src="" alt="" class="main-product-image" id="detail-image">
+                <img id="main-product-image" class="main-product-image" src="" alt="">
                 <div class="product-thumbnails">
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Thumbnail 1" class="thumbnail active">
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Thumbnail 2" class="thumbnail">
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Thumbnail 3" class="thumbnail">
+                    <img class="thumbnail active" src="" alt="">
                 </div>
             </div>
+
             <div class="product-detail-info">
-                <h2 id="detail-title">Футболка Oversized</h2>
-                <div class="product-detail-price" id="detail-price">3 499</div>
-                <p class="product-detail-desc" id="detail-desc">
-                    Ультрамодная футболка оверсайз с принтом. Изготовлена из хлопка высшего качества, который обеспечивает комфорт при носке. Идеально сочетается с джинсами, штанами и шортами. Доступна в различных размерах и цветах.
-                </p>
+                <h2 id="detail-product-name"></h2>
+                <div id="detail-product-price" class="product-detail-price"></div>
+                <p id="detail-product-desc" class="product-detail-desc"></p>
+
                 <div class="product-features">
-                    <h3>Характеристики</h3>
+                    <h3>Особенности товара:</h3>
                     <ul class="features-list">
-                        <li>100% хлопок премиального качества</li>
-                        <li>Удобный оверсайз крой</li>
-                        <li>Стойкий принт, не выцветает после стирки</li>
-                        <li>Доступна в размерах S, M, L, XL</li>
-                        <li>Быстрая доставка по всей России</li>
+                        <li>Качество материалов 1:1</li>
+                        <li>Все бирки и ярлыки как в оригинале</li>
+                        <li>Полное визуальное соответствие</li>
+                        <li>Проверка каждой единицы товара</li>
                     </ul>
                 </div>
+
                 <div class="detail-actions">
                     <div class="size-selector">
                         <h4>Выберите размер:</h4>
                         <div class="size-options">
-                            <div class="size-option">S</div>
-                            <div class="size-option selected">M</div>
-                            <div class="size-option">L</div>
-                            <div class="size-option">XL</div>
+                            <div class="size-option" data-size="M">M</div>
+                            <div class="size-option" data-size="L">L</div>
+                            <div class="size-option" data-size="XL">XL</div>
                         </div>
                     </div>
-                    <button class="detail-add-to-cart" id="detail-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        Добавить в корзину
+
+                    <button id="detail-add-to-cart" class="detail-add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Добавить в корзину
                     </button>
                 </div>
             </div>
@@ -1661,373 +1489,527 @@
 <div class="modal" id="contact-modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-headset"></i> Свяжитесь с нами</h3>
+            <h3><i class="fas fa-users"></i> Наша команда</h3>
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
             <div class="contact-info">
-                <p>Мы всегда на связи! Выберите удобный способ связи:</p>
-                <div class="contact-cards">
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fab fa-telegram"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Telegram</h4>
-                            <p>Быстрый ответ в течение 5 минут</p>
-                            <a href="https://t.me/vibeshop_support" class="contact-link" target="_blank">
-                                <i class="fab fa-telegram"></i> Написать в Telegram
-                            </a>
-                        </div>
+                <p>Мы всегда готовы помочь вам с выбором и ответить на все ваши вопросы. Свяжитесь с нами в Telegram для быстрой и удобной коммуникации!</p>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-avatar">
+                        <i class="fas fa-user-tie"></i>
                     </div>
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>WhatsApp</h4>
-                            <p>Консультация и помощь в выборе</p>
-                            <a href="https://wa.me/79501234567" class="contact-link" target="_blank">
-                                <i class="fab fa-whatsapp"></i> Написать в WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
-                            <p>Для писем и официальных запросов</p>
-                            <a href="mailto:support@vibeshop.ru" class="contact-link">
-                                <i class="fas fa-envelope"></i> Написать на почту
-                            </a>
-                        </div>
+                    <div class="contact-details">
+                        <h4>Владислав</h4>
+                        <p>Менеджер по продажам</p>
+                        <a href="https://t.me/bigdigovich" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Написать в Telegram
+                        </a>
                     </div>
                 </div>
-                <div class="replica-notice">
-                    <h4><i class="fas fa-info-circle"></i> О наших товарах</h4>
-                    <p>Мы предлагаем качественные реплики известных брендов. Наша продукция отличается:</p>
-                    <ul>
-                        <li>Высоким качеством материалов и пошива</li>
-                        <li>Вниманием к деталям и точностью воспроизведения</li>
-                        <li>Доступными ценами при сохранении визуального сходства</li>
-                        <li>Быстрой доставкой по всей России</li>
-                    </ul>
+                <div class="contact-card">
+                    <div class="contact-avatar">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Александр</h4>
+                        <p>Техническая поддержка</p>
+                        <a href="https://t.me/Amg0101am" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Написать в Telegram
+                        </a>
+                    </div>
                 </div>
+            </div>
+            <div class="replica-notice">
+                <h4><i class="fas fa-crown"></i> Премиум качество</h4>
+                <p>Все наши товары - это качественные реплики 1:1, которые не уступают оригиналам по материалам и пошиву.</p>
+                <ul>
+                    <li>Точное соответствие оригиналу</li>
+                    <li>Качественные материалы</li>
+                    <li>Прочная фурнитура</li>
+                    <li>Аккуратная строчка</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Size Selection Modal -->
+<div id="size-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-ruler"></i> Выберите размер</h3>
+            <button id="close-size-modal" class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" style="text-align:center;">
+            <p>Выберите размер одежды:</p>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
+                <button class="size-btn" data-size="M">M</button>
+                <button class="size-btn" data-size="L">L</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Cart Sidebar -->
-<div class="cart-sidebar" id="cart-sidebar">
+<div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Ваша корзина</h3>
-        <button class="close-btn">&times;</button>
+        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+        <button id="close-cart" class="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
-    <div class="cart-content" id="cart-content">
-        <div class="cart-empty" id="cart-empty">
-            <i class="fas fa-shopping-cart"></i>
-            <p>Ваша корзина пуста</p>
+
+    <div class="cart-content">
+        <div id="cart-empty" class="cart-empty">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Корзина пуста</p>
             <small>Добавьте товары из каталога</small>
         </div>
+
+        <div id="cart-items" class="cart-items"></div>
     </div>
+
     <div class="cart-footer">
         <div class="cart-total">
             <span>Итого:</span>
-            <div class="cart-total-price" id="cart-total">0</div>
+            <span id="cart-total">0 BYN</span>
         </div>
-        <button class="checkout-btn" id="checkout-btn">
-            <i class="fas fa-credit-card"></i>
-            Оформить заказ
+
+        <button id="send-order" class="order-btn">
+            <i class="fas fa-paper-plane"></i> Оформить заказ
+        </button>
+
+        <button id="copy-order" class="copy-btn">
+            <i class="fas fa-copy"></i> Скопировать заказ
         </button>
     </div>
 </div>
 
 <!-- Overlay -->
-<div class="overlay" id="overlay"></div>
+<div id="overlay" class="overlay"></div>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-logo">
-            <h2>VibeShop</h2>
-            <p>Стильная одежда и качественные реплики с доставкой по всей России. Мы заботимся о том, чтобы вы выглядели на все 100% без переплат.</p>
-        </div>
-        <div class="footer-links">
-            <h3>Категории</h3>
-            <ul>
-                <li><a href="#"><i class="fas fa-tshirt"></i> Футболки</a></li>
-                <li><a href="#"><i class="fas fa-vest"></i> Худи</a></li>
-                <li><a href="#"><i class="fas fa-jeans"></i> Джинсы</a></li>
-                <li><a href="#"><i class="fas fa-shoe-prints"></i> Кроссовки</a></li>
-            </ul>
-        </div>
-        <div class="footer-links">
-            <h3>Помощь</h3>
-            <ul>
-                <li><a href="#"><i class="fas fa-truck"></i> Доставка и оплата</a></li>
-                <li><a href="#"><i class="fas fa-ruler"></i> Таблица размеров</a></li>
-                <li><a href="#"><i class="fas fa-undo"></i> Возврат и обмен</a></li>
-                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
-            </ul>
-        </div>
-        <div class="footer-links">
-            <h3>Контакты</h3>
-            <ul>
-                <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
-                <li><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
-                <li><a href="#"><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 15</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2023 VibeShop. Все права защищены.</p>
-    </div>
-</footer>
-
-<!-- Toast Notification -->
-<div class="toast" id="toast">
-    <i class="fas fa-check-circle"></i>
-    <span id="toast-message">Товар добавлен в корзину!</span>
-</div>
+<!-- Toast Notifications -->
+<div id="toast" class="toast"></div>
 
 <script>
-    // Preloader
-    window.addEventListener('load', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Основные переменные
+        let cartItems = [];
+        let selectedProduct = null;
+        let selectedSize = null;
+
+        // Элементы DOM
+        const elements = {
+            preloader: document.getElementById('preloader'),
+            contactBtn: document.getElementById('contact-btn'),
+            contactModal: document.getElementById('contact-modal'),
+            cartToggle: document.getElementById('cart-toggle'),
+            cartSidebar: document.getElementById('cart-sidebar'),
+            closeCart: document.getElementById('close-cart'),
+            overlay: document.getElementById('overlay'),
+            cartItems: document.getElementById('cart-items'),
+            cartEmpty: document.getElementById('cart-empty'),
+            cartTotal: document.getElementById('cart-total'),
+            sendOrder: document.getElementById('send-order'),
+            copyOrder: document.getElementById('copy-order'),
+            toast: document.getElementById('toast'),
+            closeModal: document.querySelector('.close-modal'),
+            sizeModal: document.getElementById('size-modal'),
+            closeSizeModal: document.getElementById('close-size-modal'),
+            sizeButtons: document.querySelectorAll('.size-btn'),
+            addButtons: document.querySelectorAll('.add-to-cart-btn'),
+            telegramButtons: document.querySelectorAll('.contact-link'),
+            productDetailPage: document.getElementById('product-detail-page'),
+            backToProducts: document.getElementById('back-to-products'),
+            detailAddToCart: document.getElementById('detail-add-to-cart'),
+            sizeOptions: document.querySelectorAll('.size-option'),
+            categories: document.querySelectorAll('.category'),
+            productCards: document.querySelectorAll('.product-card'),
+            scrollLeftBtn: document.querySelector('.scroll-left'),
+            scrollRightBtn: document.querySelector('.scroll-right'),
+            categoriesContainer: document.querySelector('.categories')
+        };
+
+        // Скрытие прелоадера
         setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
+            elements.preloader.style.opacity = '0';
             setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
-        }, 1500);
-    });
+                elements.preloader.style.display = 'none';
+            }, 300);
+        }, 1000);
 
-    // Cart functionality
-    let cart = [];
-    const cartBtn = document.getElementById('cart-btn');
-    const cartSidebar = document.getElementById('cart-sidebar');
-    const overlay = document.getElementById('overlay');
-    const closeBtn = document.querySelector('.close-btn');
-    const cartContent = document.getElementById('cart-content');
-    const cartEmpty = document.getElementById('cart-empty');
-    const cartCount = document.getElementById('cart-count');
-    const cartTotal = document.getElementById('cart-total');
-    const checkoutBtn = document.getElementById('checkout-btn');
-    const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
-    const detailAddToCartBtn = document.getElementById('detail-add-to-cart');
-    const quickViewBtns = document.querySelectorAll('.quick-view');
-    const productDetailPage = document.getElementById('product-detail');
-    const backBtn = document.getElementById('back-btn');
-    const contactBtn = document.getElementById('contact-btn');
-    const contactModal = document.getElementById('contact-modal');
-    const closeModalBtn = document.querySelector('.close-modal');
-    const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toast-message');
-    const sizeOptions = document.querySelectorAll('.size-option');
-
-    // Cart functions
-    function updateCart() {
-        cartCount.textContent = cart.length;
-
-        if (cart.length === 0) {
-            cartEmpty.style.display = 'block';
-            cartContent.innerHTML = '';
-            cartContent.appendChild(cartEmpty);
-            cartTotal.textContent = '0';
-            return;
+        // Функция открытия Telegram
+        function openTelegram(username) {
+            window.open(`https://t.me/${username}`, '_blank');
+            closeAllModals();
+            showNotification(`Открываю Telegram: @${username}`, 'success');
         }
 
-        cartEmpty.style.display = 'none';
+        // Функция добавления в корзину (с выбором размера)
+        function addToCartRequest(e) {
+            selectedProduct = e.target.closest('.product-card');
+            elements.sizeModal.classList.add('active');
+            elements.overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-        let total = 0;
-        cartContent.innerHTML = '';
+        // Функция добавления товара с выбранным размером
+        function addToCartWithSize(size) {
+            if (!selectedProduct) return;
 
-        cart.forEach((item, index) => {
-            total += item.price;
+            const name = selectedProduct.dataset.name + ` (размер: ${size})`;
+            const price = selectedProduct.dataset.price;
+            const image = selectedProduct.querySelector('img').src;
 
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}">
+            // Проверка на дубликаты
+            if (cartItems.some(item => item.name === name)) {
+                showNotification('Этот товар уже в корзине!', 'warning');
+                closeSizeModal();
+                return;
+            }
+
+            // Добавление в корзину
+            cartItems.push({ name, price, image });
+            updateCartUI();
+            showNotification(`Товар (размер: ${size}) добавлен в корзину!`, 'success');
+
+            // Визуальная обратная связь
+            const addButton = selectedProduct.querySelector('.add-to-cart-btn');
+            addButton.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+            addButton.classList.add('added');
+
+            setTimeout(() => {
+                addButton.innerHTML = '<i class="fas fa-plus"></i> В корзину';
+                addButton.classList.remove('added');
+            }, 2000);
+
+            closeSizeModal();
+        }
+
+        // Закрытие модального окна выбора размера
+        function closeSizeModal() {
+            elements.sizeModal.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            selectedProduct = null;
+        }
+
+        // Обновление UI корзины
+        function updateCartUI() {
+            elements.cartItems.innerHTML = '';
+            let total = 0;
+
+            if (cartItems.length === 0) {
+                elements.cartEmpty.style.display = 'block';
+                elements.cartTotal.textContent = '0 BYN';
+                document.getElementById('cart-count').textContent = '0';
+                return;
+            }
+
+            elements.cartEmpty.style.display = 'none';
+
+            cartItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${item.price.toLocaleString()}</div>
+                        <div class="cart-item-price">${item.price} BYN</div>
                     </div>
                     <button class="remove-item" data-index="${index}">
-                        <i class="fas fa-trash"></i>
+                        <i class="fas fa-times"></i>
                     </button>
                 `;
-
-            cartContent.appendChild(cartItem);
-        });
-
-        cartTotal.textContent = total.toLocaleString();
-
-        // Add event listeners to remove buttons
-        document.querySelectorAll('.remove-item').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = parseInt(e.currentTarget.getAttribute('data-index'));
-                removeFromCart(index);
+                elements.cartItems.appendChild(itemElement);
+                total += parseInt(item.price);
             });
-        });
-    }
 
-    function addToCart(product) {
-        cart.push(product);
-        updateCart();
-        showToast('Товар добавлен в корзину!');
-    }
+            elements.cartTotal.textContent = `${total} BYN`;
+            document.getElementById('cart-count').textContent = cartItems.length;
 
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        updateCart();
-        showToast('Товар удален из корзины', true);
-    }
-
-    function showToast(message, isError = false) {
-        toastMessage.textContent = message;
-        toast.className = isError ? 'toast error' : 'toast';
-        toast.classList.add('show');
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-
-    // Event Listeners
-    cartBtn.addEventListener('click', () => {
-        cartSidebar.classList.add('open');
-        overlay.classList.add('active');
-    });
-
-    closeBtn.addEventListener('click', () => {
-        cartSidebar.classList.remove('open');
-        overlay.classList.remove('active');
-    });
-
-    overlay.addEventListener('click', () => {
-        cartSidebar.classList.remove('open');
-        contactModal.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
-    addToCartBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            const name = e.currentTarget.getAttribute('data-name');
-            const price = parseInt(e.currentTarget.getAttribute('data-price'));
-            const img = e.currentTarget.getAttribute('data-img');
-
-            addToCart({ id, name, price, img });
-
-            // Animation effect
-            e.currentTarget.classList.add('added');
-            setTimeout(() => {
-                e.currentTarget.classList.remove('added');
-            }, 1000);
-        });
-    });
-
-    quickViewBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            const product = document.querySelector(`.add-to-cart-btn[data-id="${id}"]`);
-
-            if (product) {
-                const name = product.getAttribute('data-name');
-                const price = product.getAttribute('data-price');
-                const img = product.getAttribute('data-img');
-
-                document.getElementById('detail-title').textContent = name;
-                document.getElementById('detail-price').textContent = Number(price).toLocaleString();
-                document.getElementById('detail-image').src = img;
-
-                // Set data attributes for detail add to cart button
-                detailAddToCartBtn.setAttribute('data-id', id);
-                detailAddToCartBtn.setAttribute('data-name', name);
-                detailAddToCartBtn.setAttribute('data-price', price);
-                detailAddToCartBtn.setAttribute('data-img', img);
-
-                productDetailPage.classList.add('active');
-                overlay.classList.add('active');
-            }
-        });
-    });
-
-    backBtn.addEventListener('click', () => {
-        productDetailPage.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
-    detailAddToCartBtn.addEventListener('click', (e) => {
-        const id = e.currentTarget.getAttribute('data-id');
-        const name = e.currentTarget.getAttribute('data-name');
-        const price = parseInt(e.currentTarget.getAttribute('data-price'));
-        const img = e.currentTarget.getAttribute('data-img');
-
-        addToCart({ id, name, price, img });
-
-        // Animation effect
-        e.currentTarget.classList.add('added');
-        setTimeout(() => {
-            e.currentTarget.classList.remove('added');
-        }, 1000);
-    });
-
-    contactBtn.addEventListener('click', () => {
-        contactModal.classList.add('active');
-        overlay.classList.add('active');
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-        contactModal.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
-    checkoutBtn.addEventListener('click', () => {
-        if (cart.length === 0) {
-            showToast('Добавьте товары в корзину перед оформлением заказа', true);
-            return;
+            // Добавляем обработчики для кнопок удаления
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cartItems.splice(index, 1);
+                    updateCartUI();
+                    showNotification('Товар удален из корзины', 'info');
+                });
+            });
         }
 
-        showToast('Заказ успешно оформлен! С вами свяжутся для подтверждения.');
+        // Функция показа уведомления
+        function showNotification(message, type = 'info') {
+            elements.toast.textContent = message;
+            elements.toast.className = `toast ${type} show`;
 
-        // Clear cart after successful order
-        cart = [];
-        updateCart();
+            setTimeout(() => {
+                elements.toast.classList.remove('show');
+            }, 3000);
+        }
 
-        // Close cart sidebar
-        cartSidebar.classList.remove('open');
-        overlay.classList.remove('active');
+        // Открытие/закрытие модальных окон
+        function openContactModal() {
+            elements.contactModal.classList.add('active');
+            elements.overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            elements.contactModal.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function toggleCart() {
+            elements.cartSidebar.classList.toggle('open');
+            elements.overlay.classList.toggle('active');
+            document.body.style.overflow = elements.cartSidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeAllModals() {
+            closeContactModal();
+            closeSizeModal();
+            elements.cartSidebar.classList.remove('open');
+            elements.productDetailPage.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Отправка заказа
+        function sendOrderToTelegram() {
+            if (cartItems.length === 0) {
+                showNotification('Корзина пуста!', 'error');
+                return;
+            }
+
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
+            orderText += "📦 Состав заказа:\n";
+
+            let total = 0;
+            cartItems.forEach(item => {
+                orderText += `• ${item.name} — ${item.price} BYN\n`;
+                total += parseInt(item.price);
+            });
+
+            orderText += `\n💰 Итого: ${total} BYN`;
+            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+            orderText += `\n✅ Качество материалов 1:1`;
+            orderText += `\n✅ Полное визуальное соответствие`;
+
+            const encodedOrder = encodeURIComponent(orderText);
+            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`;
+
+            // Открываем Telegram с готовым текстом заказа
+            window.open(telegramUrl, '_blank');
+            showNotification('Открываю Telegram с вашим заказом...', 'success');
+
+            // Очищаем корзину
+            setTimeout(() => {
+                cartItems = [];
+                updateCartUI();
+                closeAllModals();
+            }, 2000);
+        }
+
+        // Копирование заказа
+        function copyOrderToClipboard() {
+            if (cartItems.length === 0) {
+                showNotification('Корзина пуста!', 'error');
+                return;
+            }
+
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
+            orderText += "📦 Состав заказа:\n";
+
+            let total = 0;
+            cartItems.forEach(item => {
+                orderText += `• ${item.name} — ${item.price} BYN\n`;
+                total += parseInt(item.price);
+            });
+
+            orderText += `\n💰 Итого: ${total} BYN`;
+            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+            orderText += `\n✅ Качество материалов 1:1`;
+            orderText += `\n✅ Полное визуальное соответствие`;
+
+            navigator.clipboard.writeText(orderText).then(() => {
+                showNotification('Заказ скопирован в буфер!', 'success');
+            }).catch(err => {
+                showNotification('Ошибка копирования', 'error');
+            });
+        }
+
+        // Функция открытия детальной страницы товара
+        function openProductDetail(productCard) {
+            const name = productCard.dataset.name;
+            const price = productCard.dataset.price;
+            const desc = productCard.querySelector('.product-desc').textContent;
+            const image = productCard.querySelector('img').src;
+
+            document.getElementById('detail-product-name').textContent = name;
+            document.getElementById('detail-product-price').textContent = price + ' BYN';
+            document.getElementById('detail-product-desc').textContent = desc;
+            document.getElementById('main-product-image').src = image;
+            document.querySelector('.thumbnail').src = image;
+
+            elements.productDetailPage.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Сбрасываем выбранный размер
+            selectedSize = null;
+            elements.sizeOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        // Функция добавления товара из детальной страницы
+        function addToCartFromDetail() {
+            if (!selectedSize) {
+                showNotification('Пожалуйста, выберите размер', 'warning');
+                return;
+            }
+
+            const name = document.getElementById('detail-product-name').textContent + ` (размер: ${selectedSize})`;
+            const price = document.getElementById('detail-product-price').textContent.replace(' BYN', '');
+            const image = document.getElementById('main-product-image').src;
+
+            // Проверка на дубликаты
+            if (cartItems.some(item => item.name === name)) {
+                showNotification('Этот товар уже в корзине!', 'warning');
+                return;
+            }
+
+            // Добавление в корзину
+            cartItems.push({ name, price, image });
+            updateCartUI();
+            showNotification(`Товар (размер: ${selectedSize}) добавлен в корзину!`, 'success');
+
+            // Визуальная обратная связь
+            elements.detailAddToCart.innerHTML = '<i class="fas fa-check"></i> Добавлено в корзину';
+            elements.detailAddToCart.style.background = 'var(--success)';
+
+            setTimeout(() => {
+                elements.detailAddToCart.innerHTML = '<i class="fas fa-shopping-cart"></i> Добавить в корзину';
+                elements.detailAddToCart.style.background = 'var(--primary)';
+            }, 2000);
+        }
+
+        // Функция фильтрации товаров по категориям
+        function filterProducts(category) {
+            elements.productCards.forEach(card => {
+                if (category === 'все' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Кнопки добавления в корзину
+            elements.addButtons.forEach(btn => {
+                btn.addEventListener('click', addToCartRequest);
+            });
+
+            // Кнопки выбора размера
+            elements.sizeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const size = this.getAttribute('data-size');
+                    addToCartWithSize(size);
+                });
+            });
+
+            // Основные обработчики
+            elements.contactBtn.addEventListener('click', openContactModal);
+            elements.closeModal.addEventListener('click', closeContactModal);
+            elements.cartToggle.addEventListener('click', toggleCart);
+            elements.closeCart.addEventListener('click', closeAllModals);
+            elements.closeSizeModal.addEventListener('click', closeSizeModal);
+            elements.overlay.addEventListener('click', closeAllModals);
+            elements.sendOrder.addEventListener('click', sendOrderToTelegram);
+            elements.copyOrder.addEventListener('click', copyOrderToClipboard);
+
+            // Обработчики для кнопок Telegram
+            elements.telegramButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const username = this.getAttribute('data-telegram');
+                    openTelegram(username);
+                });
+            });
+
+            // Быстрый просмотр
+            document.querySelectorAll('.quick-view').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    openProductDetail(productCard);
+                });
+            });
+
+            // Клик по карточке товара
+            elements.productCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.add-to-cart-btn') && !e.target.closest('.quick-view')) {
+                        openProductDetail(this);
+                    }
+                });
+            });
+
+            // Кнопка "Назад к каталогу"
+            elements.backToProducts.addEventListener('click', closeAllModals);
+
+            // Добавление в корзину из детальной страницы
+            elements.detailAddToCart.addEventListener('click', addToCartFromDetail);
+
+            // Выбор размера на детальной странице
+            elements.sizeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    elements.sizeOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSize = this.getAttribute('data-size');
+                });
+            });
+
+            // Фильтрация по категориям
+            elements.categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    const categoryName = this.dataset.category;
+                    filterProducts(categoryName);
+
+                    // Прокрутка к началу каталога
+                    document.querySelector('.products-section').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Прокрутка категорий
+            elements.scrollLeftBtn.addEventListener('click', function() {
+                elements.categoriesContainer.scrollBy({
+                    left: -200,
+                    behavior: 'smooth'
+                });
+            });
+
+            elements.scrollRightBtn.addEventListener('click', function() {
+                elements.categoriesContainer.scrollBy({
+                    left: 200,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Инициализация
+        setupEventListeners();
     });
-
-    // Size selection
-    sizeOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            sizeOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-        });
-    });
-
-    // Categories scroll
-    const categories = document.querySelector('.categories');
-    const scrollLeftBtn = document.querySelector('.scroll-left');
-    const scrollRightBtn = document.querySelector('.scroll-right');
-
-    scrollLeftBtn.addEventListener('click', () => {
-        categories.scrollBy({ left: -200, behavior: 'smooth' });
-    });
-
-    scrollRightBtn.addEventListener('click', () => {
-        categories.scrollBy({ left: 200, behavior: 'smooth' });
-    });
-
-    // Initialize cart
-    updateCart();
 </script>
 </body>
 </html>
