@@ -442,6 +442,7 @@
             color: var(--dark);
             margin-bottom: 0.3rem;
             font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .contact-details p {
@@ -757,6 +758,25 @@
             background: var(--secondary);
         }
 
+        /* Size Modal Styles */
+        .size-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            min-width: 80px;
+        }
+
+        .size-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
         /* Анимации */
         @keyframes fadeIn {
             from {
@@ -864,6 +884,12 @@
                 width: 95%;
                 margin: 1rem;
             }
+
+            .size-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                min-width: 70px;
+            }
         }
 
         @media (max-width: 360px) {
@@ -894,6 +920,12 @@
 
             .product-desc {
                 font-size: 0.8rem;
+            }
+
+            .size-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: 60px;
             }
         }
     </style>
@@ -1013,10 +1045,10 @@
             </div>
         </div>
 
-        <!-- Nike -->
-        <div class="product-card" data-name="Футболка Oversize" data-price="55">
+        <!-- Жилетка Nike -->
+        <div class="product-card" data-name="Жилетка Nike" data-price="55">
             <div class="product-image">
-                <img src="jiletka.jpg" alt="Футболка Oversize">
+                <img src="jiletka.jpg" alt="Жилетка Nike">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
@@ -1088,6 +1120,23 @@
     </div>
 </div>
 
+<!-- Size Selection Modal -->
+<div id="size-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-ruler"></i> Выберите размер</h3>
+            <button id="close-size-modal" class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" style="text-align:center;">
+            <p>Выберите размер одежды:</p>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
+                <button class="size-btn" data-size="M">M</button>
+                <button class="size-btn" data-size="L">L</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Cart Sidebar -->
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
@@ -1130,34 +1179,41 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // Упрощенный JavaScript для быстрой загрузки
     document.addEventListener('DOMContentLoaded', function() {
+        // Основные переменные
+        let cartItems = [];
+        let selectedProduct = null;
+
+        // Элементы DOM
+        const elements = {
+            preloader: document.getElementById('preloader'),
+            contactBtn: document.getElementById('contact-btn'),
+            contactModal: document.getElementById('contact-modal'),
+            cartToggle: document.getElementById('cart-toggle'),
+            cartSidebar: document.getElementById('cart-sidebar'),
+            closeCart: document.getElementById('close-cart'),
+            overlay: document.getElementById('overlay'),
+            cartItems: document.getElementById('cart-items'),
+            cartEmpty: document.getElementById('cart-empty'),
+            cartTotal: document.getElementById('cart-total'),
+            sendOrder: document.getElementById('send-order'),
+            copyOrder: document.getElementById('copy-order'),
+            toast: document.getElementById('toast'),
+            closeModal: document.querySelector('.close-modal'),
+            sizeModal: document.getElementById('size-modal'),
+            closeSizeModal: document.getElementById('close-size-modal'),
+            sizeButtons: document.querySelectorAll('.size-btn'),
+            addButtons: document.querySelectorAll('.add-to-cart-btn'),
+            telegramButtons: document.querySelectorAll('.contact-link')
+        };
+
         // Скрытие прелоадера
         setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
+            elements.preloader.style.opacity = '0';
             setTimeout(() => {
-                preloader.style.display = 'none';
+                elements.preloader.style.display = 'none';
             }, 300);
         }, 1000);
-
-        // Инициализация переменных
-        let cartItems = [];
-        const cartBadge = document.getElementById('cart-count');
-        const addButtons = document.querySelectorAll('.add-to-cart-btn');
-        const contactBtn = document.getElementById('contact-btn');
-        const cartToggle = document.getElementById('cart-toggle');
-        const closeCart = document.getElementById('close-cart');
-        const contactModal = document.getElementById('contact-modal');
-        const closeModal = document.querySelector('.close-modal');
-        const overlay = document.getElementById('overlay');
-        const cartSidebar = document.getElementById('cart-sidebar');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartEmpty = document.getElementById('cart-empty');
-        const cartTotal = document.getElementById('cart-total');
-        const sendOrder = document.getElementById('send-order');
-        const copyOrder = document.getElementById('copy-order');
-        const telegramButtons = document.querySelectorAll('.contact-link');
 
         // Функция открытия Telegram
         function openTelegram(username) {
@@ -1166,45 +1222,68 @@
             showNotification(`Открываю Telegram: @${username}`, 'success');
         }
 
-        // Функция добавления в корзину
-        function addToCart() {
-            const productCard = this.closest('.product-card');
-            const name = productCard.dataset.name;
-            const price = productCard.dataset.price;
-            const image = productCard.querySelector('img').src;
+        // Функция добавления в корзину (с выбором размера)
+        function addToCartRequest(e) {
+            selectedProduct = e.target.closest('.product-card');
+            elements.sizeModal.classList.add('active');
+            elements.overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
+        // Функция добавления товара с выбранным размером
+        function addToCartWithSize(size) {
+            if (!selectedProduct) return;
+
+            const name = selectedProduct.dataset.name + ` (размер: ${size})`;
+            const price = selectedProduct.dataset.price;
+            const image = selectedProduct.querySelector('img').src;
+
+            // Проверка на дубликаты
             if (cartItems.some(item => item.name === name)) {
                 showNotification('Этот товар уже в корзине!', 'warning');
+                closeSizeModal();
                 return;
             }
 
+            // Добавление в корзину
             cartItems.push({ name, price, image });
             updateCartUI();
+            showNotification(`Товар (размер: ${size}) добавлен в корзину!`, 'success');
 
-            this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-            this.classList.add('added');
+            // Визуальная обратная связь
+            const addButton = selectedProduct.querySelector('.add-to-cart-btn');
+            addButton.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+            addButton.classList.add('added');
 
             setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-plus"></i> В корзину';
-                this.classList.remove('added');
+                addButton.innerHTML = '<i class="fas fa-plus"></i> В корзину';
+                addButton.classList.remove('added');
             }, 2000);
 
-            showNotification('Товар добавлен в корзину!', 'success');
+            closeSizeModal();
+        }
+
+        // Закрытие модального окна выбора размера
+        function closeSizeModal() {
+            elements.sizeModal.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            selectedProduct = null;
         }
 
         // Обновление UI корзины
         function updateCartUI() {
-            cartBadge.textContent = cartItems.length;
-            cartItemsContainer.innerHTML = '';
+            elements.cartItems.innerHTML = '';
+            let total = 0;
 
             if (cartItems.length === 0) {
-                cartEmpty.style.display = 'block';
-                cartTotal.textContent = '0 BYN';
+                elements.cartEmpty.style.display = 'block';
+                elements.cartTotal.textContent = '0 BYN';
+                document.getElementById('cart-count').textContent = '0';
                 return;
             }
 
-            cartEmpty.style.display = 'none';
-            let total = 0;
+            elements.cartEmpty.style.display = 'none';
 
             cartItems.forEach((item, index) => {
                 const itemElement = document.createElement('div');
@@ -1219,16 +1298,17 @@
                         <i class="fas fa-times"></i>
                     </button>
                 `;
-                cartItemsContainer.appendChild(itemElement);
+                elements.cartItems.appendChild(itemElement);
                 total += parseInt(item.price);
             });
 
-            cartTotal.textContent = `${total} BYN`;
+            elements.cartTotal.textContent = `${total} BYN`;
+            document.getElementById('cart-count').textContent = cartItems.length;
 
             // Добавляем обработчики для кнопок удаления
             document.querySelectorAll('.remove-item').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
+                    const index = parseInt(this.getAttribute('data-index'));
                     cartItems.splice(index, 1);
                     updateCartUI();
                     showNotification('Товар удален из корзины', 'info');
@@ -1238,38 +1318,38 @@
 
         // Функция показа уведомления
         function showNotification(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast ${type} show`;
+            elements.toast.textContent = message;
+            elements.toast.className = `toast ${type} show`;
 
             setTimeout(() => {
-                toast.classList.remove('show');
+                elements.toast.classList.remove('show');
             }, 3000);
         }
 
         // Открытие/закрытие модальных окон
         function openContactModal() {
-            contactModal.classList.add('active');
-            overlay.classList.add('active');
+            elements.contactModal.classList.add('active');
+            elements.overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeContactModal() {
-            contactModal.classList.remove('active');
-            overlay.classList.remove('active');
+            elements.contactModal.classList.remove('active');
+            elements.overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
 
         function toggleCart() {
-            cartSidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = cartSidebar.classList.contains('open') ? 'hidden' : '';
+            elements.cartSidebar.classList.toggle('open');
+            elements.overlay.classList.toggle('active');
+            document.body.style.overflow = elements.cartSidebar.classList.contains('open') ? 'hidden' : '';
         }
 
         function closeAllModals() {
             closeContactModal();
-            cartSidebar.classList.remove('open');
-            overlay.classList.remove('active');
+            closeSizeModal();
+            elements.cartSidebar.classList.remove('open');
+            elements.overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
 
@@ -1338,36 +1418,52 @@
             });
         }
 
-        // Обработчики событий
-        addButtons.forEach(btn => {
-            btn.addEventListener('click', addToCart);
-        });
-
-        contactBtn.addEventListener('click', openContactModal);
-        closeModal.addEventListener('click', closeContactModal);
-        cartToggle.addEventListener('click', toggleCart);
-        closeCart.addEventListener('click', closeAllModals);
-        overlay.addEventListener('click', closeAllModals);
-        sendOrder.addEventListener('click', sendOrderToTelegram);
-        copyOrder.addEventListener('click', copyOrderToClipboard);
-
-        // Обработчики для кнопок Telegram
-        telegramButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const username = this.getAttribute('data-telegram');
-                openTelegram(username);
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Кнопки добавления в корзину
+            elements.addButtons.forEach(btn => {
+                btn.addEventListener('click', addToCartRequest);
             });
-        });
 
-        // Быстрый просмотр
-        document.querySelectorAll('.quick-view').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const productCard = this.closest('.product-card');
-                const name = productCard.dataset.name;
-                showNotification('Быстрый просмотр: ' + name, 'info');
+            // Кнопки выбора размера
+            elements.sizeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const size = this.getAttribute('data-size');
+                    addToCartWithSize(size);
+                });
             });
-        });
+
+            // Основные обработчики
+            elements.contactBtn.addEventListener('click', openContactModal);
+            elements.closeModal.addEventListener('click', closeContactModal);
+            elements.cartToggle.addEventListener('click', toggleCart);
+            elements.closeCart.addEventListener('click', closeAllModals);
+            elements.closeSizeModal.addEventListener('click', closeSizeModal);
+            elements.overlay.addEventListener('click', closeAllModals);
+            elements.sendOrder.addEventListener('click', sendOrderToTelegram);
+            elements.copyOrder.addEventListener('click', copyOrderToClipboard);
+
+            // Обработчики для кнопок Telegram
+            elements.telegramButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const username = this.getAttribute('data-telegram');
+                    openTelegram(username);
+                });
+            });
+
+            // Быстрый просмотр
+            document.querySelectorAll('.quick-view').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    const name = productCard.dataset.name;
+                    showNotification('Быстрый просмотр: ' + name, 'info');
+                });
+            });
+        }
+
+        // Инициализация
+        setupEventListeners();
     });
 </script>
 </body>
