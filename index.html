@@ -1298,7 +1298,6 @@
 <div id="preloader">
     <div class="loader"></div>
 </div>
-
 <!-- Header -->
 <header class="header">
     <div class="header-content">
@@ -1317,6 +1316,185 @@
         </div>
     </div>
 </header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h2>Обнови свой стиль</h2>
+        <p>Качественная одежда и премиальные реплики 1:1</p>
+        <div class="hero-features">
+            <div class="feature">
+                <i class="fas fa-truck-fast"></i>
+                <span>Быстрая доставка</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-medal"></i>
+                <span>Качество 1:1</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-tag"></i>
+                <span>Лучшие цены</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Категории -->
+<div class="categories-container">
+    <button class="scroll-btn scroll-left">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="categories">
+        <div class="category" data-category="все"><img src="all.jpg" alt="Все"><span>Все</span></div>
+        <div class="category" data-category="лонгсливы"><img src="longsleeve.jpg" alt="Лонгсливы"><span>Лонгсливы</span></div>
+        <div class="category" data-category="зипки"><img src="zip.jpg" alt="Зипки"><span>Зипки</span></div>
+        <div class="category" data-category="жилетки"><img src="vest.jpg" alt="Жилетки"><span>Жилетки</span></div>
+        <div class="category" data-category="сумки"><img src="bag.jpg" alt="Сумки"><span>Сумки</span></div>
+    </div>
+    <button class="scroll-btn scroll-right">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
+<!-- Products Section -->
+<main class="products-section">
+    <div class="section-header">
+        <h3>Наша коллекция</h3>
+        <p>Выбери то, что подходит именно тебе</p>
+    </div>
+
+    <div class="products-grid">
+        <!-- Лонгслив Guess -->
+        <div class="product-card" data-category="лонгсливы" data-name="Лонгслив Guess" data-price="85" data-id="1">
+            <div class="product-image">
+                <img src="tshirt.jpg" alt="Лонгслив Guess">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Лонгслив Guess</h4>
+                <p class="product-desc">Премиальное качество</p>
+                <div class="product-footer">
+                    <span class="price">85 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Зипка Corteiz -->
+        <div class="product-card" data-category="зипки" data-name="Зипка Corteiz" data-price="120" data-id="2">
+            <div class="product-image">
+                <img src="hoodie.jpg" alt="Зипка Corteiz">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Зипка Corteiz</h4>
+                <p class="product-desc">Оверсайз, качественный хлопок</p>
+                <div class="product-footer">
+                    <span class="price">120 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Сумка Nike -->
+        <div class="product-card" data-category="сумки" data-name="Сумка Nike" data-price="65" data-id="3">
+            <div class="product-image">
+                <img src="bag.jpg" alt="Сумка Nike">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Сумка Nike</h4>
+                <p class="product-desc">Стильная сумка Nike, вместительная</p>
+                <div class="product-footer">
+                    <span class="price">65 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Жилетка Nike -->
+        <div class="product-card" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
+            <div class="product-image">
+                <img src="jiletka.jpg" alt="Жилетка Nike">
+                <div class="product-overlay">
+                    <button class="quick-view">Быстрый просмотр</button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h4>Жилетка Nike</h4>
+                <p class="product-desc">Свободный крой, хлопок 100%</p>
+                <div class="product-footer">
+                    <span class="price">55 BYN</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-plus"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Product Detail Page -->
+<div id="product-detail-page" class="product-detail-page">
+    <div class="product-detail-container">
+        <button id="back-to-products" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к каталогу
+        </button>
+
+        <div class="product-detail-content">
+            <div class="product-gallery">
+                <img id="main-product-image" class="main-product-image" src="" alt="">
+                <div class="product-thumbnails">
+                    <img class="thumbnail active" src="" alt="">
+                </div>
+            </div>
+
+            <div class="product-detail-info">
+                <h2 id="detail-product-name"></h2>
+                <div id="detail-product-price" class="product-detail-price"></div>
+                <p id="detail-product-desc" class="product-detail-desc"></p>
+
+                <div class="product-features">
+                    <h3>Особенности товара:</h3>
+                    <ul class="features-list">
+                        <li>Качество материалов 1:1</li>
+                        <li>Все бирки и ярлыки как в оригинале</li>
+                        <li>Полное визуальное соответствие</li>
+                        <li>Проверка каждой единицы товара</li>
+                    </ul>
+                </div>
+
+                <div class="detail-actions">
+                    <div class="size-selector">
+                        <h4>Выберите размер:</h4>
+                        <div class="size-options">
+                            <div class="size-option" data-size="M">M</div>
+                            <div class="size-option" data-size="L">L</div>
+                            <div class="size-option" data-size="XL">XL</div>
+                        </div>
+                    </div>
+
+                    <button id="detail-add-to-cart" class="detail-add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Добавить в корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Contact Modal -->
 <div class="modal" id="contact-modal">
     <div class="modal-content">
