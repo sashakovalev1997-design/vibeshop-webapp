@@ -189,14 +189,25 @@
         }
 
         /* Categories */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            flex-wrap: wrap;
+        .categories-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .categories {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 0.5rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
         }
 
         .category {
@@ -205,6 +216,7 @@
             align-items: center;
             cursor: pointer;
             transition: transform .2s ease;
+            flex-shrink: 0;
         }
 
         .category img {
@@ -224,6 +236,36 @@
 
         .category:hover {
             transform: scale(1.05);
+        }
+
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .scroll-btn:hover {
+            background: white;
+        }
+
+        .scroll-left {
+            left: 10px;
+        }
+
+        .scroll-right {
+            right: 10px;
         }
 
         /* Products Section */
@@ -1149,6 +1191,10 @@
                 width: 60px;
                 height: 60px;
             }
+
+            .scroll-btn {
+                display: none;
+            }
         }
 
         @media (max-width: 360px) {
@@ -1237,12 +1283,20 @@
 </section>
 
 <!-- Категории -->
-<div class="categories">
-    <div class="category" data-category="все"><img src="all.jpg" alt="Все"><span>Все</span></div>
-    <div class="category" data-category="лонгсливы"><img src="longsleeve.jpg" alt="Лонгсливы"><span>Лонгсливы</span></div>
-    <div class="category" data-category="зипки"><img src="zip.jpg" alt="Зипки"><span>Зипки</span></div>
-    <div class="category" data-category="жилетки"><img src="vest.jpg" alt="Жилетки"><span>Жилетки</span></div>
-    <div class="category" data-category="сумки"><img src="bag.jpg" alt="Сумки"><span>Сумки</span></div>
+<div class="categories-container">
+    <button class="scroll-btn scroll-left">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="categories">
+        <div class="category" data-category="все"><img src="all.jpg" alt="Все"><span>Все</span></div>
+        <div class="category" data-category="лонгсливы"><img src="longsleeve.jpg" alt="Лонгсливы"><span>Лонгсливы</span></div>
+        <div class="category" data-category="зипки"><img src="zip.jpg" alt="Зипки"><span>Зипки</span></div>
+        <div class="category" data-category="жилетки"><img src="vest.jpg" alt="Жилетки"><span>Жилетки</span></div>
+        <div class="category" data-category="сумки"><img src="bag.jpg" alt="Сумки"><span>Сумки</span></div>
+    </div>
+    <button class="scroll-btn scroll-right">
+        <i class="fas fa-chevron-right"></i>
+    </button>
 </div>
 
 <!-- Products Section -->
@@ -1303,7 +1357,7 @@
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
-                <p class="product-desc">Стильная сумка Nike, вместительная</p>
+                <p class="product-desc">Вместительная, прочная</p>
                 <div class="product-footer">
                     <span class="price">65 BYN</span>
                     <button class="add-to-cart-btn">
@@ -1313,19 +1367,19 @@
             </div>
         </div>
 
-        <!-- Жилетка Nike -->
-        <div class="product-card" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
+        <!-- Жилетка Carhartt -->
+        <div class="product-card" data-category="жилетки" data-name="Жилетка Carhartt" data-price="135" data-id="4">
             <div class="product-image">
-                <img src="jiletka.jpg" alt="Жилетка Nike">
+                <img src="vest.jpg" alt="Жилетка Carhartt">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Жилетка Nike</h4>
-                <p class="product-desc">Свободный крой, хлопок 100%</p>
+                <h4>Жилетка Carhartt</h4>
+                <p class="product-desc">Утепленная, прочный материал</p>
                 <div class="product-footer">
-                    <span class="price">55 BYN</span>
+                    <span class="price">135 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -1343,33 +1397,37 @@
         </button>
         <div class="product-detail-content">
             <div class="product-gallery">
-                <img id="main-product-image" class="main-product-image" src="" alt="Product">
+                <img src="tshirt.jpg" alt="Product" class="main-product-image">
                 <div class="product-thumbnails">
-                    <img class="thumbnail active" src="" alt="Thumbnail 1">
-                    <img class="thumbnail" src="" alt="Thumbnail 2">
-                    <img class="thumbnail" src="" alt="Thumbnail 3">
+                    <img src="tshirt.jpg" alt="Thumbnail 1" class="thumbnail active">
+                    <img src="hoodie.jpg" alt="Thumbnail 2" class="thumbnail">
+                    <img src="bag.jpg" alt="Thumbnail 3" class="thumbnail">
                 </div>
             </div>
             <div class="product-detail-info">
-                <h2 id="detail-product-name"></h2>
-                <div id="detail-product-price" class="product-detail-price"></div>
-                <p id="detail-product-desc" class="product-detail-desc"></p>
+                <h2>Лонгслив Guess</h2>
+                <div class="product-detail-price">85 BYN</div>
+                <p class="product-detail-desc">
+                    Лонгслив премиального качества от Guess. Идеально подходит для повседневной носки.
+                    Материал: 100% хлопок премиум качества. Доступен в разных размерах.
+                </p>
                 <div class="product-features">
-                    <h3>Характеристики</h3>
+                    <h3>Особенности:</h3>
                     <ul class="features-list">
-                        <li>Качество 1:1</li>
-                        <li>Быстрая доставка</li>
-                        <li>Оригинальные материалы</li>
+                        <li>Качество 1:1 с оригиналом</li>
+                        <li>Премиальный хлопок</li>
+                        <li>Удобная посадка</li>
                         <li>Стильный дизайн</li>
+                        <li>Долговечность</li>
                     </ul>
                 </div>
                 <div class="size-selector">
-                    <h4>Выберите размер</h4>
+                    <h4>Выберите размер:</h4>
                     <div class="size-options">
-                        <div class="size-option selected">S</div>
-                        <div class="size-option">M</div>
-                        <div class="size-option">L</div>
-                        <div class="size-option">XL</div>
+                        <span class="size-option">S</span>
+                        <span class="size-option selected">M</span>
+                        <span class="size-option">L</span>
+                        <span class="size-option">XL</span>
                     </div>
                 </div>
                 <div class="detail-actions">
@@ -1386,59 +1444,47 @@
 <div class="modal" id="contact-modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-envelope"></i> Контактная информация</h3>
+            <h3><i class="fas fa-users"></i> Наша команда</h3>
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
             <div class="contact-info">
-                <p>Свяжитесь с нами удобным для вас способом. Мы всегда на связи и готовы ответить на все ваши вопросы!</p>
-                <div class="contact-cards">
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fab fa-telegram"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Telegram</h4>
-                            <p>Написать в Telegram</p>
-                            <a href="https://t.me/vibeshop" class="contact-link" target="_blank">
-                                <i class="fab fa-telegram"></i> @vibeshop
-                            </a>
-                        </div>
+                <p>Мы всегда готовы помочь вам с выбором и ответить на все ваши вопросы. Свяжитесь с нами удобным для вас способом!</p>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-avatar">
+                        <i class="fas fa-user-tie"></i>
                     </div>
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Instagram</h4>
-                            <p>Подписаться в Instagram</p>
-                            <a href="https://instagram.com/vibeshop" class="contact-link" target="_blank">
-                                <i class="fab fa-instagram"></i> @vibeshop
-                            </a>
-                        </div>
+                    <div class="contact-details">
+                        <h4>Владислав</h4>
+                        <p>Менеджер по продажам</p>
+                        <a href="https://t.me/bigdigovich" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Написать в Telegram
+                        </a>
                     </div>
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Телефон</h4>
-                            <p>Позвонить нам</p>
-                            <a href="tel:+375291234567" class="contact-link">
-                                <i class="fas fa-phone"></i> +375 (29) 123-45-67
-                            </a>
-                        </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-avatar">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Александр</h4>
+                        <p>Техническая поддержка</p>
+                        <a href="https://t.me/Amg0101am" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Написать в Telegram
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="replica-notice">
-                <h4><i class="fas fa-info-circle"></i> О наших товарах</h4>
-                <p>Мы предлагаем высококачественные реплики брендовой одежды 1:1. Наши товары визуально и тактильно неотличимы от оригиналов.</p>
+                <h4><i class="fas fa-crown"></i> Премиум качество</h4>
+                <p>Все наши товары - это качественные реплики 1:1, которые не уступают оригиналам по материалам и пошиву.</p>
                 <ul>
-                    <li>Используем те же материалы, что и оригинальные бренды</li>
-                    <li>Полное соответствие лекалам и дизайну</li>
-                    <li>Качественная фурнитура и строчка</li>
-                    <li>Доступная цена при премиальном качестве</li>
+                    <li>Точное соответствие оригиналу</li>
+                    <li>Качественные материалы</li>
+                    <li>Прочная фурнитура</li>
+                    <li>Аккуратная строчка</li>
                 </ul>
             </div>
         </div>
@@ -1448,7 +1494,7 @@
 <!-- Cart Sidebar -->
 <div class="cart-sidebar">
     <div class="cart-header">
-        <h3>Корзина</h3>
+        <h3>Корзина покупок</h3>
         <button class="close-btn">&times;</button>
     </div>
     <div class="cart-content">
@@ -1461,12 +1507,12 @@
     <div class="cart-footer">
         <div class="cart-total">
             <span>Итого:</span>
-            <span id="cart-total-price">0 BYN</span>
+            <span>0 BYN</span>
         </div>
         <button class="order-btn">
             <i class="fas fa-check"></i> Оформить заказ
         </button>
-        <button class="copy-btn" id="copy-cart">
+        <button class="copy-btn" id="copy-order">
             <i class="fas fa-copy"></i> Скопировать заказ
         </button>
     </div>
@@ -1475,296 +1521,309 @@
 <!-- Overlay -->
 <div class="overlay"></div>
 
-<!-- Toast Notification -->
+<!-- Toast Notifications -->
 <div class="toast"></div>
 
 <script>
-    // DOM Elements
-    const preloader = document.getElementById('preloader');
-    const cartToggle = document.getElementById('cart-toggle');
-    const cartSidebar = document.querySelector('.cart-sidebar');
-    const closeCartBtn = document.querySelector('.close-btn');
-    const overlay = document.querySelector('.overlay');
-    const contactBtn = document.getElementById('contact-btn');
-    const contactModal = document.getElementById('contact-modal');
-    const closeModalBtn = document.querySelector('.close-modal');
-    const productCards = document.querySelectorAll('.product-card');
-    const quickViewBtns = document.querySelectorAll('.quick-view');
-    const productDetailPage = document.querySelector('.product-detail-page');
-    const backBtn = document.querySelector('.back-btn');
-    const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
-    const detailAddToCartBtn = document.querySelector('.detail-add-to-cart');
-    const cartContent = document.querySelector('.cart-content');
-    const cartCount = document.getElementById('cart-count');
-    const cartTotalPrice = document.getElementById('cart-total-price');
-    const orderBtn = document.querySelector('.order-btn');
-    const copyCartBtn = document.getElementById('copy-cart');
-    const toast = document.querySelector('.toast');
-    const sizeOptions = document.querySelectorAll('.size-option');
-    const thumbnails = document.querySelectorAll('.thumbnail');
-    const mainProductImage = document.getElementById('main-product-image');
-    const categories = document.querySelectorAll('.category');
-
-    // Cart Data
-    let cart = [];
-    let currentProduct = null;
-
-    // Preloader
-    window.addEventListener('load', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Preloader
         setTimeout(() => {
-            preloader.style.opacity = '0';
+            document.getElementById('preloader').style.opacity = '0';
             setTimeout(() => {
-                preloader.style.display = 'none';
+                document.getElementById('preloader').style.display = 'none';
             }, 300);
         }, 1000);
-    });
 
-    // Toggle Cart
-    cartToggle.addEventListener('click', () => {
-        cartSidebar.classList.add('open');
-        overlay.classList.add('active');
-        updateCartUI();
-    });
+        // Elements
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartSidebar = document.querySelector('.cart-sidebar');
+        const closeCartBtn = document.querySelector('.close-btn');
+        const overlay = document.querySelector('.overlay');
+        const contactBtn = document.getElementById('contact-btn');
+        const contactModal = document.getElementById('contact-modal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const backBtn = document.querySelector('.back-btn');
+        const productDetailPage = document.querySelector('.product-detail-page');
+        const quickViewBtns = document.querySelectorAll('.quick-view');
+        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+        const detailAddToCartBtn = document.querySelector('.detail-add-to-cart');
+        const sizeOptions = document.querySelectorAll('.size-option');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainProductImage = document.querySelector('.main-product-image');
+        const orderBtn = document.querySelector('.order-btn');
+        const copyOrderBtn = document.getElementById('copy-order');
+        const toast = document.querySelector('.toast');
+        const categoriesContainer = document.querySelector('.categories');
+        const scrollLeftBtn = document.querySelector('.scroll-left');
+        const scrollRightBtn = document.querySelector('.scroll-right');
 
-    // Close Cart
-    closeCartBtn.addEventListener('click', () => {
-        cartSidebar.classList.remove('open');
-        overlay.classList.remove('active');
-    });
+        // Cart functionality
+        let cart = [];
+        const cartCount = document.getElementById('cart-count');
+        const cartContent = document.querySelector('.cart-content');
+        const cartTotal = document.querySelector('.cart-total span:last-child');
 
-    // Open Contact Modal
-    contactBtn.addEventListener('click', () => {
-        contactModal.classList.add('active');
-        overlay.classList.add('active');
-    });
-
-    // Close Contact Modal
-    closeModalBtn.addEventListener('click', () => {
-        contactModal.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
-    // Close modals on overlay click
-    overlay.addEventListener('click', () => {
-        cartSidebar.classList.remove('open');
-        contactModal.classList.remove('active');
-        productDetailPage.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
-    // Quick View Product
-    quickViewBtns.forEach((btn, index) => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const productCard = btn.closest('.product-card');
-            openProductDetail(productCard);
+        // Toggle Cart
+        cartToggle.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+            overlay.classList.add('active');
         });
-    });
 
-    // Open Product Detail
-    productCards.forEach(card => {
-        card.addEventListener('click', () => {
-            openProductDetail(card);
+        // Close Cart
+        closeCartBtn.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            overlay.classList.remove('active');
         });
-    });
 
-    function openProductDetail(card) {
-        const name = card.getAttribute('data-name');
-        const price = card.getAttribute('data-price');
-        const desc = card.querySelector('.product-desc').textContent;
-        const imageSrc = card.querySelector('img').src;
-        const id = card.getAttribute('data-id');
+        // Toggle Contact Modal
+        contactBtn.addEventListener('click', () => {
+            contactModal.classList.add('active');
+            overlay.classList.add('active');
+        });
 
-        currentProduct = { id, name, price, desc, imageSrc };
+        // Close Contact Modal
+        closeModalBtn.addEventListener('click', () => {
+            contactModal.classList.remove('active');
+            overlay.classList.remove('active');
+        });
 
-        document.getElementById('detail-product-name').textContent = name;
-        document.getElementById('detail-product-price').textContent = `${price} BYN`;
-        document.getElementById('detail-product-desc').textContent = desc;
-        mainProductImage.src = imageSrc;
+        // Close on Overlay Click
+        overlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            contactModal.classList.remove('active');
+            overlay.classList.remove('active');
+        });
 
-        // Set thumbnails (for demo, using same image)
+        // Back to Catalog
+        backBtn.addEventListener('click', () => {
+            productDetailPage.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Quick View
+        quickViewBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productCard = btn.closest('.product-card');
+                const productName = productCard.getAttribute('data-name');
+                const productPrice = productCard.getAttribute('data-price');
+
+                document.querySelector('.product-detail-info h2').textContent = productName;
+                document.querySelector('.product-detail-price').textContent = `${productPrice} BYN`;
+
+                productDetailPage.classList.add('active');
+                overlay.classList.add('active');
+            });
+        });
+
+        // Size Selection
+        sizeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                sizeOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Thumbnail Selection
         thumbnails.forEach(thumb => {
-            thumb.src = imageSrc;
+            thumb.addEventListener('click', () => {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+                mainProductImage.src = thumb.src;
+            });
         });
 
-        productDetailPage.classList.add('active');
-        overlay.classList.add('active');
-    }
+        // Add to Cart
+        function addToCart(productId, productName, productPrice, size = 'M') {
+            const existingItem = cart.find(item => item.id === productId && item.size === size);
 
-    // Back to Catalog
-    backBtn.addEventListener('click', () => {
-        productDetailPage.classList.remove('active');
-        overlay.classList.remove('active');
-    });
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: parseFloat(productPrice),
+                    size: size,
+                    quantity: 1
+                });
+            }
 
-    // Add to Cart from Catalog
-    addToCartBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const productCard = btn.closest('.product-card');
-            const id = productCard.getAttribute('data-id');
-            const name = productCard.getAttribute('data-name');
-            const price = productCard.getAttribute('data-price');
-            const imageSrc = productCard.querySelector('img').src;
-
-            addToCart({ id, name, price, imageSrc, size: 'M' });
-        });
-    });
-
-    // Add to Cart from Detail Page
-    detailAddToCartBtn.addEventListener('click', () => {
-        if (currentProduct) {
-            const selectedSize = document.querySelector('.size-option.selected').textContent;
-            addToCart({ ...currentProduct, size: selectedSize });
-        }
-    });
-
-    // Size Selection
-    sizeOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            sizeOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-        });
-    });
-
-    // Thumbnail Selection
-    thumbnails.forEach(thumb => {
-        thumb.addEventListener('click', () => {
-            thumbnails.forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-            mainProductImage.src = thumb.src;
-        });
-    });
-
-    // Add to Cart Function
-    function addToCart(product) {
-        const existingItem = cart.find(item => item.id === product.id && item.size === product.size);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ ...product, quantity: 1 });
+            updateCart();
+            showToast(`Товар "${productName}" добавлен в корзину!`, 'success');
         }
 
-        updateCartUI();
-        showToast('Товар добавлен в корзину!', 'success');
-    }
+        // Update Cart
+        function updateCart() {
+            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
 
-    // Update Cart UI
-    function updateCartUI() {
-        cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
-        cartTotalPrice.textContent = `${calculateTotal()} BYN`;
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Ваша корзина пуста</p>
+                        <small>Добавьте товары из каталога</small>
+                    </div>
+                `;
+                cartTotal.textContent = '0 BYN';
+                return;
+            }
 
-        if (cart.length === 0) {
-            document.querySelector('.cart-empty').style.display = 'block';
-            document.querySelector('.cart-footer').style.display = 'none';
-        } else {
-            document.querySelector('.cart-empty').style.display = 'none';
-            document.querySelector('.cart-footer').style.display = 'block';
-
+            let total = 0;
             cartContent.innerHTML = '';
+
             cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
-                    <img src="${item.imageSrc}" alt="${item.name}">
+                    <img src="tshirt.jpg" alt="${item.name}">
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${item.price} BYN</div>
-                        <small>Размер: ${item.size}</small>
+                        <div class="cart-item-name">${item.name} (${item.size})</div>
+                        <div class="cart-item-price">${item.price} BYN × ${item.quantity}</div>
                     </div>
                     <button class="remove-item">&times;</button>
                 `;
-                cartContent.appendChild(cartItem);
 
-                // Remove item from cart
-                const removeBtn = cartItem.querySelector('.remove-item');
-                removeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
+                cartItem.querySelector('.remove-item').addEventListener('click', () => {
                     removeFromCart(item.id, item.size);
                 });
+
+                cartContent.appendChild(cartItem);
             });
-        }
-    }
 
-    // Remove from Cart
-    function removeFromCart(id, size) {
-        cart = cart.filter(item => !(item.id === id && item.size === size));
-        updateCartUI();
-        showToast('Товар удален из корзины', 'warning');
-    }
-
-    // Calculate Total
-    function calculateTotal() {
-        return cart.reduce((total, item) => total + (parseFloat(item.price) * item.quantity), 0);
-    }
-
-    // Order Button
-    orderBtn.addEventListener('click', () => {
-        if (cart.length > 0) {
-            showToast('Заказ оформлен! С вами свяжутся в ближайшее время.', 'success');
-            cart = [];
-            updateCartUI();
-            setTimeout(() => {
-                cartSidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            }, 2000);
-        }
-    });
-
-    // Copy Cart
-    copyCartBtn.addEventListener('click', () => {
-        if (cart.length === 0) {
-            showToast('Корзина пуста!', 'error');
-            return;
+            cartTotal.textContent = `${total.toFixed(2)} BYN`;
         }
 
-        let orderText = "Здравствуйте, хочу заказать:\n";
-        cart.forEach(item => {
-            orderText += `- ${item.name} (Размер: ${item.size}) - ${item.price} BYN x ${item.quantity}\n`;
+        // Remove from Cart
+        function removeFromCart(productId, size) {
+            const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
+
+            if (itemIndex !== -1) {
+                cart.splice(itemIndex, 1);
+                updateCart();
+                showToast('Товар удален из корзины', 'warning');
+            }
+        }
+
+        // Add to Cart from Catalog
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const productCard = btn.closest('.product-card');
+                const productId = productCard.getAttribute('data-id');
+                const productName = productCard.getAttribute('data-name');
+                const productPrice = productCard.getAttribute('data-price');
+
+                addToCart(productId, productName, productPrice);
+
+                // Анимация кнопки
+                btn.classList.add('added');
+                btn.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+                setTimeout(() => {
+                    btn.classList.remove('added');
+                    btn.innerHTML = '<i class="fas fa-plus"></i> В корзину';
+                }, 2000);
+            });
         });
-        orderText += `\nИтого: ${calculateTotal()} BYN`;
 
-        navigator.clipboard.writeText(orderText)
-            .then(() => {
-                showToast('Заказ скопирован в буфер обмена!', 'success');
-            })
-            .catch(err => {
-                showToast('Не удалось скопировать заказ', 'error');
-                console.error('Ошибка копирования: ', err);
+        // Add to Cart from Detail Page
+        detailAddToCartBtn.addEventListener('click', () => {
+            const selectedSize = document.querySelector('.size-option.selected').textContent;
+            const productName = document.querySelector('.product-detail-info h2').textContent;
+            const productPrice = document.querySelector('.product-detail-price').textContent.replace(' BYN', '');
+
+            // Генерируем ID на основе названия
+            const productId = productName.split(' ').join('').toLowerCase();
+
+            addToCart(productId, productName, productPrice, selectedSize);
+        });
+
+        // Order and Copy
+        orderBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('Добавьте товары в корзину перед оформлением заказа', 'error');
+                return;
+            }
+
+            showToast('Заказ оформлен! Скоро с вами свяжутся.', 'success');
+            cart = [];
+            updateCart();
+            cartSidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        copyOrderBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('Добавьте товары в корзину перед копированием', 'error');
+                return;
+            }
+
+            let orderText = "Заказ из VibeShop:\n\n";
+            cart.forEach(item => {
+                orderText += `${item.name} (Размер: ${item.size}) - ${item.price} BYN × ${item.quantity} = ${(item.price * item.quantity).toFixed(2)} BYN\n`;
             });
-    });
 
-    // Show Toast Notification
-    function showToast(message, type = 'info') {
-        toast.textContent = message;
-        toast.className = 'toast show ' + type;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            orderText += `\nИтого: ${total.toFixed(2)} BYN`;
 
-        setTimeout(() => {
-            toast.className = 'toast';
-        }, 3000);
-    }
+            // Копирование в буфер обмена
+            navigator.clipboard.writeText(orderText).then(() => {
+                showToast('Заказ скопирован в буфер обмена!', 'success');
+            }).catch(err => {
+                showToast('Не удалось скопировать заказ', 'error');
+            });
+        });
 
-    // Фильтрация по категориям
-    categories.forEach(category => {
-        category.addEventListener('click', () => {
-            const categoryName = category.getAttribute('data-category');
+        // Show Toast Notification
+        function showToast(message, type = 'info') {
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
 
-            // Обновляем активную категорию
-            categories.forEach(cat => cat.classList.remove('active'));
-            category.classList.add('active');
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
 
-            // Фильтруем товары
-            productCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
+        // Categories Scrolling
+        scrollLeftBtn.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+        });
 
-                if (categoryName === 'все' || cardCategory === categoryName) {
-                    card.style.display = 'block';
+        scrollRightBtn.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+
+        // Filter by Category
+        const categories = document.querySelectorAll('.category');
+        const productCards = document.querySelectorAll('.product-card');
+
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                const categoryName = category.getAttribute('data-category');
+
+                categories.forEach(cat => cat.style.opacity = '0.7');
+                category.style.opacity = '1';
+
+                if (categoryName === 'все') {
+                    productCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
                 } else {
-                    card.style.display = 'none';
+                    productCards.forEach(card => {
+                        if (card.getAttribute('data-category') === categoryName) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 }
             });
         });
+
+        // Initialize Cart
+        updateCart();
     });
 </script>
 </body>
