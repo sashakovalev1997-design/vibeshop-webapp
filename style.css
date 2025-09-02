@@ -982,161 +982,53 @@ body {
 .product-card:nth-child(3) { animation-delay: 0.3s; }
 .product-card:nth-child(4) { animation-delay: 0.4s; }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        padding: 1rem !important;
-    }
-
-    .logo {
-        text-align: left;
-        flex: 1;
-    }
-
-    .logo h1 {
-        font-size: 1.5rem !important;
-        text-align: left;
-        margin: 0;
-    }
-
-    .logo p {
-        font-size: 0.7rem !important;
-        text-align: left;
-    }
-
-    .header-actions {
-        width: auto !important;
-        justify-content: flex-end !important;
-        gap: 0.5rem !important;
-        flex: none;
-    }
-
-    .contact-btn, .cart-btn {
-        padding: 0.6rem !important;
-        font-size: 0.9rem;
-    }
-
-    /* Адаптация карточек для планшетов */
-    .product-card {
-        height: 360px;
-    }
-
-    .product-image {
-        height: 220px;
-    }
-
-    .product-detail-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .main-product-image {
-        height: 300px;
-    }
+/* Product Card - УВЕЛИЧЕННАЯ ВЫСОТА */
+.product-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    height: 420px; /* Фиксированная высота карточки */
+    display: flex;
+    flex-direction: column;
 }
 
-@media (max-width: 480px) {
-    .header-content {
-        padding: 0.8rem !important;
-    }
-
-    .logo h1 {
-        font-size: 1.3rem !important;
-    }
-
-    .logo p {
-        font-size: 0.6rem !important;
-    }
-
-    .contact-btn, .cart-btn {
-        padding: 0.5rem !important;
-        min-width: 40px;
-        justify-content: center;
-    }
-
-    .contact-btn i, .cart-btn i {
-        margin: 0 !important;
-    }
-
-    /* Адаптация карточек для мобильных */
-    .product-card {
-        height: 340px;
-    }
-
-    .product-image {
-        height: 180px;
-    }
-
-    .product-info {
-        padding: 1rem;
-    }
-
-    .product-info h4 {
-        font-size: 1.1rem;
-    }
-
-    .price {
-        font-size: 1.2rem;
-    }
-
-    .add-to-cart-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-    }
-
-    .cart-sidebar {
-        width: 100%;
-        right: -100%;
-    }
-
-    .modal-content {
-        width: 95%;
-        margin: 1rem;
-    }
-
-    .size-btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-        min-width: 70px;
-    }
-
-    .product-detail-info h2 {
-        font-size: 1.8rem;
-    }
-
-    .product-detail-price {
-        font-size: 1.5rem;
-    }
-
-    .size-options {
-        flex-wrap: wrap;
-    }
-
-    .thumbnail {
-        width: 60px;
-        height: 60px;
-    }
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 360px) {
-    .product-card {
-        height: 320px;
-    }
+.product-image {
+    position: relative;
+    height: 280px; /* Увеличенная высота изображения */
+    overflow: hidden;
+    flex-shrink: 0; /* Предотвращаем сжатие изображения */
+}
 
-    .product-image {
-        height: 160px;
-    }
+.product-info h4 {
+    font-size: 1.4rem; /* Увеличили шрифт */
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
 
-    .products-grid {
-        gap: 1rem;
-    }
+.price {
+    font-size: 1.5rem; /* Увеличили шрифт */
+    font-weight: 700;
+    color: var(--primary);
+}
 
-    .size-btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-        min-width: 60px;
-    }
+.add-to-cart-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.3rem; /* Увеличили padding */
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    font-size: 0.95rem; /* Немного увеличили шрифт */
 }
