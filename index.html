@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Brutal+Type:wght@700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
     <style>
         /* Reset и базовые стили */
         * {
@@ -30,7 +30,7 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --radius: 16px;
             --transition: all 0.3s ease;
-            --neon-red: #ff3131;
+            --neon-red: #ff4444;
             --neon-pink: #ff44cc;
         }
 
@@ -40,7 +40,6 @@
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
-            padding-top: 100px; /* Увеличенный отступ для фиксированной шапки */
         }
 
         /* Preloader */
@@ -74,16 +73,12 @@
 
         /* Header - Обновленная шапка */
         .header {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(15px);
-            position: fixed;
-            top: 0;
-            left: 0;
+            background: #ffffff;
+            position: static;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
-            padding: 0.8rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
         }
 
         .header-content {
@@ -96,50 +91,23 @@
         }
 
         .logo h1 {
-            font-family: 'Brutal Type', 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2.5rem;
-            color: #ff3131;
+            font-family: 'Rajdhani', 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: #ff4444;
             text-shadow:
-                    0 0 5px #ff3131,
-                    0 0 10px #ff3131,
-                    0 0 15px #ff3131,
-                    0 0 20px #ff003c,
-                    0 0 35px #ff003c,
-                    0 0 40px #ff003c,
-                    0 0 50px #ff003c,
-                    0 0 75px #ff003c;
+                    0 0 10px rgba(255, 68, 68, 0.7),
+                    0 0 20px rgba(255, 68, 68, 0.5),
+                    0 0 30px rgba(255, 68, 68, 0.3);
             letter-spacing: 1px;
-            animation: neon-flicker 2s infinite alternate;
             text-transform: uppercase;
-            position: relative;
-        }
-
-        @keyframes neon-flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow:
-                        0 0 5px #ff3131,
-                        0 0 10px #ff3131,
-                        0 0 15px #ff3131,
-                        0 0 20px #ff003c,
-                        0 0 35px #ff003c,
-                        0 0 40px #ff003c,
-                        0 0 50px #ff003c,
-                        0 0 75px #ff003c;
-                opacity: 1;
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-                opacity: 0.8;
-            }
         }
 
         .logo p {
-            color: rgba(255, 255, 255, 0.8);
+            color: #666;
             font-size: 0.9rem;
             margin-top: -2px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            letter-spacing: 1.5px;
             font-weight: 600;
         }
 
@@ -208,7 +176,7 @@
             color: white;
             text-align: center;
             padding: 3rem 1rem;
-            margin-top: 20px; /* Добавлен отступ от шапки */
+            margin-top: 0;
         }
 
         .hero-content h2 {
