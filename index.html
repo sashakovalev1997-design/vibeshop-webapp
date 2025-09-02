@@ -362,6 +362,7 @@
 
         .product-info {
             padding: 1.2rem;
+            background: white;
         }
 
         .product-info h4 {
@@ -1268,7 +1269,7 @@
         <div class="hero-features">
             <div class="feature">
                 <i class="fas fa-truck-fast"></i>
-                <span>Быстрая доставка</span>
+                <span>Бистрая доставка</span>
             </div>
             <div class="feature">
                 <i class="fas fa-medal"></i>
@@ -1357,7 +1358,7 @@
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
-                <p class="product-desc">Вместительная, прочная</p>
+                <p class="product-desc">Стильная сумка Nike, вместительная</p>
                 <div class="product-footer">
                     <span class="price">65 BYN</span>
                     <button class="add-to-cart-btn">
@@ -1367,19 +1368,19 @@
             </div>
         </div>
 
-        <!-- Жилетка Carhartt -->
-        <div class="product-card" data-category="жилетки" data-name="Жилетка Carhartt" data-price="135" data-id="4">
+        <!-- Жилетка Nike -->
+        <div class="product-card" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
             <div class="product-image">
-                <img src="vest.jpg" alt="Жилетка Carhartt">
+                <img src="jiletka.jpg" alt="Жилетка Nike">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Жилетка Carhartt</h4>
-                <p class="product-desc">Утепленная, прочный материал</p>
+                <h4>Жилетка Nike</h4>
+                <p class="product-desc">Свободный крой, хлопок 100%</p>
                 <div class="product-footer">
-                    <span class="price">135 BYN</span>
+                    <span class="price">55 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -1390,48 +1391,46 @@
 </main>
 
 <!-- Product Detail Page -->
-<div class="product-detail-page">
+<div id="product-detail-page" class="product-detail-page">
     <div class="product-detail-container">
-        <button class="back-btn">
+        <button id="back-to-products" class="back-btn">
             <i class="fas fa-arrow-left"></i> Назад к каталогу
         </button>
+
         <div class="product-detail-content">
             <div class="product-gallery">
-                <img src="tshirt.jpg" alt="Product" class="main-product-image">
+                <img id="main-product-image" class="main-product-image" src="" alt="">
                 <div class="product-thumbnails">
-                    <img src="tshirt.jpg" alt="Thumbnail 1" class="thumbnail active">
-                    <img src="hoodie.jpg" alt="Thumbnail 2" class="thumbnail">
-                    <img src="bag.jpg" alt="Thumbnail 3" class="thumbnail">
+                    <img class="thumbnail active" src="" alt="">
                 </div>
             </div>
+
             <div class="product-detail-info">
-                <h2>Лонгслив Guess</h2>
-                <div class="product-detail-price">85 BYN</div>
-                <p class="product-detail-desc">
-                    Лонгслив премиального качества от Guess. Идеально подходит для повседневной носки.
-                    Материал: 100% хлопок премиум качества. Доступен в разных размерах.
-                </p>
+                <h2 id="detail-product-name"></h2>
+                <div id="detail-product-price" class="product-detail-price"></div>
+                <p id="detail-product-desc" class="product-detail-desc"></p>
+
                 <div class="product-features">
-                    <h3>Особенности:</h3>
+                    <h3>Особенности товара:</h3>
                     <ul class="features-list">
-                        <li>Качество 1:1 с оригиналом</li>
-                        <li>Премиальный хлопок</li>
-                        <li>Удобная посадка</li>
-                        <li>Стильный дизайн</li>
-                        <li>Долговечность</li>
+                        <li>Качество материалов 1:1</li>
+                        <li>Все бирки и ярлыки как в оригинале</li>
+                        <li>Полное визуальное соответствие</li>
+                        <li>Проверка каждой единицы товара</li>
                     </ul>
                 </div>
-                <div class="size-selector">
-                    <h4>Выберите размер:</h4>
-                    <div class="size-options">
-                        <span class="size-option">S</span>
-                        <span class="size-option selected">M</span>
-                        <span class="size-option">L</span>
-                        <span class="size-option">XL</span>
-                    </div>
-                </div>
+
                 <div class="detail-actions">
-                    <button class="detail-add-to-cart">
+                    <div class="size-selector">
+                        <h4>Выберите размер:</h4>
+                        <div class="size-options">
+                            <div class="size-option" data-size="M">M</div>
+                            <div class="size-option" data-size="L">L</div>
+                            <div class="size-option" data-size="XL">XL</div>
+                        </div>
+                    </div>
+
+                    <button id="detail-add-to-cart" class="detail-add-to-cart">
                         <i class="fas fa-shopping-cart"></i> Добавить в корзину
                     </button>
                 </div>
@@ -1441,389 +1440,531 @@
 </div>
 
 <!-- Contact Modal -->
-<div class="modal" id="contact-modal">
+<div id="contact-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-users"></i> Наша команда</h3>
+            <h3><i class="fas fa-envelope"></i> Контакты для связи</h3>
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
             <div class="contact-info">
-                <p>Мы всегда готовы помочь вам с выбором и ответить на все ваши вопросы. Свяжитесь с нами удобным для вас способом!</p>
-            </div>
-            <div class="contact-cards">
-                <div class="contact-card">
-                    <div class="contact-avatar">
-                        <i class="fas fa-user-tie"></i>
+                <p>Если у вас возникли вопросы или проблемы с заказом, свяжитесь с нами:</p>
+
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Владислав</h4>
+                            <p>Менеджер</p>
+                            <button class="contact-link" data-telegram="bigdigovich">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
                     </div>
-                    <div class="contact-details">
-                        <h4>Владислав</h4>
-                        <p>Менеджер по продажам</p>
-                        <a href="https://t.me/bigdigovich" class="contact-link" target="_blank">
-                            <i class="fab fa-telegram"></i> Написать в Telegram
-                        </a>
+
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Александр</h4>
+                            <p>Техническая поддержка</p>
+                            <button class="contact-link" data-telegram="Amg0101am">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="contact-card">
-                    <div class="contact-avatar">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h4>Александр</h4>
-                        <p>Техническая поддержка</p>
-                        <a href="https://t.me/Amg0101am" class="contact-link" target="_blank">
-                            <i class="fab fa-telegram"></i> Написать в Telegram
-                        </a>
-                    </div>
+
+                <div class="replica-notice">
+                    <p>Мы предлагаем реплики высочайшего качества с полным соответствием оригиналу:</p>
+                    <ul>
+                        <li>✅ Все бирки и ярлыки как в оригинале</li>
+                        <li>✅ Качество материалов 1:1</li>
+                        <li>✅ Полное визуальное соответствие</li>
+                        <li>✅ Проверка каждой единицы товара</li>
+                    </ul>
                 </div>
             </div>
-            <div class="replica-notice">
-                <h4><i class="fas fa-crown"></i> Премиум качество</h4>
-                <p>Все наши товары - это качественные реплики 1:1, которые не уступают оригиналам по материалам и пошиву.</p>
-                <ul>
-                    <li>Точное соответствие оригиналу</li>
-                    <li>Качественные материалы</li>
-                    <li>Прочная фурнитура</li>
-                    <li>Аккуратная строчка</li>
-                </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Size Selection Modal -->
+<div id="size-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-ruler"></i> Выберите размер</h3>
+            <button id="close-size-modal" class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" style="text-align:center;">
+            <p>Выберите размер одежды:</p>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
+                <button class="size-btn" data-size="M">M</button>
+                <button class="size-btn" data-size="L">L</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Cart Sidebar -->
-<div class="cart-sidebar">
+<div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
-        <h3>Корзина покупок</h3>
-        <button class="close-btn">&times;</button>
+        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+        <button id="close-cart" class="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
+
     <div class="cart-content">
-        <div class="cart-empty">
-            <i class="fas fa-shopping-cart"></i>
-            <p>Ваша корзина пуста</p>
+        <div id="cart-empty" class="cart-empty">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Корзина пуста</p>
             <small>Добавьте товары из каталога</small>
         </div>
+
+        <div id="cart-items" class="cart-items"></div>
     </div>
+
     <div class="cart-footer">
         <div class="cart-total">
             <span>Итого:</span>
-            <span>0 BYN</span>
+            <span id="cart-total">0 BYN</span>
         </div>
-        <button class="order-btn">
-            <i class="fas fa-check"></i> Оформить заказ
+
+        <button id="send-order" class="order-btn">
+            <i class="fas fa-paper-plane"></i> Оформить заказ
         </button>
-        <button class="copy-btn" id="copy-order">
+
+        <button id="copy-order" class="copy-btn">
             <i class="fas fa-copy"></i> Скопировать заказ
         </button>
     </div>
 </div>
 
 <!-- Overlay -->
-<div class="overlay"></div>
+<div id="overlay" class="overlay"></div>
 
 <!-- Toast Notifications -->
-<div class="toast"></div>
+<div id="toast" class="toast"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Preloader
+        // Основные переменные
+        let cartItems = [];
+        let selectedProduct = null;
+        let selectedSize = null;
+
+        // Элементы DOM
+        const elements = {
+            preloader: document.getElementById('preloader'),
+            contactBtn: document.getElementById('contact-btn'),
+            contactModal: document.getElementById('contact-modal'),
+            cartToggle: document.getElementById('cart-toggle'),
+            cartSidebar: document.getElementById('cart-sidebar'),
+            closeCart: document.getElementById('close-cart'),
+            overlay: document.getElementById('overlay'),
+            cartItems: document.getElementById('cart-items'),
+            cartEmpty: document.getElementById('cart-empty'),
+            cartTotal: document.getElementById('cart-total'),
+            sendOrder: document.getElementById('send-order'),
+            copyOrder: document.getElementById('copy-order'),
+            toast: document.getElementById('toast'),
+            closeModal: document.querySelector('.close-modal'),
+            sizeModal: document.getElementById('size-modal'),
+            closeSizeModal: document.getElementById('close-size-modal'),
+            sizeButtons: document.querySelectorAll('.size-btn'),
+            addButtons: document.querySelectorAll('.add-to-cart-btn'),
+            telegramButtons: document.querySelectorAll('.contact-link'),
+            productDetailPage: document.getElementById('product-detail-page'),
+            backToProducts: document.getElementById('back-to-products'),
+            detailAddToCart: document.getElementById('detail-add-to-cart'),
+            sizeOptions: document.querySelectorAll('.size-option'),
+            categories: document.querySelectorAll('.category'),
+            productCards: document.querySelectorAll('.product-card'),
+            scrollLeftBtn: document.querySelector('.scroll-left'),
+            scrollRightBtn: document.querySelector('.scroll-right'),
+            categoriesContainer: document.querySelector('.categories')
+        };
+
+        // Скрытие прелоадера
         setTimeout(() => {
-            document.getElementById('preloader').style.opacity = '0';
+            elements.preloader.style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('preloader').style.display = 'none';
+                elements.preloader.style.display = 'none';
             }, 300);
         }, 1000);
 
-        // Elements
-        const cartToggle = document.getElementById('cart-toggle');
-        const cartSidebar = document.querySelector('.cart-sidebar');
-        const closeCartBtn = document.querySelector('.close-btn');
-        const overlay = document.querySelector('.overlay');
-        const contactBtn = document.getElementById('contact-btn');
-        const contactModal = document.getElementById('contact-modal');
-        const closeModalBtn = document.querySelector('.close-modal');
-        const backBtn = document.querySelector('.back-btn');
-        const productDetailPage = document.querySelector('.product-detail-page');
-        const quickViewBtns = document.querySelectorAll('.quick-view');
-        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
-        const detailAddToCartBtn = document.querySelector('.detail-add-to-cart');
-        const sizeOptions = document.querySelectorAll('.size-option');
-        const thumbnails = document.querySelectorAll('.thumbnail');
-        const mainProductImage = document.querySelector('.main-product-image');
-        const orderBtn = document.querySelector('.order-btn');
-        const copyOrderBtn = document.getElementById('copy-order');
-        const toast = document.querySelector('.toast');
-        const categoriesContainer = document.querySelector('.categories');
-        const scrollLeftBtn = document.querySelector('.scroll-left');
-        const scrollRightBtn = document.querySelector('.scroll-right');
-
-        // Cart functionality
-        let cart = [];
-        const cartCount = document.getElementById('cart-count');
-        const cartContent = document.querySelector('.cart-content');
-        const cartTotal = document.querySelector('.cart-total span:last-child');
-
-        // Toggle Cart
-        cartToggle.addEventListener('click', () => {
-            cartSidebar.classList.add('open');
-            overlay.classList.add('active');
-        });
-
-        // Close Cart
-        closeCartBtn.addEventListener('click', () => {
-            cartSidebar.classList.remove('open');
-            overlay.classList.remove('active');
-        });
-
-        // Toggle Contact Modal
-        contactBtn.addEventListener('click', () => {
-            contactModal.classList.add('active');
-            overlay.classList.add('active');
-        });
-
-        // Close Contact Modal
-        closeModalBtn.addEventListener('click', () => {
-            contactModal.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        // Close on Overlay Click
-        overlay.addEventListener('click', () => {
-            cartSidebar.classList.remove('open');
-            contactModal.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        // Back to Catalog
-        backBtn.addEventListener('click', () => {
-            productDetailPage.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        // Quick View
-        quickViewBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const productCard = btn.closest('.product-card');
-                const productName = productCard.getAttribute('data-name');
-                const productPrice = productCard.getAttribute('data-price');
-
-                document.querySelector('.product-detail-info h2').textContent = productName;
-                document.querySelector('.product-detail-price').textContent = `${productPrice} BYN`;
-
-                productDetailPage.classList.add('active');
-                overlay.classList.add('active');
-            });
-        });
-
-        // Size Selection
-        sizeOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                sizeOptions.forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-            });
-        });
-
-        // Thumbnail Selection
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                thumbnails.forEach(t => t.classList.remove('active'));
-                thumb.classList.add('active');
-                mainProductImage.src = thumb.src;
-            });
-        });
-
-        // Add to Cart
-        function addToCart(productId, productName, productPrice, size = 'M') {
-            const existingItem = cart.find(item => item.id === productId && item.size === size);
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    name: productName,
-                    price: parseFloat(productPrice),
-                    size: size,
-                    quantity: 1
-                });
-            }
-
-            updateCart();
-            showToast(`Товар "${productName}" добавлен в корзину!`, 'success');
+        // Функция открытия Telegram
+        function openTelegram(username) {
+            window.open(`https://t.me/${username}`, '_blank');
+            closeAllModals();
+            showNotification(`Открываю Telegram: @${username}`, 'success');
         }
 
-        // Update Cart
-        function updateCart() {
-            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        // Функция добавления в корзину (с выбором размера)
+        function addToCartRequest(e) {
+            selectedProduct = e.target.closest('.product-card');
+            elements.sizeModal.classList.add('active');
+            elements.overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-            if (cart.length === 0) {
-                cartContent.innerHTML = `
-                    <div class="cart-empty">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p>Ваша корзина пуста</p>
-                        <small>Добавьте товары из каталога</small>
-                    </div>
-                `;
-                cartTotal.textContent = '0 BYN';
+        // Функция добавления товара с выбранным размером
+        function addToCartWithSize(size) {
+            if (!selectedProduct) return;
+
+            const name = selectedProduct.dataset.name + ` (размер: ${size})`;
+            const price = selectedProduct.dataset.price;
+            const image = selectedProduct.querySelector('img').src;
+
+            // Проверка на дубликаты
+            if (cartItems.some(item => item.name === name)) {
+                showNotification('Этот товар уже в корзине!', 'warning');
+                closeSizeModal();
                 return;
             }
 
-            let total = 0;
-            cartContent.innerHTML = '';
+            // Добавление в корзину
+            cartItems.push({ name, price, image });
+            updateCartUI();
+            showNotification(`Товар (размер: ${size}) добавлен в корзину!`, 'success');
 
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <img src="tshirt.jpg" alt="${item.name}">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name} (${item.size})</div>
-                        <div class="cart-item-price">${item.price} BYN × ${item.quantity}</div>
-                    </div>
-                    <button class="remove-item">&times;</button>
-                `;
-
-                cartItem.querySelector('.remove-item').addEventListener('click', () => {
-                    removeFromCart(item.id, item.size);
-                });
-
-                cartContent.appendChild(cartItem);
-            });
-
-            cartTotal.textContent = `${total.toFixed(2)} BYN`;
-        }
-
-        // Remove from Cart
-        function removeFromCart(productId, size) {
-            const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
-
-            if (itemIndex !== -1) {
-                cart.splice(itemIndex, 1);
-                updateCart();
-                showToast('Товар удален из корзины', 'warning');
-            }
-        }
-
-        // Add to Cart from Catalog
-        addToCartBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const productCard = btn.closest('.product-card');
-                const productId = productCard.getAttribute('data-id');
-                const productName = productCard.getAttribute('data-name');
-                const productPrice = productCard.getAttribute('data-price');
-
-                addToCart(productId, productName, productPrice);
-
-                // Анимация кнопки
-                btn.classList.add('added');
-                btn.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-                setTimeout(() => {
-                    btn.classList.remove('added');
-                    btn.innerHTML = '<i class="fas fa-plus"></i> В корзину';
-                }, 2000);
-            });
-        });
-
-        // Add to Cart from Detail Page
-        detailAddToCartBtn.addEventListener('click', () => {
-            const selectedSize = document.querySelector('.size-option.selected').textContent;
-            const productName = document.querySelector('.product-detail-info h2').textContent;
-            const productPrice = document.querySelector('.product-detail-price').textContent.replace(' BYN', '');
-
-            // Генерируем ID на основе названия
-            const productId = productName.split(' ').join('').toLowerCase();
-
-            addToCart(productId, productName, productPrice, selectedSize);
-        });
-
-        // Order and Copy
-        orderBtn.addEventListener('click', () => {
-            if (cart.length === 0) {
-                showToast('Добавьте товары в корзину перед оформлением заказа', 'error');
-                return;
-            }
-
-            showToast('Заказ оформлен! Скоро с вами свяжутся.', 'success');
-            cart = [];
-            updateCart();
-            cartSidebar.classList.remove('open');
-            overlay.classList.remove('active');
-        });
-
-        copyOrderBtn.addEventListener('click', () => {
-            if (cart.length === 0) {
-                showToast('Добавьте товары в корзину перед копированием', 'error');
-                return;
-            }
-
-            let orderText = "Заказ из VibeShop:\n\n";
-            cart.forEach(item => {
-                orderText += `${item.name} (Размер: ${item.size}) - ${item.price} BYN × ${item.quantity} = ${(item.price * item.quantity).toFixed(2)} BYN\n`;
-            });
-
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            orderText += `\nИтого: ${total.toFixed(2)} BYN`;
-
-            // Копирование в буфер обмена
-            navigator.clipboard.writeText(orderText).then(() => {
-                showToast('Заказ скопирован в буфер обмена!', 'success');
-            }).catch(err => {
-                showToast('Не удалось скопировать заказ', 'error');
-            });
-        });
-
-        // Show Toast Notification
-        function showToast(message, type = 'info') {
-            toast.textContent = message;
-            toast.className = 'toast show ' + type;
+            // Визуальная обратная связь
+            const addButton = selectedProduct.querySelector('.add-to-cart-btn');
+            addButton.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+            addButton.classList.add('added');
 
             setTimeout(() => {
-                toast.className = 'toast';
+                addButton.innerHTML = '<i class="fas fa-plus"></i> В корзину';
+                addButton.classList.remove('added');
+            }, 2000);
+
+            closeSizeModal();
+        }
+
+        // Закрытие модального окна выбора размера
+        function closeSizeModal() {
+            elements.sizeModal.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            selectedProduct = null;
+        }
+
+        // Обновление UI корзины
+        function updateCartUI() {
+            elements.cartItems.innerHTML = '';
+            let total = 0;
+
+            if (cartItems.length === 0) {
+                elements.cartEmpty.style.display = 'block';
+                elements.cartTotal.textContent = '0 BYN';
+                document.getElementById('cart-count').textContent = '0';
+                return;
+            }
+
+            elements.cartEmpty.style.display = 'none';
+
+            cartItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} BYN</div>
+                    </div>
+                    <button class="remove-item" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                elements.cartItems.appendChild(itemElement);
+                total += parseInt(item.price);
+            });
+
+            elements.cartTotal.textContent = `${total} BYN`;
+            document.getElementById('cart-count').textContent = cartItems.length;
+
+            // Добавляем обработчики для кнопок удаления
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cartItems.splice(index, 1);
+                    updateCartUI();
+                    showNotification('Товар удален из корзины', 'info');
+                });
+            });
+        }
+
+        // Функция показа уведомления
+        function showNotification(message, type = 'info') {
+            elements.toast.textContent = message;
+            elements.toast.className = `toast ${type} show`;
+
+            setTimeout(() => {
+                elements.toast.classList.remove('show');
             }, 3000);
         }
 
-        // Categories Scrolling
-        scrollLeftBtn.addEventListener('click', () => {
-            categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
-        });
+        // Открытие/закрытие модальных окон
+        function openContactModal() {
+            elements.contactModal.classList.add('active');
+            elements.overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-        scrollRightBtn.addEventListener('click', () => {
-            categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
-        });
+        function closeContactModal() {
+            elements.contactModal.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-        // Filter by Category
-        const categories = document.querySelectorAll('.category');
-        const productCards = document.querySelectorAll('.product-card');
+        function toggleCart() {
+            elements.cartSidebar.classList.toggle('open');
+            elements.overlay.classList.toggle('active');
+            document.body.style.overflow = elements.cartSidebar.classList.contains('open') ? 'hidden' : '';
+        }
 
-        categories.forEach(category => {
-            category.addEventListener('click', () => {
-                const categoryName = category.getAttribute('data-category');
+        function closeAllModals() {
+            closeContactModal();
+            closeSizeModal();
+            elements.cartSidebar.classList.remove('open');
+            elements.productDetailPage.classList.remove('active');
+            elements.overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-                categories.forEach(cat => cat.style.opacity = '0.7');
-                category.style.opacity = '1';
+        // Отправка заказа
+        function sendOrderToTelegram() {
+            if (cartItems.length === 0) {
+                showNotification('Корзина пуста!', 'error');
+                return;
+            }
 
-                if (categoryName === 'все') {
-                    productCards.forEach(card => {
-                        card.style.display = 'block';
-                    });
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
+            orderText += "📦 Состав заказа:\n";
+
+            let total = 0;
+            cartItems.forEach(item => {
+                orderText += `• ${item.name} — ${item.price} BYN\n`;
+                total += parseInt(item.price);
+            });
+
+            orderText += `\n💰 Итого: ${total} BYN`;
+            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+            orderText += `\n✅ Качество материалов 1:1`;
+            orderText += `\n✅ Полное визуальное соответствие`;
+
+            const encodedOrder = encodeURIComponent(orderText);
+            const telegramUrl = `https://t.me/bigdigovich?text=${encodedOrder}`;
+
+            // Открываем Telegram с готовым текстом заказа
+            window.open(telegramUrl, '_blank');
+            showNotification('Открываю Telegram с вашим заказом...', 'success');
+
+            // Очищаем корзину
+            setTimeout(() => {
+                cartItems = [];
+                updateCartUI();
+                closeAllModals();
+            }, 2000);
+        }
+
+        // Копирование заказа
+        function copyOrderToClipboard() {
+            if (cartItems.length === 0) {
+                showNotification('Корзина пуста!', 'error');
+                return;
+            }
+
+            let orderText = "🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n";
+            orderText += "📦 Состав заказа:\n";
+
+            let total = 0;
+            cartItems.forEach(item => {
+                orderText += `• ${item.name} — ${item.price} BYN\n`;
+                total += parseInt(item.price);
+            });
+
+            orderText += `\n💰 Итого: ${total} BYN`;
+            orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+            orderText += `\n✅ Качество материалов 1:1`;
+            orderText += `\n✅ Полное визуальное соответствие`;
+
+            navigator.clipboard.writeText(orderText).then(() => {
+                showNotification('Заказ скопирован в буфер!', 'success');
+            }).catch(err => {
+                showNotification('Ошибка копирования', 'error');
+            });
+        }
+
+        // Функция открытия детальной страницы товара
+        function openProductDetail(productCard) {
+            const name = productCard.dataset.name;
+            const price = productCard.dataset.price;
+            const desc = productCard.querySelector('.product-desc').textContent;
+            const image = productCard.querySelector('img').src;
+
+            document.getElementById('detail-product-name').textContent = name;
+            document.getElementById('detail-product-price').textContent = price + ' BYN';
+            document.getElementById('detail-product-desc').textContent = desc;
+            document.getElementById('main-product-image').src = image;
+            document.querySelector('.thumbnail').src = image;
+
+            elements.productDetailPage.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Сбрасываем выбранный размер
+            selectedSize = null;
+            elements.sizeOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        // Функция добавления товара из детальной страницы
+        function addToCartFromDetail() {
+            if (!selectedSize) {
+                showNotification('Пожалуйста, выберите размер', 'warning');
+                return;
+            }
+
+            const name = document.getElementById('detail-product-name').textContent + ` (размер: ${selectedSize})`;
+            const price = document.getElementById('detail-product-price').textContent.replace(' BYN', '');
+            const image = document.getElementById('main-product-image').src;
+
+            // Проверка на дубликаты
+            if (cartItems.some(item => item.name === name)) {
+                showNotification('Этот товар уже в корзине!', 'warning');
+                return;
+            }
+
+            // Добавление в корзину
+            cartItems.push({ name, price, image });
+            updateCartUI();
+            showNotification(`Товар (размер: ${selectedSize}) добавлен в корзину!`, 'success');
+
+            // Визуальная обратная связь
+            elements.detailAddToCart.innerHTML = '<i class="fas fa-check"></i> Добавлено в корзину';
+            elements.detailAddToCart.style.background = 'var(--success)';
+
+            setTimeout(() => {
+                elements.detailAddToCart.innerHTML = '<i class="fas fa-shopping-cart"></i> Добавить в корзину';
+                elements.detailAddToCart.style.background = 'var(--primary)';
+            }, 2000);
+        }
+
+        // Функция фильтрации товаров по категориям
+        function filterProducts(category) {
+            elements.productCards.forEach(card => {
+                if (category === 'все' || card.dataset.category === category) {
+                    card.style.display = 'block';
                 } else {
-                    productCards.forEach(card => {
-                        if (card.getAttribute('data-category') === categoryName) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    card.style.display = 'none';
                 }
             });
-        });
+        }
 
-        // Initialize Cart
-        updateCart();
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Кнопки добавления в корзину
+            elements.addButtons.forEach(btn => {
+                btn.addEventListener('click', addToCartRequest);
+            });
+
+            // Кнопки выбора размера
+            elements.sizeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const size = this.getAttribute('data-size');
+                    addToCartWithSize(size);
+                });
+            });
+
+            // Основные обработчики
+            elements.contactBtn.addEventListener('click', openContactModal);
+            elements.closeModal.addEventListener('click', closeContactModal);
+            elements.cartToggle.addEventListener('click', toggleCart);
+            elements.closeCart.addEventListener('click', closeAllModals);
+            elements.closeSizeModal.addEventListener('click', closeSizeModal);
+            elements.overlay.addEventListener('click', closeAllModals);
+            elements.sendOrder.addEventListener('click', sendOrderToTelegram);
+            elements.copyOrder.addEventListener('click', copyOrderToClipboard);
+
+            // Обработчики для кнопок Telegram
+            elements.telegramButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const username = this.getAttribute('data-telegram');
+                    openTelegram(username);
+                });
+            });
+
+            // Быстрый просмотр
+            document.querySelectorAll('.quick-view').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    openProductDetail(productCard);
+                });
+            });
+
+            // Клик по карточке товара
+            elements.productCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.add-to-cart-btn') && !e.target.closest('.quick-view')) {
+                        openProductDetail(this);
+                    }
+                });
+            });
+
+            // Кнопка "Назад к каталогу"
+            elements.backToProducts.addEventListener('click', closeAllModals);
+
+            // Добавление в корзину из детальной страницы
+            elements.detailAddToCart.addEventListener('click', addToCartFromDetail);
+
+            // Выбор размера на детальной странице
+            elements.sizeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    elements.sizeOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSize = this.getAttribute('data-size');
+                });
+            });
+
+            // Фильтрация по категориям
+            elements.categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    const categoryName = this.dataset.category;
+                    filterProducts(categoryName);
+
+                    // Прокрутка к началу каталога
+                    document.querySelector('.products-section').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Прокрутка категорий
+            elements.scrollLeftBtn.addEventListener('click', function() {
+                elements.categoriesContainer.scrollBy({
+                    left: -200,
+                    behavior: 'smooth'
+                });
+            });
+
+            elements.scrollRightBtn.addEventListener('click', function() {
+                elements.categoriesContainer.scrollBy({
+                    left: 200,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Инициализация
+        setupEventListeners();
     });
 </script>
 </body>
