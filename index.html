@@ -1,47 +1,8 @@
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
-    <style>
-        /* Reset и базовые стили */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #ff3b5c;
-            --primary-dark: #e02e4d;
-            --secondary: #667eea;
-            --accent: #ff6b6b;
-            --dark: #2d3436;
-            --light: #f8f9fa;
-            --gray: #dfe6e9;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --error: #d63031;
-            --gold: #ffd700;
-            --premium: #ff6b35;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            --radius: 16px;
-            --transition: all 0.3s ease;
-            --neon-red: #ff4444;
-            --neon-pink: #ff44cc;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            min-height: 100vh;
-            transition: var(--transition);
+.product-image.correct img {
+width: 100%;
+height: auto; /* Сохраняем пропорции изображения */
+object-fit: contain; /* Показываем всё изображение без обрезки */
+transition: var(--transition);
         }
 
         body.fullscreen-mode {
@@ -380,14 +341,14 @@
         }
 
         /* Product Card */
-        .product-card {
+        .product-card.correct {
             background: white;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            position: relative;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
@@ -395,16 +356,18 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .product-image {
+        .product-image.correct {
             position: relative;
-            height: 220px;
             overflow: hidden;
+            flex-shrink: 0;
+            height: auto; /* Убрана фиксированная высота */
+            max-height: 280px; /* Максимальная высота, но может быть меньше */
         }
 
-        .product-image img {
+        .product-image.correct img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto; /* Сохраняем пропорции изображения */
+            object-fit: contain; /* Показываем всё изображение без обрезки */
             transition: var(--transition);
         }
 
@@ -1400,8 +1363,8 @@
 
     <div class="products-grid">
         <!-- Лонгслив Guess -->
-        <div class="product-card" data-category="лонгсливы" data-name="Лонгслив Guess" data-price="85" data-id="1">
-            <div class="product-image">
+        <div class="product-card correct" data-category="лонгсливы" data-name="Лонгслив Guess" data-price="85" data-id="1">
+            <div class="product-image correct">
                 <img src="tshirt.jpg" alt="Лонгслив Guess">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
@@ -1420,8 +1383,8 @@
         </div>
 
         <!-- Зипка Corteiz -->
-        <div class="product-card" data-category="зипки" data-name="Зипка Corteiz" data-price="120" data-id="2">
-            <div class="product-image">
+        <div class="product-card correct" data-category="зипки" data-name="Зипка Corteiz" data-price="120" data-id="2">
+            <div class="product-image correct">
                 <img src="hoodie.jpg" alt="Зипка Corteiz">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
@@ -1440,8 +1403,8 @@
         </div>
 
         <!-- Сумка Nike -->
-        <div class="product-card" data-category="сумки" data-name="Сумка Nike" data-price="65" data-id="3">
-            <div class="product-image">
+        <div class="product-card correct" data-category="сумки" data-name="Сумка Nike" data-price="65" data-id="3">
+            <div class="product-image correct">
                 <img src="bag.jpg" alt="Сумка Nike">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
@@ -1460,8 +1423,8 @@
         </div>
 
         <!-- Жилетка Nike -->
-        <div class="product-card" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
-            <div class="product-image">
+        <div class="product-card correct" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
+            <div class="product-image correct">
                 <img src="jiletka.jpg" alt="Жилетка Nike">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
