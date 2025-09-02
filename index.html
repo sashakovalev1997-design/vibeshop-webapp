@@ -188,6 +188,55 @@
             backdrop-filter: blur(10px);
         }
 
+        /* Categories Section */
+        .categories-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-item {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .category-item.active .category-icon {
+            color: white;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
         /* Products Section */
         .products-section {
             max-width: 1200px;
@@ -1111,6 +1160,23 @@
                 width: 60px;
                 height: 60px;
             }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .category-item {
+                padding: 1rem 0.5rem;
+            }
+
+            .category-icon {
+                font-size: 1.5rem;
+            }
+
+            .category-name {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 360px) {
@@ -1198,6 +1264,42 @@
     </div>
 </section>
 
+<!-- Categories Section -->
+<section class="categories-section">
+    <div class="categories-grid">
+        <div class="category-item active" data-category="all">
+            <div class="category-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="category-name">Все товары</div>
+        </div>
+        <div class="category-item" data-category="longsleeves">
+            <div class="category-icon">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <div class="category-name">Лонгсливы</div>
+        </div>
+        <div class="category-item" data-category="hoodies">
+            <div class="category-icon">
+                <i class="fas fa-hoodie"></i>
+            </div>
+            <div class="category-name">Зипки</div>
+        </div>
+        <div class="category-item" data-category="bags">
+            <div class="category-icon">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="category-name">Сумки</div>
+        </div>
+        <div class="category-item" data-category="vests">
+            <div class="category-icon">
+                <i class="fas fa-vest"></i>
+            </div>
+            <div class="category-name">Жилетки</div>
+        </div>
+    </div>
+</section>
+
 <!-- Products Section -->
 <main class="products-section">
     <div class="section-header">
@@ -1205,9 +1307,9 @@
         <p>Выбери то, что подходит именно тебе</p>
     </div>
 
-    <div class="products-grid">
+    <div class="products-grid" id="products-container">
         <!-- Лонгслив Guess -->
-        <div class="product-card" data-name="Лонгслив Guess" data-price="85" data-id="1">
+        <div class="product-card" data-name="Лонгслив Guess" data-price="85" data-id="1" data-category="longsleeves">
             <div class="product-image">
                 <img src="tshirt.jpg" alt="Лонгслив Guess">
                 <div class="product-overlay">
@@ -1227,7 +1329,7 @@
         </div>
 
         <!-- Зипка Corteiz -->
-        <div class="product-card" data-name="Зипка Corteiz" data-price="120" data-id="2">
+        <div class="product-card" data-name="Зипка Corteiz" data-price="120" data-id="2" data-category="hoodies">
             <div class="product-image">
                 <img src="hoodie.jpg" alt="Зипка Corteiz">
                 <div class="product-overlay">
@@ -1247,7 +1349,7 @@
         </div>
 
         <!-- Сумка Nike -->
-        <div class="product-card" data-name="Сумка Nike" data-price="65" data-id="3">
+        <div class="product-card" data-name="Сумка Nike" data-price="65" data-id="3" data-category="bags">
             <div class="product-image">
                 <img src="bag.jpg" alt="Сумка Nike">
                 <div class="product-overlay">
@@ -1256,7 +1358,7 @@
             </div>
             <div class="product-info">
                 <h4>Сумка Nike</h4>
-                <p class="product-desc">Стильная сумка Nike, вместительная</p>
+                <p class="product-desc">Спортивная, вместительная</p>
                 <div class="product-footer">
                     <span class="price">65 BYN</span>
                     <button class="add-to-cart-btn">
@@ -1266,19 +1368,19 @@
             </div>
         </div>
 
-        <!-- Жилетка Nike -->
-        <div class="product-card" data-name="Жилетка Nike" data-price="55" data-id="4">
+        <!-- Жилетка The North Face -->
+        <div class="product-card" data-name="Жилетка The North Face" data-price="145" data-id="4" data-category="vests">
             <div class="product-image">
-                <img src="jiletka.jpg" alt="Жилетка Nike">
+                <img src="vest.jpg" alt="Жилетка The North Face">
                 <div class="product-overlay">
                     <button class="quick-view">Быстрый просмотр</button>
                 </div>
             </div>
             <div class="product-info">
-                <h4>Жилетка Nike</h4>
-                <p class="product-desc">Свободный крой, хлопок 100%</p>
+                <h4>Жилетка The North Face</h4>
+                <p class="product-desc">Утепленная, мембранная ткань</p>
                 <div class="product-footer">
-                    <span class="price">55 BYN</span>
+                    <span class="price">145 BYN</span>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-plus"></i> В корзину
                     </button>
@@ -1291,41 +1393,41 @@
 <!-- Product Detail Page -->
 <div id="product-detail" class="product-detail-page">
     <div class="product-detail-container">
-        <button id="back-to-products" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Назад к каталогу
+        <button id="back-btn" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к товарам
         </button>
-
         <div class="product-detail-content">
             <div class="product-gallery">
-                <img id="main-product-image" class="main-product-image" src="" alt="">
-                <div class="product-thumbnails" id="product-thumbnails">
-                    <!-- Thumbnails will be added dynamically -->
+                <img id="detail-image" class="main-product-image" src="" alt="">
+                <div class="product-thumbnails">
+                    <img class="thumbnail active" src="" alt="">
+                    <img class="thumbnail" src="" alt="">
+                    <img class="thumbnail" src="" alt="">
                 </div>
             </div>
-
             <div class="product-detail-info">
-                <h2 id="detail-product-name"></h2>
-                <div class="product-detail-price" id="detail-product-price"></div>
-                <p class="product-detail-desc" id="detail-product-desc"></p>
-
+                <h2 id="detail-title"></h2>
+                <div id="detail-price" class="product-detail-price"></div>
+                <p id="detail-desc" class="product-detail-desc"></p>
                 <div class="product-features">
-                    <h3>Особенности товара:</h3>
-                    <ul class="features-list" id="product-features">
-                        <!-- Features will be added dynamically -->
+                    <h3>Характеристики</h3>
+                    <ul id="features-list" class="features-list">
+                        <li>Качественный материал</li>
+                        <li>Прямые поставки от производителя</li>
+                        <li>Гарантия качества 1:1</li>
+                        <li>Быстрая доставка</li>
                     </ul>
                 </div>
-
                 <div class="detail-actions">
                     <div class="size-selector">
-                        <h4>Выберите размер:</h4>
+                        <h4>Размер</h4>
                         <div class="size-options">
-                            <div class="size-option" data-size="M">M</div>
-                            <div class="size-option" data-size="L">L</div>
-                            <div class="size-option" data-size="XL">XL</div>
-                            <div class="size-option" data-size="XXL">XXL</div>
+                            <span class="size-option selected">S</span>
+                            <span class="size-option">M</span>
+                            <span class="size-option">L</span>
+                            <span class="size-option">XL</span>
                         </div>
                     </div>
-
                     <button id="detail-add-to-cart" class="detail-add-to-cart">
                         <i class="fas fa-shopping-cart"></i> Добавить в корзину
                     </button>
@@ -1344,8 +1446,7 @@
         </div>
         <div class="modal-body">
             <div class="contact-info">
-                <p>Свяжитесь с нами удобным для вас способом. Мы всегда на связи!</p>
-
+                <p>Свяжитесь с нами любым удобным способом для заказа или консультации:</p>
                 <div class="contact-cards">
                     <div class="contact-card">
                         <div class="contact-avatar">
@@ -1353,50 +1454,47 @@
                         </div>
                         <div class="contact-details">
                             <h4>Telegram</h4>
-                            <p>@vibeshop_bot</p>
-                            <a href="#" class="contact-link">
-                                <i class="fab fa-telegram"></i> Написать
+                            <p>Написать менеджеру</p>
+                            <a href="https://t.me/vibeshop_manager" class="contact-link">
+                                <i class="fab fa-telegram"></i> @vibeshop_manager
                             </a>
                         </div>
                     </div>
-
                     <div class="contact-card">
                         <div class="contact-avatar">
                             <i class="fab fa-instagram"></i>
                         </div>
                         <div class="contact-details">
                             <h4>Instagram</h4>
-                            <p>@vibeshop.by</p>
-                            <a href="#" class="contact-link">
-                                <i class="fab fa-instagram"></i> Подписаться
+                            <p>Наша основная страница</p>
+                            <a href="https://instagram.com/vibeshop_official" class="contact-link">
+                                <i class="fab fa-instagram"></i> @vibeshop_official
                             </a>
                         </div>
                     </div>
-
                     <div class="contact-card">
                         <div class="contact-avatar">
                             <i class="fas fa-phone"></i>
                         </div>
                         <div class="contact-details">
                             <h4>Телефон</h4>
-                            <p>+375 (29) 123-45-67</p>
-                            <a href="#" class="contact-link">
-                                <i class="fas fa-phone"></i> Позвонить
+                            <p>Позвонить менеджеру</p>
+                            <a href="tel:+375291234567" class="contact-link">
+                                <i class="fas fa-phone"></i> +375 (29) 123-45-67
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <div class="replica-notice">
-                    <h4><i class="fas fa-crown"></i> Премиум качество</h4>
-                    <p>Все наши товары являются качественными репликами 1:1, что означает:</p>
-                    <ul>
-                        <li>Точное соответствие оригинальным моделям</li>
-                        <li>Высококачественные материалы</li>
-                        <li>Внимание к деталям и фурнитуре</li>
-                        <li>Доступная цена при премиальном качестве</li>
-                    </ul>
-                </div>
+            </div>
+            <div class="replica-notice">
+                <h4><i class="fas fa-crown"></i> Премиум качество 1:1</h4>
+                <p>Все наши товары являются качественными репликами премиум-класса, которые не уступают оригиналам по материалам, пошиву и внешнему виду.</p>
+                <ul>
+                    <li>Идентичные оригиналу материалы</li>
+                    <li>Высококачественная фурнитура и детали</li>
+                    <li>Точное соответствие размерной сетке</li>
+                    <li>Качественная упаковка с бирками</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -1405,12 +1503,12 @@
 <!-- Cart Sidebar -->
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
+        <h3>Корзина</h3>
         <button class="close-btn">&times;</button>
     </div>
-    <div class="cart-content" id="cart-items">
+    <div class="cart-content" id="cart-content">
         <div class="cart-empty">
-            <i class="fas fa-shopping-basket"></i>
+            <i class="fas fa-shopping-cart"></i>
             <p>Ваша корзина пуста</p>
             <small>Добавьте товары из каталога</small>
         </div>
@@ -1420,10 +1518,10 @@
             <span>Итого:</span>
             <span id="cart-total-price">0 BYN</span>
         </div>
-        <button class="order-btn">
+        <button id="order-btn" class="order-btn" disabled>
             <i class="fas fa-check"></i> Оформить заказ
         </button>
-        <button class="copy-btn">
+        <button id="copy-btn" class="copy-btn">
             <i class="fas fa-copy"></i> Скопировать заказ
         </button>
     </div>
@@ -1436,450 +1534,337 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // Данные о товарах
-    const products = {
-        1: {
-            name: "Лонгслив Guess",
-            price: 85,
-            description: "Премиальный лонгслив от Guess с высококачественной вышивкой и идеальной посадкой по фигуре. Материал: 100% хлопок премиум качества.",
-            features: [
-                "100% хлопок премиум качества",
-                "Усиленные швы для долговечности",
-                "Идеальная посадка по фигуре",
-                "Стильная вышивка логотипа",
-                "Доступен в 4 размерах"
-            ],
-            images: [
-                "tshirt.jpg",
-                "tshirt2.jpg",
-                "tshirt3.jpg"
-            ]
-        },
-        2: {
-            name: "Зипка Corteiz",
-            price: 120,
-            description: "Оверсайз худи от Corteiz с капюшоном и молнией. Свободный крой, мягкий внутренний материал, качественная фурнитура.",
-            features: [
-                "Оверсайз крой для комфорта",
-                "Мягкий внутренний материал",
-                "Качественная молния YKK",
-                "Усиленные манжеты и низ",
-                "Стильный дизайн с логотипом"
-            ],
-            images: [
-                "hoodie.jpg",
-                "hoodie2.jpg",
-                "hoodie3.jpg"
-            ]
-        },
-        3: {
-            name: "Сумка Nike",
-            price: 65,
-            description: "Стильная и практичная сумка Nike для повседневного использования. Вместительное основное отделение, дополнительные карманы.",
-            features: [
-                "Вместительное основное отделение",
-                "Дополнительные карманы для мелочей",
-                "Прочный водоотталкивающий материал",
-                "Удобные регулируемые лямки",
-                "Фирменная эмблема Nike"
-            ],
-            images: [
-                "bag.jpg",
-                "bag2.jpg",
-                "bag3.jpg"
-            ]
-        },
-        4: {
-            name: "Жилетка Nike",
-            price: 55,
-            description: "Легкая и стильная жилетка Nike для активного образа жизни. Свободный крой, качественный материал, узнаваемый дизайн.",
-            features: [
-                "Свободный крой для комфорта",
-                "Качественный износостойкий материал",
-                "Светоотражающие элементы",
-                "Стильный дизайн с логотипом Nike",
-                "Удобная застежка на молнию"
-            ],
-            images: [
-                "jiletka.jpg",
-                "jiletka2.jpg",
-                "jiletka3.jpg"
-            ]
-        }
-    };
-
-    // DOM элементы
-    const preloader = document.getElementById('preloader');
-    const productCards = document.querySelectorAll('.product-card');
-    const productDetailPage = document.getElementById('product-detail');
-    const backToProductsBtn = document.getElementById('back-to-products');
-    const mainProductImage = document.getElementById('main-product-image');
-    const productThumbnails = document.getElementById('product-thumbnails');
-    const detailProductName = document.getElementById('detail-product-name');
-    const detailProductPrice = document.getElementById('detail-product-price');
-    const detailProductDesc = document.getElementById('detail-product-desc');
-    const productFeatures = document.getElementById('product-features');
-    const detailAddToCartBtn = document.getElementById('detail-add-to-cart');
-    const contactBtn = document.getElementById('contact-btn');
-    const contactModal = document.getElementById('contact-modal');
-    const closeModalBtn = document.querySelector('.close-modal');
-    const cartToggle = document.getElementById('cart-toggle');
-    const cartSidebar = document.getElementById('cart-sidebar');
-    const closeCartBtn = document.querySelector('.close-btn');
-    const overlay = document.getElementById('overlay');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotalPrice = document.getElementById('cart-total-price');
-    const cartCount = document.getElementById('cart-count');
-    const toast = document.getElementById('toast');
-    const sizeOptions = document.querySelectorAll('.size-option');
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-
-    // Текущий выбранный товар и размер
-    let currentProduct = null;
-    let selectedSize = null;
-
     // Инициализация при загрузке страницы
     document.addEventListener('DOMContentLoaded', function() {
-        // Скрываем прелоадер
+        // Скрыть прелоадер
         setTimeout(() => {
-            preloader.style.opacity = '0';
+            document.getElementById('preloader').style.opacity = '0';
             setTimeout(() => {
-                preloader.style.display = 'none';
+                document.getElementById('preloader').style.display = 'none';
             }, 300);
         }, 1000);
 
-        // Назначаем обработчики событий
-        initEventListeners();
-    });
+        // Переменные для элементов
+        const contactBtn = document.getElementById('contact-btn');
+        const contactModal = document.getElementById('contact-modal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCartBtn = document.querySelector('.close-btn');
+        const overlay = document.getElementById('overlay');
+        const backBtn = document.getElementById('back-btn');
+        const productDetail = document.getElementById('product-detail');
+        const quickViewBtns = document.querySelectorAll('.quick-view');
+        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+        const detailAddToCartBtn = document.getElementById('detail-add-to-cart');
+        const orderBtn = document.getElementById('order-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const cartContent = document.getElementById('cart-content');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        const toast = document.getElementById('toast');
+        const categoryItems = document.querySelectorAll('.category-item');
+        const productsContainer = document.getElementById('products-container');
+        const sizeOptions = document.querySelectorAll('.size-option');
 
-    // Инициализация обработчиков событий
-    function initEventListeners() {
-        // Клик по карточке товара
-        productCards.forEach(card => {
-            card.addEventListener('click', function(e) {
-                // Игнорируем клики по кнопкам внутри карточки
-                if (e.target.closest('.add-to-cart-btn') || e.target.closest('.quick-view')) {
-                    return;
+        // Данные о товарах
+        const products = [
+            {
+                id: 1,
+                name: 'Лонгслив Guess',
+                price: 85,
+                category: 'longsleeves',
+                description: 'Премиальное качество, хлопок 100%, плотная ткань, не садится после стирки.',
+                features: [
+                    'Качественный хлопок',
+                    'Плотная ткань',
+                    'Не садится после стирки',
+                    'Прямой крой'
+                ]
+            },
+            {
+                id: 2,
+                name: 'Зипка Corteiz',
+                price: 120,
+                category: 'hoodies',
+                description: 'Оверсайз, качественный хлопок, утепленный, с карманами.',
+                features: [
+                    'Оверсайз крой',
+                    'Качественный хлопок',
+                    'Утепленный',
+                    'С карманами'
+                ]
+            },
+            {
+                id: 3,
+                name: 'Сумка Nike',
+                price: 65,
+                category: 'bags',
+                description: 'Спортивная, вместительная, водонепроницаемый материал.',
+                features: [
+                    'Водонепроницаемый материал',
+                    'Вместительная',
+                    'Удобные ручки',
+                    'Спортивный стиль'
+                ]
+            },
+            {
+                id: 4,
+                name: 'Жилетка The North Face',
+                price: 145,
+                category: 'vests',
+                description: 'Утепленная, мембранная ткань, ветрозащитная, с капюшоном.',
+                features: [
+                    'Утепленная',
+                    'Мембранная ткань',
+                    'Ветрозащитная',
+                    'С капюшоном'
+                ]
+            }
+        ];
+
+        // Корзина
+        let cart = [];
+
+        // Показать/скрыть модальное окно
+        function toggleModal(modal) {
+            modal.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Показать/скрыть корзину
+        function toggleCart() {
+            cartSidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = cartSidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        // Показать уведомление
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Обновить корзину
+        function updateCart() {
+            // Очистить содержимое корзины
+            cartContent.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Ваша корзина пуста</p>
+                        <small>Добавьте товары из каталога</small>
+                    </div>
+                `;
+                orderBtn.disabled = true;
+            } else {
+                // Добавить товары в корзину
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">${item.price} BYN</div>
+                        </div>
+                        <button class="remove-item" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    cartContent.appendChild(cartItem);
+                });
+
+                // Добавить обработчики событий для кнопок удаления
+                const removeItemBtns = document.querySelectorAll('.remove-item');
+                removeItemBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.getAttribute('data-id'));
+                        removeFromCart(id);
+                    });
+                });
+
+                orderBtn.disabled = false;
+            }
+
+            // Обновить счетчик и общую сумму
+            cartCount.textContent = cart.length;
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotalPrice.textContent = `${total} BYN`;
+        }
+
+        // Добавить товар в корзину
+        function addToCart(productId, size = 'M') {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    size: size,
+                    image: 'tshirt.jpg' // Заглушка для изображения
+                });
+                updateCart();
+                showToast('Товар добавлен в корзину!');
+            }
+        }
+
+        // Удалить товар из корзины
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+            showToast('Товар удален из корзины', 'warning');
+        }
+
+        // Оформить заказ
+        function placeOrder() {
+            if (cart.length === 0) return;
+
+            let orderText = 'Здравствуйте, хочу заказать:\n';
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} (Размер: ${item.size}) - ${item.price} BYN\n`;
+            });
+            orderText += `\nИтого: ${cart.reduce((sum, item) => sum + item.price, 0)} BYN`;
+
+            // В реальном приложении здесь был бы код для отправки заказа
+            showToast('Заказ оформлен! Скопируйте и отправьте менеджеру', 'info');
+        }
+
+        // Скопировать заказ
+        function copyOrder() {
+            if (cart.length === 0) return;
+
+            let orderText = 'Здравствуйте, хочу заказать:\n';
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} (Размер: ${item.size}) - ${item.price} BYN\n`;
+            });
+            orderText += `\nИтого: ${cart.reduce((sum, item) => sum + item.price, 0)} BYN`;
+
+            // Копирование в буфер обмена
+            navigator.clipboard.writeText(orderText).then(() => {
+                showToast('Заказ скопирован! Отправьте менеджеру в Telegram', 'info');
+            });
+        }
+
+        // Показать детали товара
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                document.getElementById('detail-title').textContent = product.name;
+                document.getElementById('detail-price').textContent = `${product.price} BYN`;
+                document.getElementById('detail-desc').textContent = product.description;
+                document.getElementById('detail-image').src = 'tshirt.jpg'; // Заглушка для изображения
+
+                // Установить данные для кнопки добавления в корзину
+                detailAddToCartBtn.setAttribute('data-id', product.id);
+
+                // Показать страницу с деталями
+                productDetail.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Фильтрация товаров по категориям
+        function filterProducts(category) {
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
                 }
+            });
+        }
 
-                const productId = this.getAttribute('data-id');
-                openProductDetail(productId);
+        // Обработчики событий для категорий
+        categoryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Убрать активный класс у всех категорий
+                categoryItems.forEach(cat => cat.classList.remove('active'));
+
+                // Добавить активный класс к выбранной категории
+                this.classList.add('active');
+
+                // Отфильтровать товары
+                const category = this.getAttribute('data-category');
+                filterProducts(category);
             });
         });
 
-        // Быстрый просмотр
-        document.querySelectorAll('.quick-view').forEach((btn, index) => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const productId = this.closest('.product-card').getAttribute('data-id');
-                openProductDetail(productId);
-            });
-        });
-
-        // Кнопка "Назад к каталогу"
-        backToProductsBtn.addEventListener('click', closeProductDetail);
-
-        // Выбор размера
+        // Обработчики событий для выбора размера
         sizeOptions.forEach(option => {
             option.addEventListener('click', function() {
                 sizeOptions.forEach(opt => opt.classList.remove('selected'));
                 this.classList.add('selected');
-                selectedSize = this.getAttribute('data-size');
             });
         });
 
-        // Добавление в корзину со страницы товара
-        detailAddToCartBtn.addEventListener('click', function() {
-            if (!selectedSize) {
-                showToast('Пожалуйста, выберите размер', 'warning');
-                return;
-            }
-
-            addToCart(currentProduct.id, selectedSize);
-            showToast('Товар добавлен в корзину!', 'success');
+        // Обработчики событий для кнопок быстрого просмотра
+        quickViewBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productId = parseInt(productCard.getAttribute('data-id'));
+                showProductDetail(productId);
+            });
         });
 
-        // Кнопки добавления в корзину из каталога
-        addToCartButtons.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const productId = this.closest('.product-card').getAttribute('data-id');
-                const productName = this.closest('.product-card').getAttribute('data-name');
+        // Обработчики событий для кнопок добавления в корзину
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productId = parseInt(productCard.getAttribute('data-id'));
+                addToCart(productId);
 
-                // Для каталога используем размер по умолчанию
-                addToCart(productId, 'M');
-
-                // Анимация кнопки
+                // Анимация добавления
                 this.classList.add('added');
-                this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-
                 setTimeout(() => {
                     this.classList.remove('added');
-                    this.innerHTML = '<i class="fas fa-plus"></i> В корзину';
-                }, 2000);
-
-                showToast(`${productName} добавлен в корзину!`, 'success');
+                }, 1000);
             });
         });
 
-        // Открытие модального окна контактов
-        contactBtn.addEventListener('click', function() {
-            contactModal.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        // Обработчик события для кнопки добавления в корзину на странице деталей
+        detailAddToCartBtn.addEventListener('click', function() {
+            const productId = parseInt(this.getAttribute('data-id'));
+            const selectedSize = document.querySelector('.size-option.selected').textContent;
+            addToCart(productId, selectedSize);
+
+            // Анимация добавления
+            this.classList.add('added');
+            setTimeout(() => {
+                this.classList.remove('added');
+            }, 1000);
         });
 
-        // Закрытие модального окна
-        closeModalBtn.addEventListener('click', closeModal);
-        overlay.addEventListener('click', function() {
-            closeModal();
-            closeCart();
-            closeProductDetail();
+        // Обработчики событий для кнопок
+        contactBtn.addEventListener('click', () => toggleModal(contactModal));
+        closeModalBtn.addEventListener('click', () => toggleModal(contactModal));
+        cartToggle.addEventListener('click', toggleCart);
+        closeCartBtn.addEventListener('click', toggleCart);
+        backBtn.addEventListener('click', () => {
+            productDetail.classList.remove('active');
+            document.body.style.overflow = '';
         });
-
-        // Открытие/закрытие корзины
-        cartToggle.addEventListener('click', openCart);
-        closeCartBtn.addEventListener('click', closeCart);
-
-        // Копирование заказа
-        document.querySelector('.copy-btn').addEventListener('click', copyOrder);
-    }
-
-    // Функция открытия детальной страницы товара
-    function openProductDetail(productId) {
-        currentProduct = {
-            id: productId,
-            ...products[productId]
-        };
-
-        // Заполняем данные о товаре
-        detailProductName.textContent = currentProduct.name;
-        detailProductPrice.textContent = `${currentProduct.price} BYN`;
-        detailProductDesc.textContent = currentProduct.description;
-
-        // Заполняем особенности товара
-        productFeatures.innerHTML = '';
-        currentProduct.features.forEach(feature => {
-            const li = document.createElement('li');
-            li.textContent = feature;
-            productFeatures.appendChild(li);
+        overlay.addEventListener('click', () => {
+            contactModal.classList.remove('active');
+            cartSidebar.classList.remove('open');
+            productDetail.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
         });
+        orderBtn.addEventListener('click', placeOrder);
+        copyBtn.addEventListener('click', copyOrder);
 
-        // Заполняем галерею изображений
-        mainProductImage.src = currentProduct.images[0];
-        productThumbnails.innerHTML = '';
-
-        currentProduct.images.forEach((image, index) => {
-            const thumbnail = document.createElement('img');
-            thumbnail.src = image;
-            thumbnail.alt = `Изображение ${index + 1} для ${currentProduct.name}`;
-            thumbnail.classList.add('thumbnail');
-            if (index === 0) thumbnail.classList.add('active');
-
-            thumbnail.addEventListener('click', function() {
-                mainProductImage.src = this.src;
-                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
-
-            productThumbnails.appendChild(thumbnail);
-        });
-
-        // Сбрасываем выбранный размер
-        sizeOptions.forEach(opt => opt.classList.remove('selected'));
-        selectedSize = null;
-
-        // Показываем страницу товара
-        productDetailPage.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    // Функция закрытия детальной страницы товара
-    function closeProductDetail() {
-        productDetailPage.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    // Функция добавления товара в корзину
-    function addToCart(productId, size) {
-        const product = products[productId];
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Проверяем, есть ли уже такой товар с таким размером в корзине
-        const existingItemIndex = cart.findIndex(item => item.id === productId && item.size === size);
-
-        if (existingItemIndex !== -1) {
-            // Увеличиваем количество
-            cart[existingItemIndex].quantity += 1;
-        } else {
-            // Добавляем новый товар
-            cart.push({
-                id: productId,
-                name: product.name,
-                price: product.price,
-                size: size,
-                quantity: 1,
-                image: product.images[0]
-            });
-        }
-
-        // Сохраняем корзину в localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Обновляем отображение корзины
+        // Инициализация корзины
         updateCart();
-    }
-
-    // Функция обновления корзины
-    function updateCart() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Обновляем счетчик товаров
-        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-        cartCount.textContent = totalItems;
-
-        // Обновляем содержимое корзины
-        if (cart.length === 0) {
-            cartItems.innerHTML = `
-                <div class="cart-empty">
-                    <i class="fas fa-shopping-basket"></i>
-                    <p>Ваша корзина пуста</p>
-                    <small>Добавьте товары из каталога</small>
-                </div>
-            `;
-            cartTotalPrice.textContent = '0 BYN';
-            return;
-        }
-
-        let cartHTML = '';
-        let totalPrice = 0;
-
-        cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            totalPrice += itemTotal;
-
-            cartHTML += `
-                <div class="cart-item" data-id="${item.id}" data-size="${item.size}">
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-details">
-                            <span>Размер: ${item.size}</span> •
-                            <span>Кол-во: ${item.quantity}</span>
-                        </div>
-                        <div class="cart-item-price">${itemTotal} BYN</div>
-                    </div>
-                    <button class="remove-item">&times;</button>
-                </div>
-            `;
-        });
-
-        cartItems.innerHTML = cartHTML;
-        cartTotalPrice.textContent = `${totalPrice} BYN`;
-
-        // Добавляем обработчики для кнопок удаления
-        document.querySelectorAll('.remove-item').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const itemElement = this.closest('.cart-item');
-                const itemId = itemElement.getAttribute('data-id');
-                const itemSize = itemElement.getAttribute('data-size');
-
-                removeFromCart(itemId, itemSize);
-            });
-        });
-    }
-
-    // Функция удаления товара из корзины
-    function removeFromCart(productId, size) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Находим индекс товара
-        const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
-
-        if (itemIndex !== -1) {
-            // Уменьшаем количество или удаляем
-            if (cart[itemIndex].quantity > 1) {
-                cart[itemIndex].quantity -= 1;
-            } else {
-                cart.splice(itemIndex, 1);
-            }
-
-            // Сохраняем обновленную корзину
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Обновляем отображение
-            updateCart();
-
-            showToast('Товар удален из корзины', 'info');
-        }
-    }
-
-    // Функция открытия корзины
-    function openCart() {
-        cartSidebar.classList.add('open');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        updateCart();
-    }
-
-    // Функция закрытия корзины
-    function closeCart() {
-        cartSidebar.classList.remove('open');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    // Функция закрытия модального окна
-    function closeModal() {
-        contactModal.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    // Функция показа уведомления
-    function showToast(message, type = 'info') {
-        toast.textContent = message;
-        toast.className = `toast ${type} show`;
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-
-    // Функция копирования заказа
-    function copyOrder() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        if (cart.length === 0) {
-            showToast('Корзина пуста', 'warning');
-            return;
-        }
-
-        let orderText = "Здравствуйте, хочу заказать:\n";
-        let totalPrice = 0;
-
-        cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            totalPrice += itemTotal;
-
-            orderText += `- ${item.name} (Размер: ${item.size}, Кол-во: ${item.quantity}) - ${itemTotal} BYN\n`;
-        });
-
-        orderText += `\nИтого: ${totalPrice} BYN`;
-
-        // Копируем в буфер обмена
-        navigator.clipboard.writeText(orderText)
-            .then(() => {
-                showToast('Заказ скопирован в буфер обмена', 'success');
-            })
-            .catch(err => {
-                showToast('Не удалось скопировать заказ', 'error');
-                console.error('Ошибка копирования: ', err);
-            });
-    }
-
-    // Инициализация корзины при загрузке
-    updateCart();
+    });
 </script>
 </body>
 </html>
