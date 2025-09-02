@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeShop 👕👜 | Стильная одежда и качественные реплики</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Brutal+Type:wght@700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         /* Reset и базовые стили */
         * {
@@ -40,7 +40,7 @@
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
-            padding-top: 80px; /* Отступ для фиксированной шапки */
+            padding-top: 100px; /* Увеличенный отступ для фиксированной шапки */
         }
 
         /* Preloader */
@@ -74,68 +74,78 @@
 
         /* Header - Обновленная шапка */
         .header {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(15px);
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+            padding: 0.8rem 0;
         }
 
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo h1 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Brutal Type', 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 2.2rem;
-            color: #fff;
+            font-size: 2.5rem;
+            color: #ff3131;
             text-shadow:
-                    0 0 5px var(--neon-red),
-                    0 0 10px var(--neon-red),
-                    0 0 15px var(--neon-red),
-                    0 0 20px var(--neon-pink),
-                    0 0 35px var(--neon-pink),
-                    0 0 40px var(--neon-pink);
+                    0 0 5px #ff3131,
+                    0 0 10px #ff3131,
+                    0 0 15px #ff3131,
+                    0 0 20px #ff003c,
+                    0 0 35px #ff003c,
+                    0 0 40px #ff003c,
+                    0 0 50px #ff003c,
+                    0 0 75px #ff003c;
             letter-spacing: 1px;
             animation: neon-flicker 2s infinite alternate;
+            text-transform: uppercase;
+            position: relative;
         }
 
         @keyframes neon-flicker {
             0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
                 text-shadow:
-                        0 0 5px var(--neon-red),
-                        0 0 10px var(--neon-red),
-                        0 0 15px var(--neon-red),
-                        0 0 20px var(--neon-pink),
-                        0 0 35px var(--neon-pink),
-                        0 0 40px var(--neon-pink);
+                        0 0 5px #ff3131,
+                        0 0 10px #ff3131,
+                        0 0 15px #ff3131,
+                        0 0 20px #ff003c,
+                        0 0 35px #ff003c,
+                        0 0 40px #ff003c,
+                        0 0 50px #ff003c,
+                        0 0 75px #ff003c;
+                opacity: 1;
             }
             20%, 24%, 55% {
                 text-shadow: none;
+                opacity: 0.8;
             }
         }
 
         .logo p {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
-            margin-top: -5px;
-            letter-spacing: 1.5px;
+            margin-top: -2px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .header-actions {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             align-items: center;
         }
 
@@ -143,7 +153,7 @@
             background: linear-gradient(135deg, var(--secondary) 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 0.9rem 1.6rem;
             border-radius: 30px;
             cursor: pointer;
             display: flex;
@@ -163,7 +173,7 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 0.9rem 1.6rem;
             border-radius: 30px;
             cursor: pointer;
             display: flex;
@@ -198,7 +208,7 @@
             color: white;
             text-align: center;
             padding: 3rem 1rem;
-            margin-top: -20px;
+            margin-top: 20px; /* Добавлен отступ от шапки */
         }
 
         .hero-content h2 {
@@ -1139,11 +1149,12 @@
             }
 
             .logo h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             .hero {
                 padding: 2rem 1rem;
+                margin-top: 15px;
             }
 
             .products-section {
@@ -1306,185 +1317,6 @@
         </div>
     </div>
 </header>
-
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content">
-        <h2>Обнови свой стиль</h2>
-        <p>Качественная одежда и премиальные реплики 1:1</p>
-        <div class="hero-features">
-            <div class="feature">
-                <i class="fas fa-truck-fast"></i>
-                <span>Быстрая доставка</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-medal"></i>
-                <span>Качество 1:1</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-tag"></i>
-                <span>Лучшие цены</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Категории -->
-<div class="categories-container">
-    <button class="scroll-btn scroll-left">
-        <i class="fas fa-chevron-left"></i>
-    </button>
-    <div class="categories">
-        <div class="category" data-category="все"><img src="all.jpg" alt="Все"><span>Все</span></div>
-        <div class="category" data-category="лонгсливы"><img src="longsleeve.jpg" alt="Лонгсливы"><span>Лонгсливы</span></div>
-        <div class="category" data-category="зипки"><img src="zip.jpg" alt="Зипки"><span>Зипки</span></div>
-        <div class="category" data-category="жилетки"><img src="vest.jpg" alt="Жилетки"><span>Жилетки</span></div>
-        <div class="category" data-category="сумки"><img src="bag.jpg" alt="Сумки"><span>Сумки</span></div>
-    </div>
-    <button class="scroll-btn scroll-right">
-        <i class="fas fa-chevron-right"></i>
-    </button>
-</div>
-
-<!-- Products Section -->
-<main class="products-section">
-    <div class="section-header">
-        <h3>Наша коллекция</h3>
-        <p>Выбери то, что подходит именно тебе</p>
-    </div>
-
-    <div class="products-grid">
-        <!-- Лонгслив Guess -->
-        <div class="product-card" data-category="лонгсливы" data-name="Лонгслив Guess" data-price="85" data-id="1">
-            <div class="product-image">
-                <img src="tshirt.jpg" alt="Лонгслив Guess">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Лонгслив Guess</h4>
-                <p class="product-desc">Премиальное качество</p>
-                <div class="product-footer">
-                    <span class="price">85 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Зипка Corteiz -->
-        <div class="product-card" data-category="зипки" data-name="Зипка Corteiz" data-price="120" data-id="2">
-            <div class="product-image">
-                <img src="hoodie.jpg" alt="Зипка Corteiz">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Зипка Corteiz</h4>
-                <p class="product-desc">Оверсайз, качественный хлопок</p>
-                <div class="product-footer">
-                    <span class="price">120 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Сумка Nike -->
-        <div class="product-card" data-category="сумки" data-name="Сумка Nike" data-price="65" data-id="3">
-            <div class="product-image">
-                <img src="bag.jpg" alt="Сумка Nike">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Сумка Nike</h4>
-                <p class="product-desc">Стильная сумка Nike, вместительная</p>
-                <div class="product-footer">
-                    <span class="price">65 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Жилетка Nike -->
-        <div class="product-card" data-category="жилетки" data-name="Жилетка Nike" data-price="55" data-id="4">
-            <div class="product-image">
-                <img src="jiletka.jpg" alt="Жилетка Nike">
-                <div class="product-overlay">
-                    <button class="quick-view">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Жилетка Nike</h4>
-                <p class="product-desc">Свободный крой, хлопок 100%</p>
-                <div class="product-footer">
-                    <span class="price">55 BYN</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-<!-- Product Detail Page -->
-<div id="product-detail-page" class="product-detail-page">
-    <div class="product-detail-container">
-        <button id="back-to-products" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Назад к каталогу
-        </button>
-
-        <div class="product-detail-content">
-            <div class="product-gallery">
-                <img id="main-product-image" class="main-product-image" src="" alt="">
-                <div class="product-thumbnails">
-                    <img class="thumbnail active" src="" alt="">
-                </div>
-            </div>
-
-            <div class="product-detail-info">
-                <h2 id="detail-product-name"></h2>
-                <div id="detail-product-price" class="product-detail-price"></div>
-                <p id="detail-product-desc" class="product-detail-desc"></p>
-
-                <div class="product-features">
-                    <h3>Особенности товара:</h3>
-                    <ul class="features-list">
-                        <li>Качество материалов 1:1</li>
-                        <li>Все бирки и ярлыки как в оригинале</li>
-                        <li>Полное визуальное соответствие</li>
-                        <li>Проверка каждой единицы товара</li>
-                    </ul>
-                </div>
-
-                <div class="detail-actions">
-                    <div class="size-selector">
-                        <h4>Выберите размер:</h4>
-                        <div class="size-options">
-                            <div class="size-option" data-size="M">M</div>
-                            <div class="size-option" data-size="L">L</div>
-                            <div class="size-option" data-size="XL">XL</div>
-                        </div>
-                    </div>
-
-                    <button id="detail-add-to-cart" class="detail-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Добавить в корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Contact Modal -->
 <div class="modal" id="contact-modal">
     <div class="modal-content">
