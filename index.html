@@ -41,7 +41,36 @@
             line-height: 1.6;
             min-height: 100vh;
             transition: var(--transition);
-            padding-top: 80px; /* Добавлено для компенсации фиксированной шапки */
+            padding-top: 80px;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: var(--transition);
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Header - ФИКСИРОВАННАЯ ШАПКА */
@@ -325,8 +354,15 @@
             transition: var(--transition);
             display: flex;
             flex-direction: column;
-            height: auto; /* Убираем фиксированную высоту */
+            height: auto;
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
         }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
 
         .product-card:hover {
             transform: translateY(-8px);
@@ -337,14 +373,14 @@
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-            height: auto; /* Убрана фиксированная высота */
-            max-height: 280px; /* Максимальная высота, но может быть меньше */
+            height: auto;
+            max-height: 280px;
         }
 
         .product-image img {
             width: 100%;
-            height: auto; /* Сохраняем пропорции изображения */
-            object-fit: contain; /* Показываем всё изображение без обрезки */
+            height: auto;
+            object-fit: contain;
             transition: var(--transition);
         }
 
@@ -383,7 +419,7 @@
         .product-info {
             padding: 1.2rem;
             background: white;
-            flex-grow: 1; /* Растягиваем информационную часть */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
@@ -404,7 +440,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto; /* Прижимаем футер к низу */
+            margin-top: auto;
         }
 
         .price {
@@ -448,12 +484,14 @@
             display: none;
             opacity: 0;
             transition: opacity 0.3s ease;
-            padding: 20px;
+            padding: 10px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .product-detail-page.active {
             display: block;
             opacity: 1;
+            animation: slideInUp 0.4s ease;
         }
 
         .product-detail-container {
@@ -475,6 +513,7 @@
             font-weight: 600;
             margin-bottom: 2rem;
             transition: var(--transition);
+            min-height: 44px;
         }
 
         .back-btn:hover {
@@ -486,7 +525,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
-            align-items: start; /* Добавлено для выравнивания по верху */
+            align-items: start;
         }
 
         .product-gallery {
@@ -495,18 +534,40 @@
 
         .main-product-image {
             width: 100%;
-            height: auto; /* Изменено с фиксированной высоты */
-            max-height: 500px; /* Максимальная высота */
-            object-fit: contain; /* Изменено с cover на contain */
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            background: #f8f9fa;
         }
 
         .product-thumbnails {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
-            justify-content: center; /* Центрируем миниатюры */
+            justify-content: center;
+            overflow-x: auto;
+            padding: 0.5rem 0.5rem 1rem;
+            scrollbar-width: thin;
+        }
+
+        .product-thumbnails::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .product-thumbnails::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+
+        .product-thumbnails::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .product-thumbnails::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
 
         .thumbnail {
@@ -517,11 +578,14 @@
             cursor: pointer;
             transition: var(--transition);
             opacity: 0.7;
+            flex-shrink: 0;
+            border: 2px solid transparent;
         }
 
         .thumbnail:hover, .thumbnail.active {
             opacity: 1;
             transform: scale(1.05);
+            border-color: var(--primary);
         }
 
         .product-detail-info h2 {
@@ -590,6 +654,7 @@
         .size-options {
             display: flex;
             gap: 0.8rem;
+            flex-wrap: wrap;
         }
 
         .size-option {
@@ -599,6 +664,8 @@
             cursor: pointer;
             transition: var(--transition);
             font-weight: 600;
+            min-width: 50px;
+            text-align: center;
         }
 
         .size-option:hover {
@@ -840,6 +907,7 @@
 
         .cart-sidebar.open {
             right: 0;
+            animation: slideInRight 0.4s ease;
         }
 
         .cart-header {
@@ -907,7 +975,12 @@
             border-bottom: 1px solid var(--gray);
             gap: 1rem;
             transition: var(--transition);
+            animation: fadeIn 0.5s ease;
         }
+
+        .cart-item:nth-child(1) { animation-delay: 0.1s; }
+        .cart-item:nth-child(2) { animation-delay: 0.2s; }
+        .cart-item:nth-child(3) { animation-delay: 0.3s; }
 
         .cart-item:hover {
             background: var(--light);
@@ -1075,25 +1148,6 @@
             background: var(--secondary);
         }
 
-        /* Size Modal Styles */
-        .size-btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            min-width: 80px;
-        }
-
-        .size-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-        }
-
         /* Анимации */
         @keyframes fadeIn {
             from {
@@ -1106,16 +1160,29 @@
             }
         }
 
-        .product-card {
-            animation: fadeIn 0.6s ease forwards;
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
-        .product-card:nth-child(1) { animation-delay: 0.1s; }
-        .product-card:nth-child(2) { animation-delay: 0.2s; }
-        .product-card:nth-child(3) { animation-delay: 0.3s; }
-        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-        /* Адаптивность для очень маленьких экранов */
+        /* Адаптивность */
         @media (max-width: 768px) {
             .product-detail-content {
                 grid-template-columns: 1fr;
@@ -1126,9 +1193,20 @@
                 height: auto;
                 max-height: 400px;
             }
-        }
-        .product-detail-page {
-            padding: 10px;
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .header-actions {
+                position: static;
+                margin-top: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1153,18 +1231,96 @@
                 padding: 1rem 0.5rem;
             }
 
-            .header-actions {
-                position: static;
-                margin-top: 1rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-            }
-
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .product-info h4 {
+                font-size: 1.1rem;
+            }
+
+            .price {
+                font-size: 1.2rem;
+            }
+
+            .add-to-cart-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .product-detail-info h2 {
+                font-size: 1.4rem;
+            }
+
+            .size-option {
+                padding: 0.5rem 0.7rem;
+                min-width: 40px;
+                font-size: 0.75rem;
+            }
+
+            .thumbnail {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            .product-detail-page {
+                position: fixed;
+                height: -webkit-fill-available;
+            }
+
+            .main-product-image {
+                max-height: 40vh;
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .product-detail-content {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .product-gallery {
+                flex: 1;
+                max-width: 50%;
+            }
+
+            .product-detail-info {
+                flex: 1;
+                max-width: 50%;
+                padding-left: 1.5rem;
+            }
+
+            .main-product-image {
+                max-height: 60vh;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .product-detail-page {
+                background: #1a1a1a;
+                color: white;
+            }
+
+            .product-detail-info h2 {
+                color: white;
+            }
+
+            .product-detail-desc {
+                color: #ccc;
+            }
+
+            .main-product-image {
+                background: #2a2a2a;
             }
         }
     </style>
@@ -1174,6 +1330,7 @@
 <div id="preloader">
     <div class="loader"></div>
 </div>
+
 <!-- Header -->
 <header class="header">
     <div class="header-content">
@@ -1243,8 +1400,8 @@
     <div class="products-grid">
         <!-- Свитшот Hermes -->
         <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image"> <!-- Исправленный контейнер для изображения -->
-                <img src="hermeshud1.jpg" alt="Свитшот Hermes"> <!-- Добавлено изображение -->
+            <div class="product-image">
+                <img src="hermeshud1.jpg" alt="Свитшот Hermes">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="1">Быстрый просмотр</button>
                 </div>
@@ -1252,7 +1409,7 @@
             <div class="product-info">
                 <h4>Свитшот Hermes</h4>
                 <div class="product-footer">
-                    <div class="price">129 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">129 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1262,7 +1419,7 @@
 
         <!-- Свитшот Burberry -->
         <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="СВИТШОТЫ BURBERRY1.jpg" alt="Свитшот Burberry">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="2">Быстрый просмотр</button>
@@ -1271,7 +1428,7 @@
             <div class="product-info">
                 <h4>Свитшот Burberry</h4>
                 <div class="product-footer">
-                    <div class="price">114 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">114 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1281,7 +1438,7 @@
 
         <!-- Свитшот Lacoste -->
         <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="СВИТШОТЫ LACOSTEбел1.jpg" alt="Свитшот Lacoste">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="3">Быстрый просмотр</button>
@@ -1290,7 +1447,7 @@
             <div class="product-info">
                 <h4>Свитшот Lacoste</h4>
                 <div class="product-footer">
-                    <div class="price">89 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">89 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1300,7 +1457,7 @@
 
         <!-- Свитшот Lacoste черный -->
         <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="СВИТШОТЫ LACOSTEчер1.jpg" alt="Свитшот Lacoste черный">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="4">Быстрый просмотр</button>
@@ -1309,7 +1466,7 @@
             <div class="product-info">
                 <h4>Свитшот Lacoste черный</h4>
                 <div class="product-footer">
-                    <div class="price">89 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">89 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1319,7 +1476,7 @@
 
         <!-- Зипка Dior -->
         <div class="product-card correct-height" data-category="зипки">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="DIORзип1.jpg" alt="Зипка Dior">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="5">Быстрый просмотр</button>
@@ -1328,7 +1485,7 @@
             <div class="product-info">
                 <h4>Зипка Dior</h4>
                 <div class="product-footer">
-                    <div class="price">149 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">149 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1338,7 +1495,7 @@
 
         <!-- Лонгслив Guess -->
         <div class="product-card correct-height" data-category="лонгсливы">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="Лонгguess.jpg" alt="Лонгслив Guess">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="6">Быстрый просмотр</button>
@@ -1347,26 +1504,7 @@
             <div class="product-info">
                 <h4>Лонгслив Guess</h4>
                 <div class="product-footer">
-                    <div class="price">98 BYN</div> <!-- Добавлена валюта -->
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Лонгслив Guess чер -->
-        <div class="product-card correct-height" data-category="лонгсливы">
-            <div class="product-image"> <!-- Исправленный контейнер -->
-                <img src="tshirt.jpg" alt="Лонгслив Guess черный">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="6">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Лонгслив Guess</h4>
-                <div class="product-footer">
-                    <div class="price">98 BYN</div> <!-- Исправлена цена и добавлена валюта -->
+                    <div class="price">98 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1376,7 +1514,7 @@
 
         <!-- Жилетка Corteiz -->
         <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="photo_2025-07-01_17-31-38.jpg" alt="Жилетка Corteiz">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="7">Быстрый просмотр</button>
@@ -1385,7 +1523,7 @@
             <div class="product-info">
                 <h4>Жилетка Corteiz</h4>
                 <div class="product-footer">
-                    <div class="price">139 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">139 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1395,7 +1533,7 @@
 
         <!-- Жилетка Jordan & Supreme -->
         <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="ЖИЛЕТКИ JORDAN & SUPREMEбел1.jpg" alt="Жилетка Jordan & Supreme">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="8">Быстрый просмотр</button>
@@ -1404,7 +1542,7 @@
             <div class="product-info">
                 <h4>Жилетка Jordan & Supreme</h4>
                 <div class="product-footer">
-                    <div class="price">169 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">169 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1414,7 +1552,7 @@
 
         <!-- Жилетка Nike ACG -->
         <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="ЖИЛЕТКИ NIKEasg1.jpg" alt="Жилетка Nike ACG">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="9">Быстрый просмотр</button>
@@ -1423,7 +1561,7 @@
             <div class="product-info">
                 <h4>Жилетка Nike ACG</h4>
                 <div class="product-footer">
-                    <div class="price">124 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">124 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1433,7 +1571,7 @@
 
         <!-- Жилетка Polo Ralph Lauren -->
         <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="ЖИЛЕТКИ POLO RALPH LAUREN1.jpg" alt="Жилетка Polo Ralph Lauren">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="10">Быстрый просмотр</button>
@@ -1442,7 +1580,7 @@
             <div class="product-info">
                 <h4>Жилетка Polo Ralph Lauren</h4>
                 <div class="product-footer">
-                    <div class="price">119 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">119 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1452,7 +1590,7 @@
 
         <!-- Жилетка Prada -->
         <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image"> <!-- Исправленный контейнер -->
+            <div class="product-image">
                 <img src="ЖИЛЕТКИ PRADA1.jpg" alt="Жилетка Prada">
                 <div class="product-overlay">
                     <button class="quick-view" data-product="11">Быстрый просмотр</button>
@@ -1461,7 +1599,7 @@
             <div class="product-info">
                 <h4>Жилетка Prada</h4>
                 <div class="product-footer">
-                    <div class="price">189 BYN</div> <!-- Добавлена валюта -->
+                    <div class="price">189 BYN</div>
                     <button class="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i> В корзину
                     </button>
@@ -1469,6 +1607,7 @@
             </div>
         </div>
     </div>
+</main>
 
 <!-- Product Detail Page -->
 <div id="product-detail" class="product-detail-page">
@@ -1485,7 +1624,7 @@
             </div>
             <div class="product-detail-info">
                 <h2 id="detail-product-name">Название товара</h2>
-                <div id="detail-product-price" class="product-detail-price">0 ₽</div>
+                <div id="detail-product-price" class="product-detail-price">0 BYN</div>
                 <p id="detail-product-desc" class="product-detail-desc">Описание товара</p>
                 <div class="product-features">
                     <h3>Характеристики:</h3>
@@ -1581,7 +1720,7 @@
     <div class="cart-footer">
         <div class="cart-total">
             <span>Итого:</span>
-            <span id="cart-total-price">0 ₽</span>
+            <span id="cart-total-price">0 BYN</span>
         </div>
         <button id="order-btn" class="order-btn">
             <i class="fas fa-check"></i> Оформить заказ
@@ -1626,7 +1765,7 @@
                 "Материал: высококачественный хлопок",
                 "Узнаваемый клетчатый узор",
                 "Фирменная бирка",
-                "Размеры: M, L" // Исправлен пробел
+                "Размеры: M, L"
             ],
             images: [
                 "СВИТШОТЫ BURBERRY1.jpg",
@@ -1649,7 +1788,7 @@
             ],
             images: [
                 "СВИТШОТЫ LACOSTEбел1.jpg",
-                "СВИТШОТЫ LACOSTEбел2.jpg", // Добавлено "бел" для консистентности
+                "СВИТШОТЫ LACOSTEбел2.jpg",
                 "СВИТШОТЫ LACOSTEбел3.jpg",
                 "СВИТШОТЫ LACOSTEбел4.jpg",
                 "СВИТШОТЫ LACOSTEбел5.jpg",
@@ -1682,7 +1821,7 @@
                 "Материал: высококачественный полиэстер",
                 "Фирменная фурнитура",
                 "Качество 1:1",
-                "Размеры: M, L" // Исправлен пробел
+                "Размеры: M, L"
             ],
             images: [
                 "DIORзип1.jpg",
@@ -1706,35 +1845,16 @@
                 "Размеры: M, L"
             ],
             images: [
-                "Лонгguess1.jpg", // Исправлено для консистентности
+                "Лонгguess1.jpg",
                 "Лонгguess2.jpg",
                 "Лонгguess3.jpg",
-                "Лонгguess4.jpg",
-                "Лонгguess5.jpg", // Исправлено
-                "Лонгguess6.jpg", // Исправлено
-                "Лонгguess7.jpg"  // Исправлено
+                "Лонgguess4.jpg",
+                "Лонгguess5.jpg",
+                "Лонгguess6.jpg",
+                "Лонгguess7.jpg"
             ]
         },
         7: {
-            name: "Лонгслив Guess черный", // Добавлено уточнение цвета
-            price: 98,
-            features: [
-                "Материал: хлопок",
-                "Узнаваемый логотип Guess",
-                "Удобный крой",
-                "Размеры: M, L"
-            ],
-            images: [
-                "Лонгguessчер1.jpg", // Добавлены номера для консистентности
-                "Лонгguessчер2.jpg",
-                "Лонгguessчер3.jpg",
-                "Лонгguessчер4.jpg",
-                "Лонгguessчер5.jpg",
-                "Лонгguessчер6.jpg",
-                "Лонгguessчер7.jpg"
-            ]
-        },
-        8: {
             name: "Жилетка Corteiz",
             price: 139,
             features: [
@@ -1746,21 +1866,21 @@
             images: [
                 "photo_2025-07-01_17-31-38.jpg",
                 "CORTEIZjil2.jpg",
-                "CORTEIZjil3.jpg", // Исправлены повторяющиеся имена
+                "CORTEIZjil3.jpg",
                 "CORTEIZjil4.jpg",
                 "CORTEIZjil5.jpg",
                 "CORTEIZjil6.jpg",
                 "CORTEIZjil7.jpg"
             ]
         },
-        9: {
+        8: {
             name: "Жилетка Jordan & Supreme",
             price: 169,
             features: [
                 "Материал: полиэстер",
                 "Уникальный дизайн коллаборации",
                 "Фирменные логотипы",
-                "Размеры: M, L" // Исправлен пробел
+                "Размеры: M, L"
             ],
             images: [
                 "ЖИЛЕТКИ JORDAN & SUPREMEбел1.jpg",
@@ -1772,14 +1892,14 @@
                 "ЖИЛЕТКИ JORDAN & SUPREMEбел7.jpg"
             ]
         },
-        10: {
+        9: {
             name: "Жилетка Nike ACG",
             price: 124,
             features: [
                 "Материал: технологичная ткань Nike",
                 "Водоотталкивающие свойства",
                 "Светоотражающие элементы",
-                "Размеры: M, L" // Исправлен пробел
+                "Размеры: M, L"
             ],
             images: [
                 "ЖИЛЕТКИ NIKEasg1.jpg",
@@ -1791,7 +1911,7 @@
                 "ЖИЛЕТКИ NIKEasg7.jpg"
             ]
         },
-        11: {
+        10: {
             name: "Жилетка Polo Ralph Lauren",
             price: 119,
             features: [
@@ -1811,20 +1931,20 @@
                 "ЖИЛЕТКИ POLO RALPH LAUREN8.jpg"
             ]
         },
-        12: {
+        11: {
             name: "Жилетка Prada",
-            price: 189, // Исправлена цена (было 100, в разметке было 189)
+            price: 189,
             features: [
                 "Материал: премиальные материалы",
                 "Идеальная посадка",
                 "Фирменная фурнитура",
-                "Размеры: M, L" // Исправлен пробел
+                "Размеры: M, L"
             ],
             images: [
                 "ЖИЛЕТКИ PRADA1.jpg",
                 "ЖИЛЕТКИ PRADA2.jpg",
                 "ЖИЛЕТКИ PRADA3.jpg",
-                "ЖИЛЕТКИ PRADA4.jpg", // Исправлена опечатка (было "iЖИЛЕТКИ")
+                "ЖИЛЕТКИ PRADA4.jpg",
                 "ЖИЛЕТКИ PRADA5.jpg",
                 "ЖИЛЕТКИ PRADA6.jpg",
             ]
@@ -1853,7 +1973,7 @@
     // Обновление общей стоимости
     function updateCartTotal() {
         const total = cart.reduce((sum, item) => sum + item.price, 0);
-        cartTotalPrice.textContent = `${total.toLocaleString('ru-RU')} ₽`;
+        cartTotalPrice.textContent = `${total.toLocaleString('ru-RU')} BYN`;
     }
 
     // Отображение товаров в корзине
@@ -1874,7 +1994,7 @@
                 <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
                 <div class="cart-item-info">
                     <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">${item.price.toLocaleString('ru-RU')} ₽</div>
+                    <div class="cart-item-price">${item.price.toLocaleString('ru-RU')} BYN</div>
                     <small>Размер: ${item.size}</small>
                 </div>
                 <button class="remove-item" data-index="${index}">
@@ -1946,24 +2066,36 @@
         document.body.style.overflow = '';
     });
 
+    // Универсальная функция добавления в корзину
+    function addToCartFromCard(productCard) {
+        const productName = productCard.querySelector('h4').textContent;
+        const productPrice = parseInt(productCard.querySelector('.price').textContent.replace(/\D/g, ''));
+        const productImage = productCard.querySelector('img').src;
+
+        // Проверяем, нет ли уже такого товара в корзине
+        if (cart.some(item => item.name === productName && item.size === selectedSize)) {
+            showToast('Этот товар уже в корзине!', 'warning');
+            return;
+        }
+
+        cart.push({
+            name: productName,
+            price: productPrice,
+            size: selectedSize,
+            image: productImage
+        });
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        updateCartTotal();
+        showToast('Товар добавлен в корзину!', 'success');
+    }
+
     // Обработчики для кнопок добавления в корзину
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             const productCard = e.currentTarget.closest('.product-card');
-            const productName = productCard.querySelector('h4').textContent;
-            const productPrice = parseInt(productCard.querySelector('.price').textContent.replace(/\D/g, ''));
-
-            // Добавляем товар в корзину
-            cart.push({
-                name: productName,
-                price: productPrice,
-                size: selectedSize,
-                image: '' // Здесь будет URL изображения
-            });
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            showToast('Товар добавлен в корзину!', 'success');
+            addToCartFromCard(productCard);
 
             // Анимация кнопки
             e.currentTarget.classList.add('added');
@@ -1973,69 +2105,62 @@
         });
     });
 
+    // Универсальная функция для показа товара
+    function showProductDetail(productId) {
+        const product = products[productId];
+        if (!product) return;
+
+        // Заполняем информацию о товаре
+        document.getElementById('detail-product-name').textContent = product.name;
+        document.getElementById('detail-product-price').textContent = `${product.price.toLocaleString('ru-RU')} BYN`;
+
+        // Заполняем характеристики
+        const featuresList = document.getElementById('detail-features');
+        featuresList.innerHTML = product.features.map(feature =>
+            `<li>${feature}</li>`
+        ).join('');
+
+        // Устанавливаем изображения
+        const mainImage = document.getElementById('main-product-image');
+        const thumbnailsContainer = document.querySelector('.product-thumbnails');
+
+        if (product.images && product.images.length > 0) {
+            mainImage.src = product.images[0];
+            thumbnailsContainer.innerHTML = '';
+
+            product.images.forEach((imageSrc, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'thumbnail';
+                thumbnail.alt = `Thumbnail ${index + 1}`;
+                thumbnail.src = imageSrc;
+                thumbnail.dataset.index = index;
+
+                thumbnail.addEventListener('click', () => {
+                    mainImage.src = imageSrc;
+                    document.querySelectorAll('.thumbnail').forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    thumbnail.classList.add('active');
+                });
+
+                if (index === 0) {
+                    thumbnail.classList.add('active');
+                }
+
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+        }
+
+        // Показываем страницу товара
+        productDetailPage.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
     // Обработчики для быстрого просмотра
     document.querySelectorAll('.quick-view').forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = e.currentTarget.dataset.product;
-            const product = products[productId];
-
-            if (product) {
-                // Заполняем информацию о товаре
-                document.getElementById('detail-product-name').textContent = product.name;
-                document.getElementById('detail-product-price').textContent = `${product.price.toLocaleString('ru-RU')} BYN`;
-                document.getElementById('detail-product-desc').textContent = product.description;
-
-                // Заполняем характеристики
-                const featuresList = document.getElementById('detail-features');
-                featuresList.innerHTML = product.features.map(feature => `
-                <li>${feature}</li>
-            `).join('');
-
-                // Устанавливаем главное изображение
-                const mainImage = document.getElementById('main-product-image');
-                if (product.images && product.images.length > 0) {
-                    mainImage.src = product.images[0];
-                }
-
-                // Очищаем миниатюры
-                const thumbnailsContainer = document.querySelector('.product-thumbnails');
-                thumbnailsContainer.innerHTML = '';
-
-                // Добавляем миниатюры из массива изображений товара
-                if (product.images && product.images.length > 0) {
-                    product.images.forEach((imageSrc, index) => {
-                        const thumbnail = document.createElement('img');
-                        thumbnail.className = 'thumbnail';
-                        thumbnail.alt = `Thumbnail ${index + 1}`;
-                        thumbnail.src = imageSrc;
-                        thumbnail.dataset.index = index;
-
-                        // Обработчик клика по миниатюре
-                        thumbnail.addEventListener('click', () => {
-                            mainImage.src = imageSrc;
-
-                            // Убираем активный класс у всех миниатюр
-                            document.querySelectorAll('.thumbnail').forEach(thumb => {
-                                thumb.classList.remove('active');
-                            });
-
-                            // Добавляем активный класс к выбранной миниатюре
-                            thumbnail.classList.add('active');
-                        });
-
-                        // Активируем первую миниатюру
-                        if (index === 0) {
-                            thumbnail.classList.add('active');
-                        }
-
-                        thumbnailsContainer.appendChild(thumbnail);
-                    });
-                }
-
-                // Показываем страницу товара
-                productDetailPage.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+            showProductDetail(productId);
         });
     });
 
@@ -2063,22 +2188,47 @@
     document.getElementById('detail-add-to-cart').addEventListener('click', () => {
         const productName = document.getElementById('detail-product-name').textContent;
         const productPrice = parseInt(document.getElementById('detail-product-price').textContent.replace(/\D/g, ''));
+        const productImage = document.getElementById('main-product-image').src;
+
+        // Проверяем, нет ли уже такого товара в корзине
+        if (cart.some(item => item.name === productName && item.size === selectedSize)) {
+            showToast('Этот товар уже в корзине!', 'warning');
+            return;
+        }
 
         cart.push({
             name: productName,
             price: productPrice,
             size: selectedSize,
-            image: '' // URL изображения
+            image: productImage
         });
 
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
+        updateCartTotal();
         showToast('Товар добавлен в корзину!', 'success');
 
         // Закрываем страницу товара
         productDetailPage.classList.remove('active');
         document.body.style.overflow = '';
     });
+
+    // Генерация текста заказа
+    function generateOrderText() {
+        if (cart.length === 0) return 'Корзина пуста';
+
+        let orderText = 'Здравствуйте! Я хочу оформить заказ:\n\n';
+
+        cart.forEach((item, index) => {
+            orderText += `${index + 1}. ${item.name} - ${item.price.toLocaleString('ru-RU')} BYN (Размер: ${item.size})\n`;
+        });
+
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        orderText += `\nИтого: ${total.toLocaleString('ru-RU')} BYN\n\n`;
+        orderText += 'Спасибо!';
+
+        return orderText;
+    }
 
     // Обработчик для оформления заказа
     document.getElementById('order-btn').addEventListener('click', () => {
@@ -2103,35 +2253,6 @@
         navigator.clipboard.writeText(orderText).then(() => {
             showToast('Заказ скопирован! Отправьте его менеджеру.', 'success');
         });
-    });
-
-    // Генерация текста заказа
-    function generateOrderText() {
-        let orderText = 'Здравствуйте! Я хочу оформить заказ:\n\n';
-        cart.forEach((item, index) => {
-            orderText += `${index + 1}. ${item.name} - ${item.price.toLocaleString('ru-RU')} ₽ (Размер: ${item.size})\n`;
-        });
-
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        orderText += `\nИтого: ${total.toLocaleString('ru-RU')} ₽\n\n`;
-        orderText += 'Спасибо!';
-
-        return orderText;
-    }
-
-    // Инициализация при загрузке страницы
-    document.addEventListener('DOMContentLoaded', () => {
-        updateCartCount();
-        renderCartItems();
-        updateCartTotal();
-
-        // Выбираем размер M по умолчанию
-        document.querySelector('.size-option[data-size="M"]').classList.add('selected');
-
-        // Скрываем прелоадер
-        setTimeout(() => {
-            document.getElementById('preloader').style.display = 'none';
-        }, 500);
     });
 
     // Прокрутка категорий
@@ -2166,6 +2287,21 @@
             }
         });
     }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartCount();
+        renderCartItems();
+        updateCartTotal();
+
+        // Выбираем размер M по умолчанию
+        document.querySelector('.size-option[data-size="M"]').classList.add('selected');
+
+        // Скрываем прелоадер
+        setTimeout(() => {
+            document.getElementById('preloader').style.display = 'none';
+        }, 500);
+    });
 </script>
 </body>
 </html>
