@@ -46,8 +46,8 @@
 
         /* Header - ФИКСИРОВАННАЯ ШАПКА */
         .header {
-            background: #ffffff;
-            position: fixed; /* Изменено с sticky на fixed */
+            background: rgba(255, 255, 255, 0.95);
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -55,6 +55,7 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             padding: 0.8rem 0;
             transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .header-content {
@@ -62,13 +63,13 @@
             margin: 0 auto;
             padding: 0 1rem;
             display: flex;
-            justify-content: center; /* Центрируем содержимое */
+            justify-content: center;
             align-items: center;
-            position: relative; /* Для позиционирования кнопок */
+            position: relative;
         }
 
         .logo {
-            text-align: center; /* Центрируем текст логотипа */
+            text-align: center;
         }
 
         .logo h1 {
@@ -631,7 +632,7 @@
             transform: translateY(-2px);
         }
 
-        /* Contact Modal */
+        /* Contact Modal - ОБНОВЛЕННЫЙ СТИЛЬ */
         .modal {
             position: fixed;
             top: 0;
@@ -667,10 +668,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: linear-gradient(135deg, var(--secondary) 0%, #764ba2 100%);
+            color: white;
+            border-radius: var(--radius) var(--radius) 0 0;
         }
 
         .modal-header h3 {
-            color: var(--primary);
+            color: white;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -682,7 +686,7 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #666;
+            color: white;
             transition: var(--transition);
         }
 
@@ -698,6 +702,7 @@
             margin-bottom: 1.5rem;
             color: #666;
             line-height: 1.6;
+            text-align: center;
         }
 
         .contact-cards {
@@ -711,9 +716,10 @@
             align-items: center;
             gap: 1rem;
             padding: 1.5rem;
-            background: var(--light);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-radius: var(--radius);
             transition: var(--transition);
+            border-left: 4px solid var(--secondary);
         }
 
         .contact-card:hover {
@@ -724,7 +730,7 @@
         .contact-avatar {
             width: 60px;
             height: 60px;
-            background: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, #764ba2 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -754,7 +760,7 @@
         }
 
         .contact-link {
-            background: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, #764ba2 100%);
             color: white;
             border: none;
             padding: 0.6rem 1.2rem;
@@ -770,7 +776,7 @@
         }
 
         .contact-link:hover {
-            background: #5a6fd8;
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4890 100%);
             transform: translateY(-1px);
         }
 
@@ -817,7 +823,7 @@
             font-weight: bold;
         }
 
-        /* Cart Sidebar */
+        /* Cart Sidebar - ОБНОВЛЕННЫЙ СТИЛЬ */
         .cart-sidebar {
             position: fixed;
             top: 0;
@@ -842,6 +848,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .cart-header h3 {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .close-btn {
@@ -849,7 +864,7 @@
             border: none;
             font-size: 1.2rem;
             cursor: pointer;
-            color: #666;
+            color: white;
             transition: var(--transition);
         }
 
@@ -945,7 +960,7 @@
         .cart-footer {
             padding: 1.5rem;
             border-top: 1px solid var(--gray);
-            background: var(--light);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
 
         .cart-total {
@@ -979,23 +994,23 @@
         }
 
         .order-btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
         }
 
         .order-btn:hover {
-            background: var(--primary-dark);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #c42a46 100%);
             transform: translateY(-2px);
         }
 
         .copy-btn {
-            background: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, #764ba2 100%);
             color: white;
             border: none;
         }
 
         .copy-btn:hover {
-            background: #5a6fd8;
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4890 100%);
             transform: translateY(-2px);
         }
 
@@ -1111,9 +1126,9 @@
                 height: auto;
                 max-height: 400px;
             }
-            }
-            .product-detail-page {
-                padding: 10px;
+        }
+        .product-detail-page {
+            padding: 10px;
         }
 
         @media (max-width: 480px) {
@@ -1137,6 +1152,20 @@
             .product-detail-container {
                 padding: 1rem 0.5rem;
             }
+
+            .header-actions {
+                position: static;
+                margin-top: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
         }
     </style>
 </head>
@@ -1144,13 +1173,6 @@
 <!-- Preloader -->
 <div id="preloader">
     <div class="loader"></div>
-</div>
-
-<!-- Fullscreen Controls -->
-<div class="fullscreen-controls">
-    <button id="fullscreen-toggle" class="fullscreen-btn">
-        <i class="fas fa-expand"></i>
-    </button>
 </div>
 <!-- Header -->
 <header class="header">
