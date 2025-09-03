@@ -41,7 +41,7 @@
             line-height: 1.6;
             min-height: 100vh;
             transition: var(--transition);
-            padding-top: 80px; /* Добавлено для компенсации фиксированной шапки */
+            padding-top: 80px;
         }
 
         /* Header - ФИКСИРОВАННАЯ ШАПКА */
@@ -325,7 +325,7 @@
             transition: var(--transition);
             display: flex;
             flex-direction: column;
-            height: auto; /* Убираем фиксированную высоту */
+            height: auto;
         }
 
         .product-card:hover {
@@ -337,14 +337,14 @@
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-            height: auto; /* Убрана фиксированная высота */
-            max-height: 280px; /* Максимальная высота, но может быть меньше */
+            height: auto;
+            max-height: 280px;
         }
 
         .product-image img {
             width: 100%;
-            height: auto; /* Сохраняем пропорции изображения */
-            object-fit: contain; /* Показываем всё изображение без обрезки */
+            height: auto;
+            object-fit: contain;
             transition: var(--transition);
         }
 
@@ -383,7 +383,7 @@
         .product-info {
             padding: 1.2rem;
             background: white;
-            flex-grow: 1; /* Растягиваем информационную часть */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
@@ -404,7 +404,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto; /* Прижимаем футер к низу */
+            margin-top: auto;
         }
 
         .price {
@@ -486,7 +486,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
-            align-items: start; /* Добавлено для выравнивания по верху */
+            align-items: start;
         }
 
         .product-gallery {
@@ -495,9 +495,9 @@
 
         .main-product-image {
             width: 100%;
-            height: auto; /* Изменено с фиксированной высоты */
-            max-height: 500px; /* Максимальная высота */
-            object-fit: contain; /* Изменено с cover на contain */
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
@@ -506,7 +506,9 @@
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
-            justify-content: center; /* Центрируем миниатюры */
+            justify-content: center;
+            overflow-x: auto;
+            padding: 10px 0;
         }
 
         .thumbnail {
@@ -517,11 +519,13 @@
             cursor: pointer;
             transition: var(--transition);
             opacity: 0.7;
+            border: 2px solid transparent;
         }
 
         .thumbnail:hover, .thumbnail.active {
             opacity: 1;
             transform: scale(1.05);
+            border-color: var(--primary);
         }
 
         .product-detail-info h2 {
@@ -590,6 +594,7 @@
         .size-options {
             display: flex;
             gap: 0.8rem;
+            flex-wrap: wrap;
         }
 
         .size-option {
@@ -1075,23 +1080,33 @@
             background: var(--secondary);
         }
 
-        /* Size Modal Styles */
-        .size-btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.1rem;
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
             transition: var(--transition);
-            min-width: 80px;
         }
 
-        .size-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Анимации */
@@ -1165,6 +1180,19 @@
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .product-card {
+                height: auto;
+            }
+
+            .product-image {
+                height: 250px;
             }
         }
     </style>
@@ -1616,7 +1644,6 @@
         1: {
             name: "Свитшот Hermes",
             price: 129,
-            description: "Премиальный свитшот от Hermes с фирменным логотипом. Качество 1:1. Идеальная посадка и комфорт.",
             features: [
                 "Материал: премиальный хлопок",
                 "Качество 1:1",
@@ -1635,7 +1662,6 @@
         2: {
             name: "Свитшот Burberry",
             price: 114,
-            description: "Классический свитшот Burberry с узнаваемым клетчатым узором. Высокое качество пошива.",
             features: [
                 "Материал: высококачественный хлопок",
                 "Узнаваемый клетчатый узор",
@@ -1655,7 +1681,6 @@
         3: {
             name: "Свитшот Lacoste",
             price: 98,
-            description: "Спортивный свитшот Lacoste с фирменным крокодилом. Удобство и стиль для повседневной носки.",
             features: [
                 "Материал: хлопок с небольшим добавлением эластана",
                 "Фирменный крокодил",
@@ -1675,7 +1700,6 @@
         4: {
             name: "Свитшот Lacoste черный",
             price: 98,
-            description: "Черный свитшот Lacoste для элегантного и стильного образа. Универсальный вариант на любой случай.",
             features: [
                 "Материал: премиальный хлопок",
                 "Классический черный цвет",
@@ -1694,7 +1718,6 @@
         5: {
             name: "Зипка Dior",
             price: 149,
-            description: "Стильная зипка от Dior с фирменными элементами. Качество 1:1. Идеальный выбор для модного образа.",
             features: [
                 "Материал: высококачественный полиэстер",
                 "Фирменная фурнитура",
@@ -1716,7 +1739,6 @@
         6: {
             name: "Лонгслив Guess",
             price: 90,
-            description: "Модный лонгслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
             features: [
                 "Материал: хлопок",
                 "Узнаваемый логотип Guess",
@@ -1736,7 +1758,6 @@
         7: {
             name: "Лонгслив Guess черный", // Добавлено уточнение цвета
             price: 90,
-            description: "Модный лонгслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
             features: [
                 "Материал: хлопок",
                 "Узнаваемый логотип Guess",
@@ -1756,7 +1777,6 @@
         8: {
             name: "Жилетка Corteiz",
             price: 139,
-            description: "Уличная жилетка Corteiz для создания модного образа. Качество 1:1. Стиль и функциональность.",
             features: [
                 "Материал: нейлон",
                 "Водоотталкивающая пропитка",
@@ -1776,7 +1796,6 @@
         9: {
             name: "Жилетка Jordan & Supreme",
             price: 169,
-            description: "Коллаборация Jordan и Supreme. Уникальный дизайн и высшее качество. Эксклюзивный предмет гардероба.",
             features: [
                 "Материал: полиэстер",
                 "Уникальный дизайн коллаборации",
@@ -1796,7 +1815,6 @@
         10: {
             name: "Жилетка Nike ACG",
             price: 124,
-            description: "Функциональная жилетка Nike ACG для активного отдыха и городского стиля. Технологичные материалы.",
             features: [
                 "Материал: технологичная ткань Nike",
                 "Водоотталкивающие свойства",
@@ -1816,7 +1834,6 @@
         11: {
             name: "Жилетка Polo Ralph Lauren",
             price: 119,
-            description: "Классическая жилетка Polo Ralph Lauren. Элегантность и качество. Подходит для различных стилей.",
             features: [
                 "Материал: хлопок/нейлон",
                 "Классический дизайн",
@@ -1837,7 +1854,6 @@
         12: {
             name: "Жилетка Prada",
             price: 189, // Исправлена цена (было 100, в разметке было 189)
-            description: "Роскошная жилетка от Prada. Премиальные материалы и идеальная посадка. Высший уровень качества.",
             features: [
                 "Материал: премиальные материалы",
                 "Идеальная посадка",
