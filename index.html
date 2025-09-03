@@ -2006,26 +2006,54 @@
             if (product) {
                 // Заполняем информацию о товаре
                 document.getElementById('detail-product-name').textContent = product.name;
-                document.getElementById('detail-product-price').textContent = `${product.price.toLocaleString('ru-RU')} ₽`;
+                document.getElementById('detail-product-price').textContent = `${product.price.toLocaleString('ru-RU')} BYN`;
                 document.getElementById('detail-product-desc').textContent = product.description;
 
                 // Заполняем характеристики
                 const featuresList = document.getElementById('detail-features');
                 featuresList.innerHTML = product.features.map(feature => `
-                    <li>${feature}</li>
-                `).join('');
+                <li>${feature}</li>
+            `).join('');
+
+                // Устанавливаем главное изображение
+                const mainImage = document.getElementById('main-product-image');
+                if (product.images && product.images.length > 0) {
+                    mainImage.src = product.images[0];
+                }
 
                 // Очищаем миниатюры
                 const thumbnailsContainer = document.querySelector('.product-thumbnails');
                 thumbnailsContainer.innerHTML = '';
 
-                // Добавляем миниатюры (7 штук)
-                for (let i = 0; i < 7; i++) {
-                    const thumbnail = document.createElement('img');
-                    thumbnail.className = 'thumbnail';
-                    thumbnail.alt = `Thumbnail ${i + 1}`;
-                    thumbnail.src = ''; // URL будет добавлен позже
-                    thumbnailsContainer.appendChild(thumbnail);
+                // Добавляем миниатюры из массива изображений товара
+                if (product.images && product.images.length > 0) {
+                    product.images.forEach((imageSrc, index) => {
+                        const thumbnail = document.createElement('img');
+                        thumbnail.className = 'thumbnail';
+                        thumbnail.alt = `Thumbnail ${index + 1}`;
+                        thumbnail.src = imageSrc;
+                        thumbnail.dataset.index = index;
+
+                        // Обработчик клика по миниатюре
+                        thumbnail.addEventListener('click', () => {
+                            mainImage.src = imageSrc;
+
+                            // Убираем активный класс у всех миниатюр
+                            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                                thumb.classList.remove('active');
+                            });
+
+                            // Добавляем активный класс к выбранной миниатюре
+                            thumbnail.classList.add('active');
+                        });
+
+                        // Активируем первую миниатюру
+                        if (index === 0) {
+                            thumbnail.classList.add('active');
+                        }
+
+                        thumbnailsContainer.appendChild(thumbnail);
+                    });
                 }
 
                 // Показываем страницу товара
