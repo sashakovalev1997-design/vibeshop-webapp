@@ -1030,3 +1030,360 @@ body {
     transition: var(--transition);
     font-size: 0.95rem; /* Немного увеличили шрифт */
 }
+/* Product Detail Page - УЛУЧШЕННАЯ МОБИЛЬНАЯ АДАПТАЦИЯ */
+.product-detail-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1003;
+    overflow-y: auto;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 10px;
+}
+
+.product-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.product-detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.product-gallery {
+    position: relative;
+    order: 1;
+}
+
+.main-product-image {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    object-fit: contain;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    background: #f8f9fa;
+}
+
+.product-thumbnails {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem 0.5rem 1rem;
+    justify-content: flex-start;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
+.product-thumbnails::-webkit-scrollbar {
+    height: 4px;
+}
+
+.product-thumbnails::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    opacity: 0.7;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: var(--primary);
+}
+
+.product-detail-info {
+    order: 2;
+}
+
+.product-detail-info h2 {
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.product-detail-price {
+    font-size: 1.5rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.product-detail-desc {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.size-selector {
+    margin-bottom: 1.5rem;
+}
+
+.size-selector h4 {
+    margin-bottom: 0.8rem;
+    color: var(--dark);
+    font-size: 1.1rem;
+}
+
+.size-options {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.size-option {
+    padding: 0.7rem 1.1rem;
+    border: 2px solid var(--gray);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-width: 50px;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-option:hover {
+    border-color: var(--secondary);
+}
+
+.size-option.selected {
+    background: var(--secondary);
+    color: white;
+    border-color: var(--secondary);
+}
+
+.detail-actions {
+    margin-top: 2rem;
+}
+
+.detail-add-to-cart {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    min-height: 50px;
+}
+
+.detail-add-to-cart:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #c42a46 100%);
+    transform: translateY(-2px);
+}
+
+.back-btn {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    min-height: 44px;
+}
+
+.back-btn:hover {
+    background: #5a6fd8;
+    transform: translateY(-2px);
+}
+
+/* Анимация появления */
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.product-detail-page.active {
+    display: block;
+    opacity: 1;
+    animation: slideInUp 0.4s ease;
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+    .product-detail-container {
+        padding: 0.5rem;
+    }
+
+    .product-detail-info h2 {
+        font-size: 1.6rem;
+    }
+
+    .product-detail-price {
+        font-size: 1.4rem;
+    }
+
+    .main-product-image {
+        max-height: 45vh;
+    }
+
+    .thumbnail {
+        width: 55px;
+        height: 55px;
+    }
+
+    .size-option {
+        padding: 0.6rem 0.9rem;
+        min-width: 45px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-detail-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .product-detail-price {
+        font-size: 1.3rem;
+    }
+
+    .product-detail-desc {
+        font-size: 0.95rem;
+    }
+
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+    }
+
+    .size-option {
+        padding: 0.6rem 0.8rem;
+        min-width: 42px;
+        font-size: 0.8rem;
+    }
+
+    .product-thumbnails {
+        gap: 0.5rem;
+        padding: 0.5rem 0.5rem 0.8rem;
+    }
+
+    .detail-add-to-cart {
+        padding: 1.1rem;
+        font-size: 1rem;
+    }
+}
+
+/* Особые стили для очень маленьких экранов */
+@media (max-width: 360px) {
+    .product-detail-info h2 {
+        font-size: 1.4rem;
+    }
+
+    .size-option {
+        padding: 0.5rem 0.7rem;
+        min-width: 40px;
+        font-size: 0.75rem;
+    }
+
+    .thumbnail {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Улучшенная прокрутка на мобильных */
+.product-detail-page {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Фикс для iOS */
+@supports (-webkit-touch-callout: none) {
+    .product-detail-page {
+        position: fixed;
+        height: -webkit-fill-available;
+    }
+
+    .main-product-image {
+        max-height: 40vh;
+    }
+}
+
+/* Адаптация для landscape режима */
+@media (max-height: 500px) and (orientation: landscape) {
+    .product-detail-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .product-gallery {
+        flex: 1;
+        max-width: 50%;
+    }
+
+    .product-detail-info {
+        flex: 1;
+        max-width: 50%;
+        padding-left: 1.5rem;
+    }
+
+    .main-product-image {
+        max-height: 60vh;
+    }
+}
+
+/* Улучшение для темной темы */
+@media (prefers-color-scheme: dark) {
+    .product-detail-page {
+        background: #1a1a1a;
+        color: white;
+    }
+
+    .product-detail-info h2 {
+        color: white;
+    }
+
+    .product-detail-desc {
+        color: #ccc;
+    }
+
+    .main-product-image {
+        background: #2a2a2a;
+    }
+}

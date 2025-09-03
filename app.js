@@ -28,6 +28,9 @@ function init() {
     setupEventListeners();
     loadUserInfo();
     hidePreloader();
+
+    // Инициализация мобильного просмотра
+    setupMobileDetailView();
 }
 
 // Скрытие прелоадера
@@ -273,6 +276,76 @@ function showToast(message, type = 'info') {
     setTimeout(() => {
         elements.toast.classList.remove('show');
     }, 3000);
+}
+
+// Настройка мобильного просмотра
+function setupMobileDetailView() {
+    const productDetailPage = document.getElementById('product-detail');
+    if (!productDetailPage) return;
+
+    const mainImage = document.getElementById('main-product-image');
+    if (!mainImage) return;
+
+    let touchStartY = 0;
+
+    // Закрытие по свайпу вниз
+    productDetailPage.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    productDetailPage.addEventListener('touchend', (e) => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const diffY = touchEndY - touchStartY;
+
+        // Если свайп вниз более 100px от верхнего края
+        if (diffY > 100 && touchStartY < 100) {
+            const backBtn = document.getElementById('back-to-products');
+            if (backBtn) backBtn.click();
+        }
+    }, { passive: true });
+
+    // Свайп между изображениями
+    let galleryStartX = 0;
+    let currentImageIndex = 0;
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    if (thumbnails.length > 0) {
+        mainImage.addEventListener('touchstart', (e) => {
+            galleryStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        mainImage.addEventListener('touchend', (e) => {
+            if (thumbnails.length <= 1) return;
+
+            const galleryEndX = e.changedTouches[0].clientX;
+            const diffX = galleryStartX - galleryEndX;
+
+            if (Math.abs(diffX) > 50) { // Минимальное расстояние свайпа
+                if (diffX > 0 && currentImageIndex < thumbnails.length - 1) {
+                    // Свайп влево - следующее изображение
+                    currentImageIndex++;
+                } else if (diffX < 0 && currentImageIndex > 0) {
+                    // Свайп вправо - предыдущее изображение
+                    currentImageIndex--;
+                }
+
+                // Обновляем главное изображение
+                mainImage.src = thumbnails[currentImageIndex].src;
+
+                // Обновляем активную миниатюру
+                thumbnails.forEach((thumb, index) => {
+                    thumb.classList.toggle('active', index === currentImageIndex);
+                });
+
+                // Прокручиваем к активной миниатюре
+                thumbnails[currentImageIndex].scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                    block: 'nearest'
+                });
+            }
+        }, { passive: true });
+    }
 }
 
 // Глобальные функции для HTML
