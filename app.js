@@ -28,9 +28,9 @@ function init() {
     setupEventListeners();
     loadUserInfo();
     hidePreloader();
-
-    // Инициализация мобильного просмотра
     setupMobileDetailView();
+    setupMobileOptimizations();
+    setupKeyboardHandling();
 }
 
 // Скрытие прелоадера
@@ -67,6 +67,48 @@ function setupEventListeners() {
             const productCard = e.target.closest('.product-card');
             showQuickView(productCard);
         });
+    });
+}
+
+// Мобильная оптимизация
+function setupMobileOptimizations() {
+    // Предотвращение масштабирования при двойном тапе
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+
+    // Улучшение обработки касаний
+    document.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Оптимизация для медленных устройств
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.style.willChange = 'transform';
+    });
+
+    // Определение мобильного устройства
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.body.classList.add('mobile-device');
+    }
+}
+
+// Обработка клавиатуры
+function setupKeyboardHandling() {
+    window.addEventListener('resize', function() {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+            setTimeout(() => {
+                document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
     });
 }
 
@@ -154,7 +196,7 @@ function updateCartUI() {
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
         itemElement.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
+            <img src="${item.image}" alt="${item.name}" loading="lazy">
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
                 <div class="cart-item-price">${item.price} BYN</div>
@@ -167,7 +209,7 @@ function updateCartUI() {
         total += Number(item.price);
     });
 
-    elements.cartTotal.textContent = `${total} BYN`;
+    elements.cartTotal.textContent = `${total.toFixed(2)} BYN`;
     document.getElementById('cart-count').textContent = cartItems.length;
 }
 
@@ -182,13 +224,27 @@ function removeFromCart(index) {
 function toggleCart() {
     elements.cartSidebar.classList.toggle('open');
     elements.overlay.classList.toggle('active');
-    document.body.style.overflow = elements.cartSidebar.classList.contains('open') ? 'hidden' : '';
+
+    if (elements.cartSidebar.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+        // Блокировка фонового скролла на iOS
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        }
+    } else {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+    }
 }
 
 function closeCart() {
     elements.cartSidebar.classList.remove('open');
     elements.overlay.classList.remove('active');
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
 }
 
 // Отправка заказа
@@ -208,7 +264,7 @@ function sendOrder() {
         total += Number(item.price);
     });
 
-    orderText += `\n💰 Итого: ${total} BYN`;
+    orderText += `\n💰 Итого: ${total.toFixed(2)} BYN`;
     orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
     orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
     orderText += `\n✅ Качество материалов 1:1`;
@@ -248,7 +304,7 @@ function copyOrder() {
         total += Number(item.price);
     });
 
-    orderText += `\n💰 Итого: ${total} BYN`;
+    orderText += `\n💰 Итого: ${total.toFixed(2)} BYN`;
     orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
     orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
     orderText += `\n✅ Качество материалов 1:1`;
