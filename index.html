@@ -41,8 +41,7 @@
     <div class="loader"></div>
 </div>
 
-<!-- Прогресс-бар -->
-<div class="progress-bar" id="progress-bar"></div>
+
 
 <!-- Header -->
 <header class="header">
@@ -332,22 +331,12 @@
 <!-- Toast Notification -->
 <div id="toast" class="toast"></div>
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-</script>
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX305753YW"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-TX305753YW');
 </script>
     // Данные товаров
@@ -472,7 +461,7 @@
                 "Лонгguess1.jpg",
                 "Лонгguess2.jpg",
                 "Лонгguess3.jpg",
-                "Лонgguess4.jpg",
+                "Лонгguess4.jpg",
                 "Лонгguess5.jpg",
                 "Лонгguess6.jpg",
                 "Лонгguess7.jpg"
@@ -1133,20 +1122,6 @@
                 });
             });
         });
-    }
-
-    // Отслеживание событий для аналитики
-    function trackEvent(category, action, label) {
-        if (typeof gtag !== 'undefined') {
-            gtag('event', action, {
-                'event_category': category,
-                'event_label': label
-            });
-        }
-
-        if (typeof ym !== 'undefined') {
-            ym(XXXXXX, 'reachGoal', `${category}_${action}`);
-        }
     }
 
     // Инициализация при загрузке страницы
