@@ -5,7 +5,7 @@
     <title>VibeShop</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <!-- Preloader -->
@@ -389,15 +389,15 @@
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
         <h3><i class="fas fa-shopping-cart"></i> Корзина</h3>
-        <button class="close-btn">&times;</button>
+        <button id="close-cart" class="close-btn">&times;</button>
     </div>
     <div class="cart-content">
-        <div class="cart-empty">
+        <div id="cart-empty" class="cart-empty">
             <i class="fas fa-shopping-cart"></i>
             <p>Ваша корзина пуста</p>
             <small>Добавьте товары из каталога</small>
         </div>
-        <!-- Cart items will be added dynamically -->
+        <div id="cart-items"></div>
     </div>
     <div class="cart-footer">
         <div class="cart-total">
@@ -646,6 +646,8 @@
     const contactModal = document.getElementById('contact-modal');
     const productDetailPage = document.getElementById('product-detail');
     const toast = document.getElementById('toast');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartEmpty = document.getElementById('cart-empty');
 
     // Обновление счетчика корзины
     function updateCartCount() {
@@ -661,17 +663,13 @@
     // Отображение товаров в корзине
     function renderCartItems() {
         if (cart.length === 0) {
-            cartContent.innerHTML = `
-                <div class="cart-empty">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Ваша корзина пуста</p>
-                    <small>Добавьте товары из каталога</small>
-                </div>
-            `;
+            cartEmpty.style.display = 'block';
+            cartItemsContainer.innerHTML = '';
             return;
         }
 
-        cartContent.innerHTML = cart.map((item, index) => `
+        cartEmpty.style.display = 'none';
+        cartItemsContainer.innerHTML = cart.map((item, index) => `
             <div class="cart-item">
                 <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
                 <div class="cart-item-info">
@@ -716,7 +714,7 @@
     });
 
     // Закрыть корзину
-    document.querySelector('.close-btn').addEventListener('click', closeCart);
+    document.getElementById('close-cart').addEventListener('click', closeCart);
 
     function closeCart() {
         cartSidebar.classList.remove('open');
@@ -770,6 +768,7 @@
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
         updateCartTotal();
+        renderCartItems();
         showToast('Товар добавлен в корзину!', 'success');
     }
 
@@ -780,9 +779,12 @@
             addToCartFromCard(productCard);
 
             // Анимация кнопки
+            const originalHtml = e.currentTarget.innerHTML;
+            e.currentTarget.innerHTML = '<i class="fas fa-check"></i> Добавлено';
             e.currentTarget.classList.add('added');
             setTimeout(() => {
                 e.currentTarget.classList.remove('added');
+                e.currentTarget.innerHTML = originalHtml;
             }, 2000);
         });
     });
@@ -888,6 +890,7 @@
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
         updateCartTotal();
+        renderCartItems();
         showToast('Товар добавлен в корзину!', 'success');
 
         // Закрываем страницу товара
@@ -899,15 +902,30 @@
     function generateOrderText() {
         if (cart.length === 0) return 'Корзина пуста';
 
-        let orderText = 'Здравствуйте! Я хочу оформить заказ:\n\n';
+        let orderText = '🛒 ДЕТАЛИ ЗАКАЗА 🛒\n\n';
+
+        // Добавляем информацию о пользователе, если есть Telegram WebApp
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe.user) {
+            const user = Telegram.WebApp.initDataUnsafe.user;
+            orderText += `👤 Пользователь: ${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`;
+            if (user.username) orderText += ` (@${user.username})`;
+            orderText += `\n🆔 ID: ${user.id}\n\n`;
+        } else {
+            orderText += '👤 Пользователь: Гость\n\n';
+        }
+
+        orderText += '📦 Состав заказа:\n';
 
         cart.forEach((item, index) => {
-            orderText += `${index + 1}. ${item.name} - ${item.price.toLocaleString('ru-RU')} BYN (Размер: ${item.size})\n`;
+            orderText += `• ${item.name} (Размер: ${item.size}) - ${item.price.toLocaleString('ru-RU')} BYN\n`;
         });
 
         const total = cart.reduce((sum, item) => sum + item.price, 0);
-        orderText += `\nИтого: ${total.toLocaleString('ru-RU')} BYN\n\n`;
-        orderText += 'Спасибо!';
+        orderText += `\n💰 Итого: ${total.toLocaleString('ru-RU')} BYN\n`;
+        orderText += `\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+        orderText += `\n✅ Все бирки и ярлыки как в оригинале`;
+        orderText += `\n✅ Качество материалов 1:1`;
+        orderText += `\n✅ Полное визуальное соответствие`;
 
         return orderText;
     }
@@ -920,8 +938,20 @@
         }
 
         const orderText = generateOrderText();
-        const telegramUrl = `https://t.me/vibeshop_manager?text=${encodeURIComponent(orderText)}`;
+        const telegramUrl = `https://t.me/bigdigovich?text=${encodeURIComponent(orderText)}`;
         window.open(telegramUrl, '_blank');
+
+        showToast('Открываю Telegram...', 'success');
+
+        // Очищаем корзину после отправки
+        setTimeout(() => {
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartTotal();
+            renderCartItems();
+            closeCart();
+        }, 2000);
     });
 
     // Обработчик для копирования заказа
@@ -933,7 +963,9 @@
 
         const orderText = generateOrderText();
         navigator.clipboard.writeText(orderText).then(() => {
-            showToast('Заказ скопирован! Отправьте его менеджеру.', 'success');
+            showToast('Заказ скопирован в буфер!', 'success');
+        }).catch(err => {
+            showToast('Ошибка копирования', 'error');
         });
     });
 
@@ -942,13 +974,15 @@
     const scrollLeftBtn = document.querySelector('.scroll-left');
     const scrollRightBtn = document.querySelector('.scroll-right');
 
-    scrollLeftBtn.addEventListener('click', () => {
-        categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
-    });
+    if (scrollLeftBtn && scrollRightBtn) {
+        scrollLeftBtn.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+        });
 
-    scrollRightBtn.addEventListener('click', () => {
-        categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
-    });
+        scrollRightBtn.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+    }
 
     // Фильтрация по категориям
     document.querySelectorAll('.category').forEach(category => {
@@ -977,12 +1011,20 @@
         updateCartTotal();
 
         // Выбираем размер M по умолчанию
-        document.querySelector('.size-option[data-size="M"]').classList.add('selected');
+        const defaultSize = document.querySelector('.size-option[data-size="M"]');
+        if (defaultSize) {
+            defaultSize.classList.add('selected');
+        }
 
         // Скрываем прелоадер
         setTimeout(() => {
             document.getElementById('preloader').style.display = 'none';
         }, 500);
+
+        // Инициализируем Telegram WebApp
+        if (typeof Telegram !== 'undefined') {
+            Telegram.WebApp.expand();
+        }
     });
 </script>
 </body>
