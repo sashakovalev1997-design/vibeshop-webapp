@@ -1,17 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>VibeShop</title>
+    <title>VibeShop - Качественная одежда и премиальные реплики 1:1</title>
+    <meta name="description" content="VibeShop - магазин качественной одежды и премиальных реплик 1:1. Свитшоты, лонгсливы, жилетки от известных брендов Hermes, Burberry, Lacoste, Dior и других.">
+    <meta name="keywords" content="одежда, реплики, свитшоты, жилетки, мода, стиль, Hermes, Burberry, Lacoste, Dior, премиум качество">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="VibeShop - Стиль в каждом моменте">
+    <meta property="og:description" content="Качественная одежда и премиальные реплики 1:1">
+    <meta property="og:image" content="https://vibeshop.by/preview.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vibeshop.by">
+
+    <!-- Schema.org markup -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Store",
+            "name": "VibeShop",
+            "description": "Магазин качественной одежды и премиальных реплик 1:1",
+            "url": "https://vibeshop.by",
+            "telephone": "+375-29-XXX-XX-XX",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "BY"
+            },
+            "openingHours": "Mo-Su 09:00-21:00",
+            "priceRange": "$$"
+        }
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
 <!-- Preloader -->
 <div id="preloader">
     <div class="loader"></div>
 </div>
+
+<!-- Прогресс-бар -->
+<div class="progress-bar" id="progress-bar"></div>
 
 <!-- Header -->
 <header class="header">
@@ -54,18 +85,74 @@
     </div>
 </section>
 
+<!-- Хлебные крошки -->
+<div class="breadcrumbs-container">
+    <div class="breadcrumbs">
+        <a href="#">Главная</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Каталог</span>
+    </div>
+</div>
+
+<!-- Фильтры -->
+<section class="filters-section">
+    <div class="filters-header">
+        <h3><i class="fas fa-filter"></i> Фильтры</h3>
+        <button id="reset-filters" class="contact-btn">
+            <i class="fas fa-redo"></i> Сбросить
+        </button>
+    </div>
+    <div class="filters-grid">
+        <div class="filter-group">
+            <label>Цена (BYN)</label>
+            <input type="range" class="filter-range" id="price-range" min="50" max="300" step="10" value="300">
+            <div id="price-value">До 300 BYN</div>
+        </div>
+        <div class="filter-group">
+            <label>Бренд</label>
+            <select class="filter-select" id="brand-filter">
+                <option value="all">Все бренды</option>
+                <option value="hermes">Hermes</option>
+                <option value="burberry">Burberry</option>
+                <option value="lacoste">Lacoste</option>
+                <option value="dior">Dior</option>
+                <option value="guess">Guess</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Размер</label>
+            <select class="filter-select" id="size-filter">
+                <option value="all">Все размеры</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Сортировка</label>
+            <select class="filter-select" id="sort-filter">
+                <option value="newest">Сначала новые</option>
+                <option value="price-asc">Цена по возрастанию</option>
+                <option value="price-desc">Цена по убыванию</option>
+                <option value="popular">Популярные</option>
+            </select>
+        </div>
+    </div>
+</section>
+
 <!-- Категории -->
 <div class="categories-container">
     <button class="scroll-btn scroll-left">
         <i class="fas fa-chevron-left"></i>
     </button>
     <div class="categories">
-        <div class="category" data-category="все"><img src="home0024-48.png" alt="Все"><span>Все</span></div>
-        <div class="category" data-category="свитшоты"><img src="кархарт.jpeg" alt="Свитшоты"><span>Свитшоты</span></div>
-        <div class="category" data-category="лонгсливы"><img src="кархарт.jpeg" alt="Лонгсливы"><span>Лонгсливы</span></div>
-        <div class="category" data-category="зипки"><img src="stus.jpeg" alt="Зипки"><span>Зипки</span></div>
-        <div class="category" data-category="жилетки"><img src="жилетка.jpeg" alt="Жилетки"><span>Жилетки</span></div>
-        <div class="category" data-category="сумки"><img src="praada.jpeg" alt="Сумки"><span>Сумки</span></div>
+        <div class="category" data-category="все"><img src="home0024-48.png" alt="Все товары" loading="lazy"><span>Все</span></div>
+        <div class="category" data-category="свитшоты"><img src="кархарт.jpeg" alt="Свитшоты" loading="lazy"><span>Свитшоты</span></div>
+        <div class="category" data-category="лонгсливы"><img src="кархарт.jpeg" alt="Лонгсливы" loading="lazy"><span>Лонгсливы</span></div>
+        <div class="category" data-category="зипки"><img src="stus.jpeg" alt="Зипки" loading="lazy"><span>Зипки</span></div>
+        <div class="category" data-category="жилетки"><img src="жилетка.jpeg" alt="Жилетки" loading="lazy"><span>Жилетки</span></div>
+        <div class="category" data-category="сумки"><img src="praada.jpeg" alt="Сумки" loading="lazy"><span>Сумки</span></div>
     </div>
     <button class="scroll-btn scroll-right">
         <i class="fas fa-chevron-right"></i>
@@ -79,215 +166,41 @@
         <p>Выбери то, что подходит именно тебе</p>
     </div>
 
-    <div class="products-grid">
-        <!-- Свитшот Hermes -->
-        <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image">
-                <img src="hermeshud1.jpg" alt="Свитшот Hermes">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="1">Быстрый просмотр</button>
-                </div>
-            </div>
+    <div class="products-grid" id="products-grid">
+        <!-- Скелетоны для загрузки -->
+        <div class="product-card skeleton">
+            <div class="product-image skeleton-image"></div>
             <div class="product-info">
-                <h4>Свитшот Hermes</h4>
+                <div class="skeleton-text" style="width: 70%"></div>
+                <div class="skeleton-text" style="width: 50%"></div>
                 <div class="product-footer">
-                    <div class="price">129 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
+                    <div class="skeleton-text" style="width: 40%"></div>
+                    <div class="skeleton-text" style="width: 30%"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Свитшот Burberry -->
-        <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image">
-                <img src="СВИТШОТЫ BURBERRY1.jpg" alt="Свитшот Burberry">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="2">Быстрый просмотр</button>
-                </div>
-            </div>
+        <div class="product-card skeleton">
+            <div class="product-image skeleton-image"></div>
             <div class="product-info">
-                <h4>Свитшот Burberry</h4>
+                <div class="skeleton-text" style="width: 70%"></div>
+                <div class="skeleton-text" style="width: 50%"></div>
                 <div class="product-footer">
-                    <div class="price">114 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
+                    <div class="skeleton-text" style="width: 40%"></div>
+                    <div class="skeleton-text" style="width: 30%"></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Свитшот Lacoste -->
-        <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image">
-                <img src="СВИТШОТЫ LACOSTEбел1.jpg" alt="Свитшот Lacoste">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="3">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Свитшот Lacoste</h4>
-                <div class="product-footer">
-                    <div class="price">89 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Свитшот Lacoste черный -->
-        <div class="product-card correct-height" data-category="свитшоты">
-            <div class="product-image">
-                <img src="СВИТШОТЫ LACOSTEчер1.jpg" alt="Свитшот Lacoste черный">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="4">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Свитшот Lacoste черный</h4>
-                <div class="product-footer">
-                    <div class="price">89 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Зипка Dior -->
-        <div class="product-card correct-height" data-category="зипки">
-            <div class="product-image">
-                <img src="DIORзип1.jpg" alt="Зипка Dior">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="5">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Зипка Dior</h4>
-                <div class="product-footer">
-                    <div class="price">149 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Лонгслив Guess -->
-        <div class="product-card correct-height" data-category="лонгсливы">
-            <div class="product-image">
-                <img src="Лонгguess.jpg" alt="Лонгслив Guess">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="6">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Лонгслив Guess</h4>
-                <div class="product-footer">
-                    <div class="price">98 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Жилетка Corteiz -->
-        <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image">
-                <img src="photo_2025-07-01_17-31-38.jpg" alt="Жилетка Corteiz">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="7">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Жилетка Corteiz</h4>
-                <div class="product-footer">
-                    <div class="price">139 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Жилетка Jordan & Supreme -->
-        <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image">
-                <img src="ЖИЛЕТКИ JORDAN & SUPREMEбел1.jpg" alt="Жилетка Jordan & Supreme">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="8">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Жилетка Jordan & Supreme</h4>
-                <div class="product-footer">
-                    <div class="price">169 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Жилетка Nike ACG -->
-        <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image">
-                <img src="ЖИЛЕТКИ NIKEasg1.jpg" alt="Жилетка Nike ACG">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="9">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Жилетка Nike ACG</h4>
-                <div class="product-footer">
-                    <div class="price">124 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Жилетка Polo Ralph Lauren -->
-        <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image">
-                <img src="ЖИЛЕТКИ POLO RALPH LAUREN1.jpg" alt="Жилетка Polo Ralph Lauren">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="10">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Жилетка Polo Ralph Lauren</h4>
-                <div class="product-footer">
-                    <div class="price">119 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Жилетка Prada -->
-        <div class="product-card correct-height" data-category="жилетки">
-            <div class="product-image">
-                <img src="ЖИЛЕТКИ PRADA1.jpg" alt="Жилетка Prada">
-                <div class="product-overlay">
-                    <button class="quick-view" data-product="11">Быстрый просмотр</button>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Жилетка Prada</h4>
-                <div class="product-footer">
-                    <div class="price">189 BYN</div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Пагинация -->
+    <div class="pagination" id="pagination">
+        <button class="pagination-btn active">1</button>
+        <button class="pagination-btn">2</button>
+        <button class="pagination-btn">3</button>
+        <button class="pagination-btn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </main>
 
@@ -299,7 +212,7 @@
         </button>
         <div class="product-detail-content">
             <div class="product-gallery">
-                <img id="main-product-image" class="main-product-image" src="" alt="Product Image">
+                <img id="main-product-image" class="main-product-image" src="" alt="Product Image" loading="lazy">
                 <div class="product-thumbnails">
                     <!-- Миниатюры будут добавлены динамически -->
                 </div>
@@ -353,7 +266,7 @@
                     <div class="contact-details">
                         <h4>Владислав</h4>
                         <p>Менеджер по продажам</p>
-                        <a href="https://t.me/bigdigovich" class="contact-link" target="_blank">
+                        <a href="https://t.me/bigdigovich" class="contact-link" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-telegram"></i> Написать в Telegram
                         </a>
                     </div>
@@ -365,7 +278,7 @@
                     <div class="contact-details">
                         <h4>Александр</h4>
                         <p>Техническая поддержка</p>
-                        <a href="https://t.me/Amg0101am" class="contact-link" target="_blank">
+                        <a href="https://t.me/Amg0101am" class="contact-link" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-telegram"></i> Написать в Telegram
                         </a>
                     </div>
@@ -419,12 +332,39 @@
 <!-- Toast Notification -->
 <div id="toast" class="toast"></div>
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+
+<!-- Yandex.Metrika -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(XXXXXX, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+    });
+</script>
+
 <script>
     // Данные товаров
     const products = {
         1: {
             name: "Свитшот Hermes",
             price: 129,
+            brand: "hermes",
+            category: "свитшоты",
             features: [
                 "Материал: премиальный хлопок",
                 "Качество 1:1",
@@ -443,6 +383,8 @@
         2: {
             name: "Свитшот Burberry",
             price: 114,
+            brand: "burberry",
+            category: "свитшоты",
             features: [
                 "Материал: высококачественный хлопок",
                 "Узнаваемый клетчатый узор",
@@ -462,6 +404,8 @@
         3: {
             name: "Свитшот Lacoste",
             price: 89,
+            brand: "lacoste",
+            category: "свитшоты",
             features: [
                 "Материал: хлопок с небольшим добавлением эластана",
                 "Фирменный крокодил",
@@ -481,6 +425,8 @@
         4: {
             name: "Свитшот Lacoste черный",
             price: 89,
+            brand: "lacoste",
+            category: "свитшоты",
             features: [
                 "Материал: премиальный хлопок",
                 "Классический черный цвет",
@@ -499,6 +445,8 @@
         5: {
             name: "Зипка Dior",
             price: 149,
+            brand: "dior",
+            category: "зипки",
             features: [
                 "Материал: высококачественный полиэстер",
                 "Фирменная фурнитура",
@@ -520,6 +468,8 @@
         6: {
             name: "Лонгслив Guess",
             price: 98,
+            brand: "guess",
+            category: "лонгсливы",
             features: [
                 "Материал: хлопок",
                 "Узнаваемый логотип Guess",
@@ -539,6 +489,8 @@
         7: {
             name: "Жилетка Corteiz",
             price: 139,
+            brand: "corteiz",
+            category: "жилетки",
             features: [
                 "Материал: нейлон",
                 "Водоотталкивающая пропитка",
@@ -558,6 +510,8 @@
         8: {
             name: "Жилетка Jordan & Supreme",
             price: 169,
+            brand: "jordan",
+            category: "жилетки",
             features: [
                 "Материал: полиэстер",
                 "Уникальный дизайн коллаборации",
@@ -577,6 +531,8 @@
         9: {
             name: "Жилетка Nike ACG",
             price: 124,
+            brand: "nike",
+            category: "живетки",
             features: [
                 "Материал: технологичная ткань Nike",
                 "Водоотталкивающие свойства",
@@ -596,6 +552,8 @@
         10: {
             name: "Жилетка Polo Ralph Lauren",
             price: 119,
+            brand: "polo",
+            category: "жилетки",
             features: [
                 "Материал: хлопок/нейлон",
                 "Классический дизайн",
@@ -616,6 +574,8 @@
         11: {
             name: "Жилетка Prada",
             price: 189,
+            brand: "prada",
+            category: "жилетки",
             features: [
                 "Материал: премиальные материалы",
                 "Идеальная посадка",
@@ -636,6 +596,9 @@
     // Инициализация корзины
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let selectedSize = 'M';
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    let filteredProducts = Object.values(products);
 
     // DOM элементы
     const cartCount = document.getElementById('cart-count');
@@ -648,10 +611,58 @@
     const toast = document.getElementById('toast');
     const cartItemsContainer = document.getElementById('cart-items');
     const cartEmpty = document.getElementById('cart-empty');
+    const productsGrid = document.getElementById('products-grid');
+    const progressBar = document.getElementById('progress-bar');
+    const priceRange = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-value');
+    const brandFilter = document.getElementById('brand-filter');
+    const sizeFilter = document.getElementById('size-filter');
+    const sortFilter = document.getElementById('sort-filter');
+    const resetFilters = document.getElementById('reset-filters');
+    const pagination = document.getElementById('pagination');
+
+    // Lazy loading для изображений
+    function initLazyLoading() {
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    }
+
+    // Прогресс-бар при прокрутке
+    function initProgressBar() {
+        window.addEventListener('scroll', () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+            progressBar.style.width = scrollPercent + '%';
+        });
+    }
 
     // Обновление счетчика корзины
     function updateCartCount() {
         cartCount.textContent = cart.length;
+        // Мгновенное обновление иконки корзины
+        cartCount.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            cartCount.style.transform = 'scale(1)';
+        }, 300);
     }
 
     // Обновление общей стоимости
@@ -671,7 +682,7 @@
         cartEmpty.style.display = 'none';
         cartItemsContainer.innerHTML = cart.map((item, index) => `
             <div class="cart-item">
-                <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
+                <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}" loading="lazy">
                 <div class="cart-item-info">
                     <div class="cart-item-name">${item.name}</div>
                     <div class="cart-item-price">${item.price.toLocaleString('ru-RU')} BYN</div>
@@ -770,24 +781,29 @@
         updateCartTotal();
         renderCartItems();
         showToast('Товар добавлен в корзину!', 'success');
+
+        // Аналитика
+        trackEvent('cart', 'add_to_cart', productName);
     }
 
     // Обработчики для кнопок добавления в корзину
-    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productCard = e.currentTarget.closest('.product-card');
-            addToCartFromCard(productCard);
+    function initAddToCartButtons() {
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productCard = e.currentTarget.closest('.product-card');
+                addToCartFromCard(productCard);
 
-            // Анимация кнопки
-            const originalHtml = e.currentTarget.innerHTML;
-            e.currentTarget.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-            e.currentTarget.classList.add('added');
-            setTimeout(() => {
-                e.currentTarget.classList.remove('added');
-                e.currentTarget.innerHTML = originalHtml;
-            }, 2000);
+                // Анимация кнопки
+                const originalHtml = e.currentTarget.innerHTML;
+                e.currentTarget.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+                e.currentTarget.classList.add('added');
+                setTimeout(() => {
+                    e.currentTarget.classList.remove('added');
+                    e.currentTarget.innerHTML = originalHtml;
+                }, 2000);
+            });
         });
-    });
+    }
 
     // Универсальная функция для показа товара
     function showProductDetail(productId) {
@@ -818,6 +834,7 @@
                 thumbnail.alt = `Thumbnail ${index + 1}`;
                 thumbnail.src = imageSrc;
                 thumbnail.dataset.index = index;
+                thumbnail.loading = 'lazy';
 
                 thumbnail.addEventListener('click', () => {
                     mainImage.src = imageSrc;
@@ -838,15 +855,20 @@
         // Показываем страницу товара
         productDetailPage.classList.add('active');
         document.body.style.overflow = 'hidden';
+
+        // Аналитика
+        trackEvent('product', 'view', product.name);
     }
 
     // Обработчики для быстрого просмотра
-    document.querySelectorAll('.quick-view').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productId = e.currentTarget.dataset.product;
-            showProductDetail(productId);
+    function initQuickViewButtons() {
+        document.querySelectorAll('.quick-view').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productId = e.currentTarget.dataset.product;
+                showProductDetail(productId);
+            });
         });
-    });
+    }
 
     // Обработчик для кнопки "Назад"
     document.getElementById('back-to-products').addEventListener('click', () => {
@@ -896,6 +918,9 @@
         // Закрываем страницу товара
         productDetailPage.classList.remove('active');
         document.body.style.overflow = '';
+
+        // Аналитика
+        trackEvent('cart', 'add_from_detail', productName);
     });
 
     // Генерация текста заказа
@@ -942,6 +967,9 @@
         window.open(telegramUrl, '_blank');
 
         showToast('Открываю Telegram...', 'success');
+
+        // Аналитика
+        trackEvent('conversion', 'purchase', cart.reduce((sum, item) => sum + item.price, 0));
 
         // Очищаем корзину после отправки
         setTimeout(() => {
@@ -993,15 +1021,151 @@
     });
 
     function filterProducts(category) {
-        const productCards = document.querySelectorAll('.product-card');
+        if (category === 'все') {
+            filteredProducts = Object.values(products);
+        } else {
+            filteredProducts = Object.values(products).filter(product =>
+                product.category === category
+            );
+        }
 
-        productCards.forEach(card => {
-            if (category === 'все' || card.dataset.category === category) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
+        currentPage = 1;
+        renderProducts();
+        updatePagination();
+    }
+
+    // Функции фильтрации
+    function applyFilters() {
+        const maxPrice = parseInt(priceRange.value);
+        const brand = brandFilter.value;
+        const size = sizeFilter.value;
+        const sort = sortFilter.value;
+
+        filteredProducts = Object.values(products).filter(product => {
+            let pass = true;
+
+            // Фильтр по цене
+            if (product.price > maxPrice) {
+                pass = false;
             }
+
+            // Фильтр по бренду
+            if (brand !== 'all' && product.brand !== brand) {
+                pass = false;
+            }
+
+            // Фильтр по размеру (здесь нужно адаптировать под вашу логику)
+            // if (size !== 'all' && !product.availableSizes.includes(size)) {
+            //     pass = false;
+            // }
+
+            return pass;
         });
+
+        // Сортировка
+        switch(sort) {
+            case 'price-asc':
+                filteredProducts.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-desc':
+                filteredProducts.sort((a, b) => b.price - a.price);
+                break;
+            case 'popular':
+                // Здесь можно добавить логику популярности
+                break;
+            default:
+                // newest - оставляем как есть
+                break;
+        }
+
+        currentPage = 1;
+        renderProducts();
+        updatePagination();
+    }
+
+    // Рендер товаров
+    function renderProducts() {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const productsToShow = filteredProducts.slice(start, end);
+
+        productsGrid.innerHTML = productsToShow.map(product => `
+            <div class="product-card correct-height" data-category="${product.category}">
+                <div class="product-image">
+                    <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-view" data-product="${Object.keys(products).find(key => products[key] === product)}">Быстрый просмотр</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h4>${product.name}</h4>
+                    <div class="product-footer">
+                        <div class="price">${product.price} BYN</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        initAddToCartButtons();
+        initQuickViewButtons();
+        initLazyLoading();
+    }
+
+    // Обновление пагинации
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+        if (totalPages <= 1) {
+            pagination.style.display = 'none';
+            return;
+        }
+
+        pagination.style.display = 'flex';
+        let paginationHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i <= 3 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                paginationHTML += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}">${i}</button>`;
+            } else if (i === currentPage - 2 || i === currentPage + 2) {
+                paginationHTML += `<button class="pagination-btn">...</button>`;
+            }
+        }
+
+        pagination.innerHTML = paginationHTML;
+
+        // Добавляем обработчики для кнопок пагинации
+        document.querySelectorAll('.pagination-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                if (btn.textContent === '...') return;
+
+                currentPage = parseInt(btn.textContent);
+                renderProducts();
+                updatePagination();
+
+                // Прокрутка к верху
+                window.scrollTo({
+                    top: productsGrid.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    }
+
+    // Отслеживание событий для аналитики
+    function trackEvent(category, action, label) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', action, {
+                'event_category': category,
+                'event_label': label
+            });
+        }
+
+        if (typeof ym !== 'undefined') {
+            ym(XXXXXX, 'reachGoal', `${category}_${action}`);
+        }
     }
 
     // Инициализация при загрузке страницы
@@ -1016,6 +1180,33 @@
             defaultSize.classList.add('selected');
         }
 
+        // Инициализация фильтров
+        priceRange.addEventListener('input', () => {
+            priceValue.textContent = `До ${priceRange.value} BYN`;
+            applyFilters();
+        });
+
+        brandFilter.addEventListener('change', applyFilters);
+        sizeFilter.addEventListener('change', applyFilters);
+        sortFilter.addEventListener('change', applyFilters);
+
+        resetFilters.addEventListener('click', () => {
+            priceRange.value = 300;
+            priceValue.textContent = 'До 300 BYN';
+            brandFilter.value = 'all';
+            sizeFilter.value = 'all';
+            sortFilter.value = 'newest';
+            applyFilters();
+        });
+
+        // Рендер товаров
+        renderProducts();
+        updatePagination();
+
+        // Инициализация дополнительных функций
+        initProgressBar();
+        initLazyLoading();
+
         // Скрываем прелоадер
         setTimeout(() => {
             document.getElementById('preloader').style.display = 'none';
@@ -1025,7 +1216,37 @@
         if (typeof Telegram !== 'undefined') {
             Telegram.WebApp.expand();
         }
+
+        // Service Worker для кэширования
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW registration failed:', err));
+        }
     });
+
+    // Кэширование в LocalStorage
+    function cacheProducts() {
+        localStorage.setItem('cached_products', JSON.stringify({
+            data: products,
+            timestamp: Date.now(),
+            expires: Date.now() + (24 * 60 * 60 * 1000) // 24 часа
+        }));
+    }
+
+    function getCachedProducts() {
+        const cached = localStorage.getItem('cached_products');
+        if (!cached) return null;
+
+        const { data, timestamp, expires } = JSON.parse(cached);
+
+        if (Date.now() > expires) {
+            localStorage.removeItem('cached_products');
+            return null;
+        }
+
+        return data;
+    }
 </script>
 </body>
 </html>
