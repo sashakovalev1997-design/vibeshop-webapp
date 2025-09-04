@@ -1106,3 +1106,73 @@ body {
         transform: translateY(0);
     }
 }
+/* Добавьте эти стили в конец вашего файла style.css */
+
+/* Исправление для переменной --radius */
+:root {
+    --radius: 8px; /* Добавлено значение по умолчанию */
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Базовые стили для скрытия элементов */
+.modal {
+    display: none;
+}
+
+.product-detail-page {
+    display: none;
+}
+
+.cart-sidebar {
+    display: none;
+}
+
+/* Активационные классы */
+.modal.active {
+    display: flex;
+}
+
+.product-detail-page.active {
+    display: block;
+}
+
+.cart-sidebar.open {
+    display: flex;
+}
+
+/* Убедитесь, что все изображения корректно отображаются */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Улучшение отображения для мобильных устройств */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-actions {
+        margin-top: 1rem;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+}
