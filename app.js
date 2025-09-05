@@ -11,8 +11,10 @@ function initApp() {
     initCart();
     initFilters();
     initCategories();
-    loadProducts();
+    initQuickView();
+    initSizeSelection();
     initProductDetails();
+    initAddToCartButtons();
 }
 
 // Preloader
@@ -74,6 +76,11 @@ function initCart() {
         cartSidebar.classList.remove('open');
         overlay.classList.remove('active');
     });
+
+    overlay.addEventListener('click', function() {
+        cartSidebar.classList.remove('open');
+        overlay.classList.remove('active');
+    });
 }
 
 // Фильтры
@@ -82,17 +89,21 @@ function initFilters() {
     const priceValue = document.getElementById('price-value');
     const resetFilters = document.getElementById('reset-filters');
 
-    priceRange.addEventListener('input', function() {
-        priceValue.textContent = `До ${this.value} BYN`;
-    });
+    if (priceRange && priceValue) {
+        priceRange.addEventListener('input', function() {
+            priceValue.textContent = `До ${this.value} BYN`;
+        });
+    }
 
-    resetFilters.addEventListener('click', function() {
-        priceRange.value = 300;
-        priceValue.textContent = 'До 300 BYN';
-        document.getElementById('brand-filter').value = 'all';
-        document.getElementById('size-filter').value = 'all';
-        document.getElementById('sort-filter').value = 'newest';
-    });
+    if (resetFilters) {
+        resetFilters.addEventListener('click', function() {
+            if (priceRange) priceRange.value = 300;
+            if (priceValue) priceValue.textContent = 'До 300 BYN';
+            document.getElementById('brand-filter').value = 'all';
+            document.getElementById('size-filter').value = 'all';
+            document.getElementById('sort-filter').value = 'newest';
+        });
+    }
 }
 
 // Категории
@@ -110,190 +121,202 @@ function initCategories() {
         });
     });
 
-    scrollLeft.addEventListener('click', function() {
-        categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
-    });
+    if (scrollLeft && categoriesContainer) {
+        scrollLeft.addEventListener('click', function() {
+            categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+    }
 
-    scrollRight.addEventListener('click', function() {
-        categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
-    });
+    if (scrollRight && categoriesContainer) {
+        scrollRight.addEventListener('click', function() {
+            categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+    }
 }
 
-// Загрузка продуктов
-function loadProducts() {
-    const productsGrid = document.getElementById('products-grid');
-    if (!productsGrid) return;
-
-    // Очищаем скелетоны
-    productsGrid.innerHTML = '';
-
-
 // Детали продукта
-    function initProductDetails() {
-        const backBtn = document.getElementById('back-to-products');
-        const productDetail = document.getElementById('product-detail');
+function initProductDetails() {
+    const backBtn = document.getElementById('back-to-products');
+    const productDetail = document.getElementById('product-detail');
 
-        backBtn.addEventListener('click', function () {
+    if (backBtn && productDetail) {
+        backBtn.addEventListener('click', function() {
             productDetail.classList.remove('active');
         });
     }
+}
 
-// Вспомогательные функции
-    function showToast(message, type = 'success') {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.className = `toast show ${type}`;
+// Инициализация кнопок "В корзину"
+function initAddToCartButtons() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
-        setTimeout(function () {
-            toast.classList.remove('show');
-        }, 3000);
-    }
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productCard = this.closest('.product-card');
+            const productName = productCard.querySelector('h4').textContent;
+            const productPrice = productCard.querySelector('.price').textContent;
 
-// Функция фильтрации по категориям (заглушка)
-    function filterByCategory(category) {
-        showToast(`Выбрана категория: ${category}`, 'info');
-    }
-    // Объект с данными продуктов для быстрого просмотра
-    const products = {
-        1: {
-            name: "Свитшот Hermes",
-            price: 129,
-            description: "Премиальный свитшот от Hermes с фирменным логотипом. Качество 1:1. Идеальная посадка и комфорт.",
-            features: [
-                "Материал: премиальный хлопок",
-                "Качество 1:1",
-                "Фирменная бирка и упаковка",
-                "Доступные размеры: S, M, L, XL"
-            ],
-            images: [
-                "hermeshud1.jpg",
-                "hermeshud2.jpg",
-                "hermeshud3.jpg",
-                "hermeshud4.jpg",
-                "hermeshud5.jpg",
-                "hermeshud6.jpg",
-            ]
-        },
-        // ... остальные продукты из вашего объекта
-    };
+            showToast(`${productName} добавлен в корзину!`, 'success');
+            updateCartCount();
+        });
+    });
+}
 
 // Инициализация быстрого просмотра
-    function initQuickView() {
-        const quickViewButtons = document.querySelectorAll('.quick-view');
+function initQuickView() {
+    const quickViewButtons = document.querySelectorAll('.quick-view');
 
-        quickViewButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product');
-                showProductDetail(productId);
-            });
+    quickViewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product');
+            showProductDetail(productId);
         });
+    });
+}
+
+// Объект с данными продуктов для быстрого просмотра
+const products = {
+    1: {
+        name: "Свитшот Hermes",
+        price: 129,
+        description: "Премиальный свитшот от Hermes с фирменным логотипом. Качество 1:1. Идеальная посадка и комфорт.",
+        features: [
+            "Материал: премиальный хлопок",
+            "Качество 1:1",
+            "Фирменная бирка и упаковка",
+            "Доступные размеры: S, M, L, XL"
+        ],
+        images: [
+            "hermeshud1.jpg",
+            "hermeshud2.jpg",
+            "hermeshud3.jpg",
+            "hermeshud4.jpg",
+            "hermeshud5.jpg",
+            "hermeshud6.jpg",
+        ]
+    },
+    // Добавьте остальные продукты по аналогии
+    2: {
+        name: "Свитшот Burberry",
+        price: 114,
+        description: "Качественный свитшот Burberry с классическим принтом.",
+        features: [
+            "Материал: высококачественный хлопок",
+            "Точная копия оригинала",
+            "Фирменная бирка",
+            "Размеры: S, M, L, XL"
+        ],
+        images: [
+            "СВИТШОТЫ BURBERRY1.jpg"
+        ]
     }
+    // Продолжите для остальных продуктов...
+};
 
 // Показать детали продукта
-    function showProductDetail(productId) {
-        const product = products[productId];
-        if (!product) return;
+function showProductDetail(productId) {
+    const product = products[productId];
+    if (!product) return;
 
-        const productDetail = document.getElementById('product-detail');
-        const mainImage = document.getElementById('main-product-image');
-        const productName = document.getElementById('detail-product-name');
-        const productPrice = document.getElementById('detail-product-price');
-        const productDesc = document.getElementById('detail-product-desc');
-        const productFeatures = document.getElementById('detail-features');
-        const thumbnailsContainer = document.querySelector('.product-thumbnails');
+    const productDetail = document.getElementById('product-detail');
+    const mainImage = document.getElementById('main-product-image');
+    const productName = document.getElementById('detail-product-name');
+    const productPrice = document.getElementById('detail-product-price');
+    const productDesc = document.getElementById('detail-product-desc');
+    const productFeatures = document.getElementById('detail-features');
+    const thumbnailsContainer = document.querySelector('.product-thumbnails');
 
-        // Заполняем информацию о продукте
-        mainImage.src = product.images[0];
-        mainImage.alt = product.name;
-        productName.textContent = product.name;
-        productPrice.textContent = `${product.price} BYN`;
-        productDesc.textContent = product.description;
+    // Заполняем информацию о продукте
+    mainImage.src = product.images[0];
+    mainImage.alt = product.name;
+    productName.textContent = product.name;
+    productPrice.textContent = `${product.price} BYN`;
+    productDesc.textContent = product.description;
 
-        // Очищаем и заполняем характеристики
-        productFeatures.innerHTML = '';
-        product.features.forEach(feature => {
-            const li = document.createElement('li');
-            li.textContent = feature;
-            productFeatures.appendChild(li);
+    // Очищаем и заполняем характеристики
+    productFeatures.innerHTML = '';
+    product.features.forEach(feature => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        productFeatures.appendChild(li);
+    });
+
+    // Очищаем и заполняем миниатюры
+    thumbnailsContainer.innerHTML = '';
+    product.images.forEach((image, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = image;
+        thumbnail.alt = `Миниатюра ${index + 1}`;
+        thumbnail.className = 'thumbnail';
+        thumbnail.loading = 'lazy';
+
+        thumbnail.addEventListener('click', function() {
+            mainImage.src = image;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
         });
 
-        // Очищаем и заполняем миниатюры
-        thumbnailsContainer.innerHTML = '';
-        product.images.forEach((image, index) => {
-            const thumbnail = document.createElement('img');
-            thumbnail.src = image;
-            thumbnail.alt = `Миниатюра ${index + 1}`;
-            thumbnail.className = 'thumbnail';
-            thumbnail.loading = 'lazy';
+        if (index === 0) {
+            thumbnail.classList.add('active');
+        }
 
-            thumbnail.addEventListener('click', function() {
-                mainImage.src = image;
-                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
 
-            if (index === 0) {
-                thumbnail.classList.add('active');
-            }
+    // Показываем страницу деталей продукта
+    productDetail.classList.add('active');
 
-            thumbnailsContainer.appendChild(thumbnail);
-        });
-
-        // Показываем страницу деталей продукта
-        productDetail.classList.add('active');
-
-        // Добавляем обработчик для кнопки добавления в корзину
-        const addToCartBtn = document.getElementById('detail-add-to-cart');
-        addToCartBtn.onclick = function() {
-            addToCart(productId, product);
-        };
-    }
-
-// Добавить в корзину
-    function addToCart(productId, product) {
-        // Получаем выбранный размер
-        const selectedSize = document.querySelector('.size-option.selected');
-        const size = selectedSize ? selectedSize.getAttribute('data-size') : 'M';
-
-        // Здесь будет логика добавления в корзину
-        showToast(`${product.name} (Размер: ${size}) добавлен в корзину!`, 'success');
-
-        // Обновляем счетчик корзины
-        updateCartCount();
-    }
-
-// Обновить счетчик корзины
-    function updateCartCount() {
-        const cartCount = document.getElementById('cart-count');
-        // Временная заглушка - увеличиваем счетчик на 1
-        let count = parseInt(cartCount.textContent) || 0;
-        cartCount.textContent = count + 1;
-    }
+    // Добавляем обработчик для кнопки добавления в корзину
+    const addToCartBtn = document.getElementById('detail-add-to-cart');
+    addToCartBtn.onclick = function() {
+        addToCart(productId, product);
+    };
+}
 
 // Инициализация выбора размера
-    function initSizeSelection() {
-        const sizeOptions = document.querySelectorAll('.size-option');
+function initSizeSelection() {
+    const sizeOptions = document.querySelectorAll('.size-option');
 
-        sizeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                sizeOptions.forEach(o => o.classList.remove('selected'));
-                this.classList.add('selected');
-            });
+    sizeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            sizeOptions.forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
         });
-    }
+    });
+}
 
-// Обновляем функцию initApp
-    function initApp() {
-        // Инициализация компонентов
-        initPreloader();
-        initModals();
-        initCart();
-        initFilters();
-        initCategories();
-        initQuickView(); // Добавлено
-        initSizeSelection(); // Добавлено
-        initProductDetails();
-    }
+// Добавить в корзину
+function addToCart(productId, product) {
+    // Получаем выбранный размер
+    const selectedSize = document.querySelector('.size-option.selected');
+    const size = selectedSize ? selectedSize.getAttribute('data-size') : 'M';
 
-// Убираем вызов loadProducts() так как товары уже загружены в HTML
+    // Здесь будет логика добавления в корзину
+    showToast(`${product.name} (Размер: ${size}) добавлен в корзину!`, 'success');
+
+    // Обновляем счетчик корзины
+    updateCartCount();
+}
+
+// Обновить счетчик корзины
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    let count = parseInt(cartCount.textContent) || 0;
+    cartCount.textContent = count + 1;
+}
+
+// Вспомогательные функции
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+
+    setTimeout(function() {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Функция фильтрации по категориям (заглушка)
+function filterByCategory(category) {
+    showToast(`Выбрана категория: ${category}`, 'info');
 }
