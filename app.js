@@ -177,20 +177,3 @@ function showToast(message, type = 'success') {
 function filterByCategory(category) {
     showToast(`Выбрана категория: ${category}`, 'info');
 }
-function initApp() {
-    // Проверка существования необходимых элементов
-    if (!document.getElementById('preloader') ||
-        !document.getElementById('contact-btn')) {
-        console.error('Не найдены необходимые элементы DOM');
-        return;
-    }
-
-    // Инициализация компонентов
-    initPreloader();
-    initModals();
-    initCart();
-    initFilters();
-    initCategories();
-    loadProducts();
-    initProductDetails();
-}
