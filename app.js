@@ -127,53 +127,173 @@ function loadProducts() {
     // Очищаем скелетоны
     productsGrid.innerHTML = '';
 
-    // Заглушка для демонстрации
-    setTimeout(function() {
-        productsGrid.innerHTML = `
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="кархарт.jpeg" alt="Свитшот" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Изображение+отсутствует'">
-                    <div class="product-overlay">
-                        <button class="quick-view">Быстрый просмотр</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h4>Свитшот Carhartt</h4>
-                    <p>Качественный свитшот премиум класса</p>
-                    <div class="product-footer">
-                        <span class="price">150 BYN</span>
-                        <button class="add-to-cart-btn">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }, 1500);
-}
 
 // Детали продукта
-function initProductDetails() {
-    const backBtn = document.getElementById('back-to-products');
-    const productDetail = document.getElementById('product-detail');
+    function initProductDetails() {
+        const backBtn = document.getElementById('back-to-products');
+        const productDetail = document.getElementById('product-detail');
 
-    backBtn.addEventListener('click', function() {
-        productDetail.classList.remove('active');
-    });
-}
+        backBtn.addEventListener('click', function () {
+            productDetail.classList.remove('active');
+        });
+    }
 
 // Вспомогательные функции
-function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = `toast show ${type}`;
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
 
-    setTimeout(function() {
-        toast.classList.remove('show');
-    }, 3000);
-}
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, 3000);
+    }
 
 // Функция фильтрации по категориям (заглушка)
-function filterByCategory(category) {
-    showToast(`Выбрана категория: ${category}`, 'info');
+    function filterByCategory(category) {
+        showToast(`Выбрана категория: ${category}`, 'info');
+    }
+    // Объект с данными продуктов для быстрого просмотра
+    const products = {
+        1: {
+            name: "Свитшот Hermes",
+            price: 129,
+            description: "Премиальный свитшот от Hermes с фирменным логотипом. Качество 1:1. Идеальная посадка и комфорт.",
+            features: [
+                "Материал: премиальный хлопок",
+                "Качество 1:1",
+                "Фирменная бирка и упаковка",
+                "Доступные размеры: S, M, L, XL"
+            ],
+            images: [
+                "hermeshud1.jpg",
+                "hermeshud2.jpg",
+                "hermeshud3.jpg",
+                "hermeshud4.jpg",
+                "hermeshud5.jpg",
+                "hermeshud6.jpg",
+            ]
+        },
+        // ... остальные продукты из вашего объекта
+    };
+
+// Инициализация быстрого просмотра
+    function initQuickView() {
+        const quickViewButtons = document.querySelectorAll('.quick-view');
+
+        quickViewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product');
+                showProductDetail(productId);
+            });
+        });
+    }
+
+// Показать детали продукта
+    function showProductDetail(productId) {
+        const product = products[productId];
+        if (!product) return;
+
+        const productDetail = document.getElementById('product-detail');
+        const mainImage = document.getElementById('main-product-image');
+        const productName = document.getElementById('detail-product-name');
+        const productPrice = document.getElementById('detail-product-price');
+        const productDesc = document.getElementById('detail-product-desc');
+        const productFeatures = document.getElementById('detail-features');
+        const thumbnailsContainer = document.querySelector('.product-thumbnails');
+
+        // Заполняем информацию о продукте
+        mainImage.src = product.images[0];
+        mainImage.alt = product.name;
+        productName.textContent = product.name;
+        productPrice.textContent = `${product.price} BYN`;
+        productDesc.textContent = product.description;
+
+        // Очищаем и заполняем характеристики
+        productFeatures.innerHTML = '';
+        product.features.forEach(feature => {
+            const li = document.createElement('li');
+            li.textContent = feature;
+            productFeatures.appendChild(li);
+        });
+
+        // Очищаем и заполняем миниатюры
+        thumbnailsContainer.innerHTML = '';
+        product.images.forEach((image, index) => {
+            const thumbnail = document.createElement('img');
+            thumbnail.src = image;
+            thumbnail.alt = `Миниатюра ${index + 1}`;
+            thumbnail.className = 'thumbnail';
+            thumbnail.loading = 'lazy';
+
+            thumbnail.addEventListener('click', function() {
+                mainImage.src = image;
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+
+            if (index === 0) {
+                thumbnail.classList.add('active');
+            }
+
+            thumbnailsContainer.appendChild(thumbnail);
+        });
+
+        // Показываем страницу деталей продукта
+        productDetail.classList.add('active');
+
+        // Добавляем обработчик для кнопки добавления в корзину
+        const addToCartBtn = document.getElementById('detail-add-to-cart');
+        addToCartBtn.onclick = function() {
+            addToCart(productId, product);
+        };
+    }
+
+// Добавить в корзину
+    function addToCart(productId, product) {
+        // Получаем выбранный размер
+        const selectedSize = document.querySelector('.size-option.selected');
+        const size = selectedSize ? selectedSize.getAttribute('data-size') : 'M';
+
+        // Здесь будет логика добавления в корзину
+        showToast(`${product.name} (Размер: ${size}) добавлен в корзину!`, 'success');
+
+        // Обновляем счетчик корзины
+        updateCartCount();
+    }
+
+// Обновить счетчик корзины
+    function updateCartCount() {
+        const cartCount = document.getElementById('cart-count');
+        // Временная заглушка - увеличиваем счетчик на 1
+        let count = parseInt(cartCount.textContent) || 0;
+        cartCount.textContent = count + 1;
+    }
+
+// Инициализация выбора размера
+    function initSizeSelection() {
+        const sizeOptions = document.querySelectorAll('.size-option');
+
+        sizeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                sizeOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    }
+
+// Обновляем функцию initApp
+    function initApp() {
+        // Инициализация компонентов
+        initPreloader();
+        initModals();
+        initCart();
+        initFilters();
+        initCategories();
+        initQuickView(); // Добавлено
+        initSizeSelection(); // Добавлено
+        initProductDetails();
+    }
+
+// Убираем вызов loadProducts() так как товары уже загружены в HTML
 }
