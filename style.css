@@ -283,7 +283,7 @@ body {
     }
 }
 
-/* Парящие частицы */
+/* Парящие частицы с Font Awesome */
 .floating-particles {
     position: absolute;
     top: 0;
@@ -296,38 +296,42 @@ body {
 
 .particle {
     position: absolute;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
     animation: floatParticle 8s ease-in-out infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .particle:nth-child(1) {
-    width: 6px;
-    height: 6px;
+    width: 40px;
+    height: 40px;
     top: 20%;
     left: 10%;
     animation-delay: 0s;
 }
 
 .particle:nth-child(2) {
-    width: 8px;
-    height: 8px;
+    width: 50px;
+    height: 50px;
     top: 60%;
     left: 80%;
     animation-delay: 2s;
 }
 
 .particle:nth-child(3) {
-    width: 4px;
-    height: 4px;
+    width: 30px;
+    height: 30px;
     top: 40%;
     left: 60%;
     animation-delay: 4s;
 }
 
 .particle:nth-child(4) {
-    width: 10px;
-    height: 10px;
+    width: 60px;
+    height: 60px;
     top: 70%;
     left: 30%;
     animation-delay: 6s;
