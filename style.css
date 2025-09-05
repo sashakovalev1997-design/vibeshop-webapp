@@ -16,6 +16,7 @@
     --gray: #95a5a6;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+    --radius: 8px; /* Добавлена переменная radius */
 }
 
 body {
@@ -220,7 +221,7 @@ body {
     gap: 1.5rem;
     background: white;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
 }
 
@@ -263,6 +264,7 @@ body {
     scroll-behavior: smooth;
     padding: 0.5rem;
     scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .categories::-webkit-scrollbar {
@@ -277,7 +279,7 @@ body {
     min-width: 80px;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     transition: var(--transition);
 }
 
@@ -346,8 +348,8 @@ body {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 3rem;
 }
 
@@ -359,7 +361,7 @@ body {
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: 100%;
     animation: fadeIn 0.6s ease forwards;
     opacity: 0;
 }
@@ -420,6 +422,9 @@ body {
 
 .product-info {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .product-info h4 {
@@ -431,6 +436,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
 }
 
 .price {
@@ -565,12 +571,13 @@ body {
     width: 100%;
     height: 400px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: var(--radius);
 }
 
 .product-thumbnails {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .thumbnail {
@@ -631,7 +638,7 @@ body {
 .detail-actions {
     background: #f8f9fa;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
 }
 
 .size-selector {
@@ -645,6 +652,7 @@ body {
 .size-options {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .size-option {
@@ -653,6 +661,8 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: var(--transition);
+    min-width: 40px;
+    text-align: center;
 }
 
 .size-option:hover, .size-option.selected {
@@ -705,7 +715,7 @@ body {
 
 .modal-content {
     background: white;
-    border-radius: 8px;
+    border-radius: var(--radius);
     width: 90%;
     max-width: 600px;
     max-height: 90vh;
@@ -759,7 +769,7 @@ body {
 .contact-card {
     background: #f8f9fa;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -807,7 +817,7 @@ body {
 .replica-notice {
     background: #fff8e1;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     border-left: 4px solid var(--warning);
 }
 
@@ -1043,8 +1053,26 @@ body {
     background: var(--warning);
 }
 
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
     .product-detail-content {
         grid-template-columns: 1fr;
     }
@@ -1066,7 +1094,8 @@ body {
     }
 
     .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .cart-sidebar {
@@ -1076,11 +1105,54 @@ body {
     .contact-cards {
         grid-template-columns: 1fr;
     }
+
+    .categories-container {
+        padding: 0 2rem;
+    }
+
+    .scroll-btn {
+        display: none;
+    }
+
+    .main-product-image {
+        height: 300px;
+    }
+
+    .size-options {
+        justify-content: center;
+    }
 }
 
-/* Correct height for product cards */
+@media (max-width: 480px) {
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+
+    .feature i {
+        font-size: 1.2rem;
+    }
+
+    .feature span {
+        font-size: 0.9rem;
+    }
+
+    .product-info h4 {
+        font-size: 1rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+}
+
+/* Исправление для высоты карточек товаров */
 .correct-height {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
@@ -1095,84 +1167,29 @@ body {
     margin-top: auto;
 }
 
-/* Анимации */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-/* Добавьте эти стили в конец вашего файла style.css */
-
-/* Исправление для переменной --radius */
-:root {
-    --radius: 8px; /* Добавлено значение по умолчанию */
+/* Улучшение доступности */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
 }
 
-/* Анимация появления */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Улучшение скроллбара для WebKit браузеров */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* Базовые стили для скрытия элементов */
-.modal {
-    display: none;
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
 
-.product-detail-page {
-    display: none;
+::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 4px;
 }
 
-.cart-sidebar {
-    display: none;
-}
-
-/* Активационные классы */
-.modal.active {
-    display: flex;
-}
-
-.product-detail-page.active {
-    display: block;
-}
-
-.cart-sidebar.open {
-    display: flex;
-}
-
-/* Убедитесь, что все изображения корректно отображаются */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Улучшение отображения для мобильных устройств */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .header-actions {
-        margin-top: 1rem;
-    }
-
-    .hero h2 {
-        font-size: 2rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
 }
