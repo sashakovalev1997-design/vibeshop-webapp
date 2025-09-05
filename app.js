@@ -465,39 +465,6 @@ function generateOrderText() {
 }
 
 // Фильтры
-function initFilters() {
-    const priceRange = document.getElementById('price-range');
-    const priceValue = document.getElementById('price-value');
-    const brandFilter = document.getElementById('brand-filter');
-    const sizeFilter = document.getElementById('size-filter');
-    const sortFilter = document.getElementById('sort-filter');
-    const resetButton = document.getElementById('reset-filters');
-
-    priceRange.addEventListener('input', function() {
-        priceValue.textContent = `До ${this.value} BYN`;
-        filterProducts();
-    });
-
-    brandFilter.addEventListener('change', filterProducts);
-    sizeFilter.addEventListener('change', filterProducts);
-    sortFilter.addEventListener('change', filterProducts);
-
-    resetButton.addEventListener('click', function() {
-        priceRange.value = 300;
-        priceValue.textContent = 'До 300 BYN';
-        brandFilter.value = 'all';
-        sizeFilter.value = 'all';
-        sortFilter.value = 'newest';
-
-        document.querySelectorAll('.category').forEach(cat => {
-            cat.classList.remove('active');
-        });
-        document.querySelector('.category[data-category="все"]').classList.add('active');
-
-        filterProducts();
-    });
-}
-
 function filterProducts() {
     const priceRange = document.getElementById('price-range').value;
     const brandFilter = document.getElementById('brand-filter').value;
@@ -505,9 +472,11 @@ function filterProducts() {
     const sortFilter = document.getElementById('sort-filter').value;
     const activeCategory = document.querySelector('.category.active')?.dataset.category || 'все';
 
-    const productCards = document.querySelectorAll('.product-card');
+    // Получаем все карточки продуктов
+    const productCards = Array.from(document.querySelectorAll('.product-card'));
 
-    productCards.forEach(card => {
+    // Сначала фильтруем продукты
+    const filteredProducts = productCards.filter(card => {
         const productPrice = parseInt(card.querySelector('.price').textContent);
         const productCategory = card.dataset.category;
         const productBrand = card.dataset.brand;
@@ -516,22 +485,53 @@ function filterProducts() {
         const priceMatch = productPrice <= priceRange;
         const brandMatch = brandFilter === 'all' || productBrand === brandFilter;
 
-        if (categoryMatch && priceMatch && brandMatch) {
-            card.style.display = 'block';
-            setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 10);
-        } else {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                card.style.display = 'none';
-            }, 300);
+        return categoryMatch && priceMatch && brandMatch;
+    });
+
+    // Затем сортируем отфильтрованные продукты
+    filteredProducts.sort((a, b) => {
+        const priceA = parseInt(a.querySelector('.price').textContent);
+        const priceB = parseInt(b.querySelector('.price').textContent);
+
+        switch(sortFilter) {
+            case 'price-asc':
+                return priceA - priceB;
+            case 'price-desc':
+                return priceB - priceA;
+            case 'newest':
+                // Для сортировки по новизне можно использовать data-атрибут с датой добавления
+                // Если у вас нет такого атрибута, можно оставить без изменений
+                return 0;
+            case 'popular':
+                // Для сортировки по популярности также нужны дополнительные данные
+                return 0;
+            default:
+                return 0;
         }
     });
-}
 
+    // Сначала скрываем все карточки
+    productCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.display = 'none';
+        }, 300);
+    });
+
+    // Затем показываем отсортированные и отфильтрованные карточки
+    setTimeout(() => {
+        filteredProducts.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 10);
+            }, index * 50); // Небольшая задержка для анимации
+        });
+    }, 300);
+}
 // Категории
 function initCategories() {
     const categories = document.querySelectorAll('.category');
