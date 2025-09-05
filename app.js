@@ -469,6 +469,8 @@ function generateOrderText() {
 
 // Фильтры
 function initFilters() {
+    console.log('Initializing filters...');
+
     const priceRange = document.getElementById('price-range');
     const priceValue = document.getElementById('price-value');
     const brandFilter = document.getElementById('brand-filter');
@@ -476,25 +478,35 @@ function initFilters() {
     const sortFilter = document.getElementById('sort-filter');
     const resetButton = document.getElementById('reset-filters');
 
+    // Проверяем, что элементы существуют
+    if (!priceRange || !brandFilter || !sortFilter) {
+        console.error('Filter elements not found!');
+        return;
+    }
+
     priceRange.addEventListener('input', function() {
+        console.log('Price range changed:', this.value);
         priceValue.textContent = `До ${this.value} BYN`;
-        filterProducts(); // Добавьте этот вызов
+        filterProducts();
     });
 
-    // Добавьте вызов filterProducts() для всех обработчиков
     brandFilter.addEventListener('change', function() {
+        console.log('Brand filter changed:', this.value);
         filterProducts();
     });
 
     sizeFilter.addEventListener('change', function() {
+        console.log('Size filter changed:', this.value);
         filterProducts();
     });
 
     sortFilter.addEventListener('change', function() {
+        console.log('Sort filter changed:', this.value);
         filterProducts();
     });
 
     resetButton.addEventListener('click', function() {
+        console.log('Reset filters clicked');
         priceRange.value = 300;
         priceValue.textContent = 'До 300 BYN';
         brandFilter.value = 'all';
@@ -506,18 +518,25 @@ function initFilters() {
         });
         document.querySelector('.category[data-category="все"]').classList.add('active');
 
-        filterProducts(); // Добавьте этот вызов
+        filterProducts();
     });
+
+    console.log('Filters initialized successfully');
 }
 
 function filterProducts() {
+    console.log('=== FILTER PRODUCTS CALLED ===');
+
     const priceRange = document.getElementById('price-range').value;
     const brandFilter = document.getElementById('brand-filter').value;
     const sizeFilter = document.getElementById('size-filter').value;
     const sortFilter = document.getElementById('sort-filter').value;
     const activeCategory = document.querySelector('.category.active')?.dataset.category || 'все';
 
+    console.log('Filters:', {priceRange, brandFilter, sizeFilter, sortFilter, activeCategory});
+
     const productCards = Array.from(document.querySelectorAll('.product-card'));
+    console.log('Total products:', productCards.length);
 
     // Фильтрация
     const filteredCards = productCards.filter(card => {
@@ -532,7 +551,9 @@ function filterProducts() {
         return categoryMatch && priceMatch && brandMatch;
     });
 
-    // Сортировка
+    console.log('Filtered products:', filteredCards.length);
+
+    // Сортировка только по цене
     if (sortFilter === 'price-asc' || sortFilter === 'price-desc') {
         filteredCards.sort((a, b) => {
             const priceA = parseInt(a.querySelector('.price').textContent);
@@ -540,16 +561,16 @@ function filterProducts() {
 
             return sortFilter === 'price-asc' ? priceA - priceB : priceB - priceA;
         });
+        console.log('Sorted by price:', sortFilter);
     }
-    // Для "newest" и "popular" можно добавить дополнительную логику позже
 
-    // Сначала скрываем все карточки
+    // Скрыть все
     productCards.forEach(card => {
         card.style.display = 'none';
         card.style.opacity = '0';
     });
 
-    // Затем показываем отфильтрованные карточки с анимацией
+    // Показать отфильтрованные
     setTimeout(() => {
         filteredCards.forEach((card, index) => {
             setTimeout(() => {
@@ -559,9 +580,9 @@ function filterProducts() {
                 }, 10);
             }, index * 50);
         });
+        console.log('Displayed filtered products');
     }, 50);
 }
-
 // Категории
 function initCategories() {
     const categories = document.querySelectorAll('.category');
