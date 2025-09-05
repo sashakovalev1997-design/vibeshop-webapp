@@ -113,7 +113,7 @@ const products = {
         images: [
             "Лонгguess1.jpg",
             "Лонгguess2.jpg",
-            "Лонгguess3.jpg",
+            "Лонgguess3.jpg",
             "Лонгguess4.jpg",
             "Лонгguess5.jpg",
             "Лонгguess6.jpg",
@@ -302,9 +302,9 @@ function initCart() {
         }
 
         const orderText = generateOrderText();
-        const phoneNumber = '+375290000000'; // Замените на реальный номер
+        const telegramUsername = 'bigdigovich'; // Ваш Telegram username
         const encodedText = encodeURIComponent(orderText);
-        window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
+        window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
     });
 
     // Обработчик кнопки "Скопировать заказ"
