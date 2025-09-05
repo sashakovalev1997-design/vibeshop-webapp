@@ -179,7 +179,8 @@ const products = {
     1: {
         name: "Свитшот Hermes",
         price: 129,
-        description: "Премиальный свитшот от Hermes с фирменным логотипом. Качество 1:1. Идеальная посадка и комфорт.",
+        brand: "hermes",
+        category: "свитшоты",
         features: [
             "Материал: премиальный хлопок",
             "Качество 1:1",
@@ -195,22 +196,217 @@ const products = {
             "hermeshud6.jpg",
         ]
     },
-    // Добавьте остальные продукты по аналогии
     2: {
         name: "Свитшот Burberry",
         price: 114,
-        description: "Качественный свитшот Burberry с классическим принтом.",
+        brand: "burberry",
+        category: "свитшоты",
         features: [
             "Материал: высококачественный хлопок",
-            "Точная копия оригинала",
+            "Узнаваемый клетчатый узор",
             "Фирменная бирка",
+            "Размеры: M, L"
+        ],
+        images: [
+            "СВИТШОТЫ BURBERRY1.jpg",
+            "СВИТШОТЫ BURBERRY2.jpg",
+            "СВИТШОТЫ BURBERRY3.jpg",
+            "СВИТШОТЫ BURBERRY4.jpg",
+            "СВИТШОТЫ BURBERRY5.jpg",
+            "СВИТШОТЫ BURBERRY6.jpg",
+            "СВИТШОТЫ BURBERRY7.jpg"
+        ]
+    },
+    3: {
+        name: "Свитшот Lacoste",
+        price: 89,
+        brand: "lacoste",
+        category: "свитшоты",
+        features: [
+            "Материал: хлопок с небольшим добавлением эластана",
+            "Фирменный крокодил",
+            "Комфортная посадка",
+            "Размеры: M, L"
+        ],
+        images: [
+            "СВИТШОТЫ LACOSTEбел1.jpg",
+            "СВИТШОТЫ LACOSTEбел2.jpg",
+            "СВИТШОТЫ LACOSTEбел3.jpg",
+            "СВИТШОТЫ LACOSTEбел4.jpg",
+            "СВИТШОТЫ LACOSTEбел5.jpg",
+            "СВИТШОТЫ LACOSTEбел6.jpg",
+            "СВИТШОТЫ LACOSTEбел7.jpg"
+        ]
+    },
+    4: {
+        name: "Свитшот Lacoste черный",
+        price: 89,
+        brand: "lacoste",
+        category: "свитшоты",
+        features: [
+            "Материал: премиальный хлопок",
+            "Классический черный цвет",
+            "Фирменный крокодил",
             "Размеры: S, M, L, XL"
         ],
         images: [
-            "СВИТШОТЫ BURBERRY1.jpg"
+            "СВИТШОТЫ LACOSTEчер1.jpg",
+            "СВИТШОТЫ LACOSTEчер2.jpg",
+            "СВИТШОТЫ LACOSTEчер3.jpg",
+            "СВИТШОТЫ LACOSTEчер4.jpg",
+            "СВИТШОТЫ LACOSTEчер5.jpg",
+            "СВИТШОТЫ LACOSTEчер6.jpg",
+        ]
+    },
+    5: {
+        name: "Зипка Dior",
+        price: 149,
+        brand: "dior",
+        category: "зипки",
+        features: [
+            "Материал: высококачественный полиэстер",
+            "Фирменная фурнитура",
+            "Качество 1:1",
+            "Размеры: M, L"
+        ],
+        images: [
+            "DIORзип1.jpg",
+            "DIORзип2.jpg",
+            "DIORзип3.jpg",
+            "DIORзип4.jpg",
+            "DIORзип5.jpg",
+            "DIORзип6.jpg",
+            "DIORзип7.jpg",
+            "DIORзип8.jpg",
+            "DIORзип9.jpg"
+        ]
+    },
+    6: {
+        name: "Лонгслив Guess",
+        price: 98,
+        brand: "guess",
+        category: "лонгсливы",
+        features: [
+            "Материал: хлопок",
+            "Узнаваемый логотип Guess",
+            "Удобный крой",
+            "Размеры: M, L"
+        ],
+        images: [
+            "Лонгguess1.jpg",
+            "Лонгguess2.jpg",
+            "Лонгguess3.jpg",
+            "Лонгguess4.jpg",
+            "Лонгguess5.jpg",
+            "Лонгguess6.jpg",
+            "Лонгguess7.jpg"
+        ]
+    },
+    7: {
+        name: "Жилетка Corteiz",
+        price: 139,
+        brand: "corteiz",
+        category: "жилетки",
+        features: [
+            "Материал: нейлон",
+            "Водоотталкивающая пропитка",
+            "Несколько карманов",
+            "Размеры: M, L"
+        ],
+        images: [
+            "photo_2025-07-01_17-31-38.jpg",
+            "CORTEIZjil2.jpg",
+            "CORTEIZjil3.jpg",
+            "CORTEIZjil4.jpg",
+            "CORTEIZjil5.jpg",
+            "CORTEIZjil6.jpg",
+            "CORTEIZjil7.jpg"
+        ]
+    },
+    8: {
+        name: "Жилетка Jordan & Supreme",
+        price: 169,
+        brand: "jordan",
+        category: "жилетки",
+        features: [
+            "Материал: полиэстер",
+            "Уникальный дизайн коллаборации",
+            "Фирменные логотипы",
+            "Размеры: M, L"
+        ],
+        images: [
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел1.jpg",
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел2.jpg",
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел3.jpg",
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел4.jpg",
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел5.jpg",
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел6.jpg",
+            "ЖИЛЕТКИ JORDAN & SUPREMEбел7.jpg"
+        ]
+    },
+    9: {
+        name: "Жилетка Nike ACG",
+        price: 124,
+        brand: "nike",
+        category: "жилетки",
+        features: [
+            "Материал: технологичная ткань Nike",
+            "Водоотталкивающие свойства",
+            "Светоотражающие элементы",
+            "Размеры: M, L"
+        ],
+        images: [
+            "ЖИЛЕТКИ NIKEasg1.jpg",
+            "ЖИЛЕТКИ NIKEasg2.jpg",
+            "ЖИЛЕТКИ NIKEasg3.jpg",
+            "ЖИЛЕТКИ NIKEasg4.jpg",
+            "ЖИЛЕТКИ NIKEasg5.jpg",
+            "ЖИЛЕТКИ NIKEasg6.jpg",
+            "ЖИЛЕТКИ NIKEasg7.jpg"
+        ]
+    },
+    10: {
+        name: "Жилетка Polo Ralph Lauren",
+        price: 119,
+        brand: "polo",
+        category: "жилетки",
+        features: [
+            "Материал: хлопок/ нейлон",
+            "Классический дизайн",
+            "Фирменный логотип",
+            "Размеры: S, M, L, XL"
+        ],
+        images: [
+            "ЖИЛЕТКИ POLO RALPH LAUREN1.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN2.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN3.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN4.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN5.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN6.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN7.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN8.jpg"
+        ]
+    },
+    11: {
+        name: "Жилетка Prada",
+        price: 189,
+        brand: "prada",
+        category: "жилетки",
+        features: [
+            "Материал: премиальные материалы",
+            "Идеальная посадка",
+            "Фирменная фурнитура",
+            "Размеры: M, L"
+        ],
+        images: [
+            "ЖИЛЕТКИ PRADA1.jpg",
+            "ЖИЛЕТКИ PRADA2.jpg",
+            "ЖИЛЕТКИ PRADA3.jpg",
+            "ЖИЛЕТКИ PRADA4.jpg",
+            "ЖИЛЕТКИ PRADA5.jpg",
+            "ЖИЛЕТКИ PRADA6.jpg",
         ]
     }
-    // Продолжите для остальных продуктов...
 };
 
 // Показать детали продукта
@@ -319,4 +515,5 @@ function showToast(message, type = 'success') {
 // Функция фильтрации по категориям (заглушка)
 function filterByCategory(category) {
     showToast(`Выбрана категория: ${category}`, 'info');
+
 }
