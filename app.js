@@ -1,74 +1,163 @@
-const CACHE_NAME = 'vibe-shop-v1';
-const urlsToCache = [
-    '/',
-    '/style.css',
-    '/script.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-];
-
-// Установка Service Worker и кэширование ресурсов
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Opened cache');
-                return cache.addAll(urlsToCache);
-            })
-    );
+// app.js - Основной JavaScript код для работы сайта
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация приложения
+    initApp();
 });
 
-// Активация Service Worker и очистка старых кэшей
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        console.log('Deleting old cache:', cacheName);
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
+function initApp() {
+    // Инициализация компонентов
+    initPreloader();
+    initModals();
+    initCart();
+    initFilters();
+    initCategories();
+    loadProducts();
+    initProductDetails();
+}
 
-// Обработка fetch запросов
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((cachedResponse) => {
-                // Возвращаем кэшированный файл если он есть
-                if (cachedResponse) {
-                    return cachedResponse;
-                }
+// Preloader
+function initPreloader() {
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('preloader').style.display = 'none';
+        }, 1000);
+    });
+}
 
-                // Если нет в кэше, идем в сеть
-                return fetch(event.request)
-                    .then((networkResponse) => {
-                        // Проверяем, валидный ли ответ и можно ли его кэшировать
-                        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                            return networkResponse;
-                        }
+// Модальные окна
+function initModals() {
+    const contactBtn = document.getElementById('contact-btn');
+    const contactModal = document.getElementById('contact-modal');
+    const closeModalBtn = document.querySelector('.close-modal');
+    const overlay = document.getElementById('overlay');
 
-                        // Клонируем ответ и добавляем в кэш для будущих запросов
-                        const responseToCache = networkResponse.clone();
+    contactBtn.addEventListener('click', function() {
+        contactModal.classList.add('active');
+        overlay.classList.add('active');
+    });
 
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
+    closeModalBtn.addEventListener('click', function() {
+        contactModal.classList.remove('active');
+        overlay.classList.remove('active');
+    });
 
-                        return networkResponse;
-                    })
-                    .catch(() => {
-                        // Можно вернуть fallback-ресурс если запрос не удался
-                        // Например: return caches.match('/offline.html');
-                        return new Response('Network error occurred', {
-                            status: 408,
-                            statusText: 'Network error'
-                        });
-                    });
-            })
-    );
-});
+    overlay.addEventListener('click', function() {
+        contactModal.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+}
+
+// Корзина
+function initCart() {
+    const cartToggle = document.getElementById('cart-toggle');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const closeCartBtn = document.querySelector('.close-btn');
+    const overlay = document.getElementById('overlay');
+
+    cartToggle.addEventListener('click', function() {
+        cartSidebar.classList.add('open');
+        overlay.classList.add('active');
+    });
+
+    closeCartBtn.addEventListener('click', function() {
+        cartSidebar.classList.remove('open');
+        overlay.classList.remove('active');
+    });
+}
+
+// Фильтры
+function initFilters() {
+    const priceRange = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-value');
+    const resetFilters = document.getElementById('reset-filters');
+
+    priceRange.addEventListener('input', function() {
+        priceValue.textContent = `До ${this.value} BYN`;
+    });
+
+    resetFilters.addEventListener('click', function() {
+        priceRange.value = 300;
+        priceValue.textContent = 'До 300 BYN';
+        document.getElementById('brand-filter').value = 'all';
+        document.getElementById('size-filter').value = 'all';
+        document.getElementById('sort-filter').value = 'newest';
+    });
+}
+
+// Категории
+function initCategories() {
+    const categories = document.querySelectorAll('.category');
+    const scrollLeft = document.querySelector('.scroll-left');
+    const scrollRight = document.querySelector('.scroll-right');
+    const categoriesContainer = document.querySelector('.categories');
+
+    categories.forEach(category => {
+        category.addEventListener('click', function() {
+            categories.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            filterByCategory(this.dataset.category);
+        });
+    });
+
+    scrollLeft.addEventListener('click', function() {
+        categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+    });
+
+    scrollRight.addEventListener('click', function() {
+        categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+    });
+}
+
+// Загрузка продуктов
+function loadProducts() {
+    // Заглушка для демонстрации
+    setTimeout(function() {
+        const productsGrid = document.getElementById('products-grid');
+        productsGrid.innerHTML = `
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="кархарт.jpeg" alt="Свитшот" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Изображение+отсутствует'">
+                    <div class="product-overlay">
+                        <button class="quick-view">Быстрый просмотр</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h4>Свитшот Carhartt</h4>
+                    <p>Качественный свитшот премиум класса</p>
+                    <div class="product-footer">
+                        <span class="price">150 BYN</span>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }, 1500);
+}
+
+// Детали продукта
+function initProductDetails() {
+    const backBtn = document.getElementById('back-to-products');
+    const productDetail = document.getElementById('product-detail');
+
+    backBtn.addEventListener('click', function() {
+        productDetail.classList.remove('active');
+    });
+}
+
+// Вспомогательные функции
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+
+    setTimeout(function() {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Функция фильтрации по категориям (заглушка)
+function filterByCategory(category) {
+    showToast(`Выбрана категория: ${category}`, 'info');
+}

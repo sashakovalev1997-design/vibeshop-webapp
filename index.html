@@ -336,5 +336,19 @@
 <div id="toast" class="toast"></div>
 
 <script src="app.js"></script>
+<script>
+    // Регистрация Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js')
+                .then(function(registration) {
+                    console.log('SW registered');
+                })
+                .catch(function(error) {
+                    console.log('SW registration failed:', error);
+                });
+        });
+    }
+</script>
 </body>
 </html>
