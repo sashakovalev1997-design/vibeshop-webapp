@@ -469,7 +469,11 @@ function generateOrderText() {
 
     return text;
 }
-
+function vibrate() {
+    if ('vibrate' in navigator) {
+        navigator.vibrate(50);
+    }
+}
 // Категории
 function initCategories() {
     const categoryElements = document.querySelectorAll('.category');
@@ -670,11 +674,17 @@ function showProductDetail(productId) {
 }
 
 // Кнопки добавления в корзину
+// Кнопки добавления в корзину
 function initAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', function() {
             const productCard = this.closest('.product-card');
-            const productId = Array.from(productCard.parentNode.children).indexOf(productCard) + 1;
+
+            // Находим кнопку быстрого просмотра в той же карточке товара
+            const quickViewBtn = productCard.querySelector('.quick-view');
+
+            // Получаем ID продукта из data-атрибута кнопки быстрого просмотра
+            const productId = quickViewBtn.dataset.product;
             const cartButton = document.getElementById('cart-toggle');
 
             if (products[productId]) {
@@ -785,16 +795,6 @@ function vibrate() {
     if ('vibrate' in navigator) {
         navigator.vibrate(50);
     }
-}
-
-// Обновите функцию addToCart
-function addToCart(productId, size = 'M') {
-    // ... существующий код ...
-
-    // Вибрация
-    vibrate();
-
-    // ... остальной код ...
 }
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
