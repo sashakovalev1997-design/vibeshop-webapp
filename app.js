@@ -291,6 +291,9 @@ function initApp() {
 
     // Обработка ошибок изображений
     initImageErrorHandling();
+
+    // Первоначальная фильтрация продуктов
+    filterProducts(); // Добавьте эту строку
 }
 
 // Корзина
@@ -475,12 +478,21 @@ function initFilters() {
 
     priceRange.addEventListener('input', function() {
         priceValue.textContent = `До ${this.value} BYN`;
+        filterProducts(); // Добавьте этот вызов
+    });
+
+    // Добавьте вызов filterProducts() для всех обработчиков
+    brandFilter.addEventListener('change', function() {
         filterProducts();
     });
 
-    brandFilter.addEventListener('change', filterProducts);
-    sizeFilter.addEventListener('change', filterProducts);
-    sortFilter.addEventListener('change', filterProducts);
+    sizeFilter.addEventListener('change', function() {
+        filterProducts();
+    });
+
+    sortFilter.addEventListener('change', function() {
+        filterProducts();
+    });
 
     resetButton.addEventListener('click', function() {
         priceRange.value = 300;
@@ -494,7 +506,7 @@ function initFilters() {
         });
         document.querySelector('.category[data-category="все"]').classList.add('active');
 
-        filterProducts();
+        filterProducts(); // Добавьте этот вызов
     });
 }
 
@@ -520,7 +532,7 @@ function filterProducts() {
         return categoryMatch && priceMatch && brandMatch;
     });
 
-    // Сортировка только по цене (так как других данных нет)
+    // Сортировка
     if (sortFilter === 'price-asc' || sortFilter === 'price-desc') {
         filteredCards.sort((a, b) => {
             const priceA = parseInt(a.querySelector('.price').textContent);
@@ -529,14 +541,15 @@ function filterProducts() {
             return sortFilter === 'price-asc' ? priceA - priceB : priceB - priceA;
         });
     }
+    // Для "newest" и "popular" можно добавить дополнительную логику позже
 
-    // Скрыть все
+    // Сначала скрываем все карточки
     productCards.forEach(card => {
         card.style.display = 'none';
         card.style.opacity = '0';
     });
 
-    // Показать отфильтрованные
+    // Затем показываем отфильтрованные карточки с анимацией
     setTimeout(() => {
         filteredCards.forEach((card, index) => {
             setTimeout(() => {
@@ -546,7 +559,7 @@ function filterProducts() {
                 }, 10);
             }, index * 50);
         });
-    }, 300);
+    }, 50);
 }
 
 // Категории
@@ -560,7 +573,7 @@ function initCategories() {
         category.addEventListener('click', function() {
             categories.forEach(c => c.classList.remove('active'));
             this.classList.add('active');
-            filterProducts();
+            filterProducts(); // Добавьте этот вызов
         });
     });
 
