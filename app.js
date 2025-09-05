@@ -75,7 +75,7 @@ const products = {
             "СВИТШОТЫ LACOSTEчер3.jpg",
             "СВИТШОТЫ LACOSTEчер4.jpg",
             "СВИТШОТЫ LACOSTEчер5.jpg",
-            "СВИТШОТЫ LACOSTEчер6.jpg",
+            "СВИТШОТЫ LACOSTЕчер6.jpg",
         ]
     },
     5: {
@@ -115,7 +115,7 @@ const products = {
             "Лонгguess2.jpg",
             "Лонгguess3.jpg",
             "Лонгguess4.jpg",
-            "Лонgguess5.jpg",
+            "Лонгguess5.jpg",
             "Лонгguess6.jpg",
             "Лонгguess7.jpg"
         ]
@@ -205,7 +205,7 @@ const products = {
         price: 119,
         description: "Классическая жилетка Polo Ralph Lauren. Элегантность и качество. Подходит для различных стилей.",
         features: [
-            "Материал: хлопок/нейлон",
+            "Материал: хлопок/ нейлон",
             "Классический дизайн",
             "Фирменный логотип",
             "Размеры: S, M, L, XL"
@@ -605,7 +605,8 @@ function initQuickView() {
 
     // Обработчик кнопки "Назад к товарам"
     backToProductsBtn.addEventListener('click', function() {
-        productDetailPage.style.display = 'none';
+        productDetailPage.classList.remove('active');
+        document.body.style.overflow = 'auto';
     });
 
     // Обработчик кнопки "Добавить в корзину" на странице деталей
@@ -626,7 +627,7 @@ function initQuickView() {
     });
 }
 
-// Обновленная функция показа деталей продукта
+// Функция показа деталей продукта
 function showProductDetail(productId) {
     const product = products[productId];
     if (!product) return;
@@ -705,13 +706,6 @@ function showProductDetail(productId) {
     // Прокручиваем к верху
     window.scrollTo(0, 0);
 
-    // Добавляем обработчик для кнопки "Назад"
-    const backBtn = document.getElementById('back-to-products');
-    backBtn.onclick = function() {
-        productDetailPage.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    };
-
     // Добавляем обработчики для выбора размера
     document.querySelectorAll('.size-option').forEach(option => {
         option.addEventListener('click', function() {
@@ -719,48 +713,22 @@ function showProductDetail(productId) {
             this.classList.add('selected');
         });
     });
-
-    // Добавляем обработчик для кнопки добавления в корзину
-    addToCartBtn.onclick = function() {
-        const selectedSize = document.querySelector('.size-option.selected');
-        const size = selectedSize ? selectedSize.dataset.size : 'M';
-
-        addToCart(productId, product, size);
-
-        // Анимация добавления в корзину
-        this.classList.add('added');
-        this.innerHTML = '<i class="fas fa-check"></i> Добавлено в корзину';
-
-        setTimeout(() => {
-            this.classList.remove('added');
-            this.innerHTML = '<i class="fas fa-shopping-cart"></i> Добавить в корзину';
-        }, 2000);
-    };
 }
 
-// Обновленная функция добавления в корзину
-function addToCart(productId, product, size) {
-    const existingItemIndex = cart.findIndex(item => item.id === productId && item.size === size);
+// Функция показа уведомлений
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast active'; // Сбрасываем классы
+    toast.classList.add(type); // Добавляем класс для типа (success/error)
 
-    if (existingItemIndex !== -1) {
-        cart[existingItemIndex].quantity += 1;
-    } else {
-        cart.push({
-            id: productId,
-            name: product.name,
-            price: product.price,
-            size: size,
-            quantity: 1,
-            image: product.images[0]
-        });
-    }
+    setTimeout(() => {
+        toast.classList.remove('active');
+    }, 3000);
+}
 
-    // Сохраняем корзину в localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Обновляем счетчик корзины
-    updateCartCount();
-
-    // Показываем уведомление
-    showToast(`${product.name} (Размер: ${size}) добавлен в корзину!`);
+// Заглушка для пагинации
+function initPagination() {
+    // Пагинация будет реализована позже
+    console.log('Пагинация инициализирована (заглушка)');
 }
