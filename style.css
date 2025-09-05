@@ -243,6 +243,9 @@ body {
     font-size: 1rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+.hero-features .feature i.fa-truck-fast::before { content: "🚚"; }
+.hero-features .feature i.fa-medal::before { content: "🏅"; }
+.hero-features .feature i.fa-tag::before { content: "🏷️"; }
 
 /* Анимации */
 @keyframes gradientShift {
