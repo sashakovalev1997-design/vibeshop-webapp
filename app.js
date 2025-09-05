@@ -271,9 +271,6 @@ function initApp() {
     // Инициализация корзины
     initCart();
 
-    // Инициализация фильтров
-    initFilters();
-
     // Инициализация категорий
     initCategories();
 
@@ -291,9 +288,6 @@ function initApp() {
 
     // Обработка ошибок изображений
     initImageErrorHandling();
-
-    // Первоначальная фильтрация продуктов
-    filterProducts(); // Добавьте эту строку
 }
 
 // Корзина
@@ -465,148 +459,6 @@ function generateOrderText() {
     text += "\n\nСпасибо!";
 
     return text;
-}
-
-// Фильтры
-function initFilters() {
-    console.log('Initializing filters...');
-
-    const priceRange = document.getElementById('price-range');
-    const priceValue = document.getElementById('price-value');
-    const brandFilter = document.getElementById('brand-filter');
-    const sizeFilter = document.getElementById('size-filter');
-    const sortFilter = document.getElementById('sort-filter');
-    const resetButton = document.getElementById('reset-filters');
-
-    // Проверяем, что элементы существуют
-    if (!priceRange || !brandFilter || !sortFilter) {
-        console.error('Filter elements not found!');
-        return;
-    }
-
-    priceRange.addEventListener('input', function() {
-        console.log('Price range changed:', this.value);
-        priceValue.textContent = `До ${this.value} BYN`;
-        filterProducts();
-    });
-
-    brandFilter.addEventListener('change', function() {
-        console.log('Brand filter changed:', this.value);
-        filterProducts();
-    });
-
-    sizeFilter.addEventListener('change', function() {
-        console.log('Size filter changed:', this.value);
-        filterProducts();
-    });
-
-    sortFilter.addEventListener('change', function() {
-        console.log('Sort filter changed:', this.value);
-        filterProducts();
-    });
-
-    resetButton.addEventListener('click', function() {
-        console.log('Reset filters clicked');
-        priceRange.value = 300;
-        priceValue.textContent = 'До 300 BYN';
-        brandFilter.value = 'all';
-        sizeFilter.value = 'all';
-        sortFilter.value = 'newest';
-
-        document.querySelectorAll('.category').forEach(cat => {
-            cat.classList.remove('active');
-        });
-        document.querySelector('.category[data-category="все"]').classList.add('active');
-
-        filterProducts();
-    });
-
-    console.log('Filters initialized successfully');
-}
-
-function filterProducts() {
-    console.log('=== FILTER PRODUCTS CALLED ===');
-
-    const priceRange = document.getElementById('price-range').value;
-    const brandFilter = document.getElementById('brand-filter').value;
-    const sizeFilter = document.getElementById('size-filter').value;
-    const sortFilter = document.getElementById('sort-filter').value;
-    const activeCategory = document.querySelector('.category.active')?.dataset.category || 'все';
-
-    console.log('Filters:', {priceRange, brandFilter, sizeFilter, sortFilter, activeCategory});
-
-    const productCards = Array.from(document.querySelectorAll('.product-card'));
-    console.log('Total products:', productCards.length);
-
-    // Фильтрация
-    const filteredCards = productCards.filter(card => {
-        const productPrice = parseInt(card.querySelector('.price').textContent);
-        const productCategory = card.dataset.category;
-        const productBrand = card.dataset.brand;
-
-        const categoryMatch = activeCategory === 'все' || productCategory === activeCategory;
-        const priceMatch = productPrice <= priceRange;
-        const brandMatch = brandFilter === 'all' || productBrand === brandFilter;
-
-        return categoryMatch && priceMatch && brandMatch;
-    });
-
-    console.log('Filtered products:', filteredCards.length);
-
-    // Сортировка только по цене
-    if (sortFilter === 'price-asc' || sortFilter === 'price-desc') {
-        filteredCards.sort((a, b) => {
-            const priceA = parseInt(a.querySelector('.price').textContent);
-            const priceB = parseInt(b.querySelector('.price').textContent);
-
-            return sortFilter === 'price-asc' ? priceA - priceB : priceB - priceA;
-        });
-        console.log('Sorted by price:', sortFilter);
-    }
-
-    // Скрыть все
-    productCards.forEach(card => {
-        card.style.display = 'none';
-        card.style.opacity = '0';
-    });
-
-    // Показать отфильтрованные
-    setTimeout(() => {
-        filteredCards.forEach((card, index) => {
-            setTimeout(() => {
-                card.style.display = 'block';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                }, 10);
-            }, index * 50);
-        });
-        console.log('Displayed filtered products');
-    }, 50);
-}
-// Категории
-function initCategories() {
-    const categories = document.querySelectorAll('.category');
-    const scrollLeft = document.querySelector('.scroll-left');
-    const scrollRight = document.querySelector('.scroll-right');
-    const categoriesContainer = document.querySelector('.categories');
-
-    categories.forEach(category => {
-        category.addEventListener('click', function() {
-            categories.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
-            filterProducts(); // Добавьте этот вызов
-        });
-    });
-
-    document.querySelector('.category[data-category="все"]').classList.add('active');
-
-    scrollLeft.addEventListener('click', function() {
-        categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
-    });
-
-    scrollRight.addEventListener('click', function() {
-        categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
-    });
 }
 
 // Модальные окна
