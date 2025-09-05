@@ -131,7 +131,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: #000;
+    background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 50%, #3498db 100%);
     position: relative;
     overflow: hidden;
 }
@@ -148,46 +148,18 @@ body {
             radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
 }
 
-.floating-brands {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.floating-brands div {
-    position: absolute;
-    font-size: 2rem;
-    opacity: 0.3;
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-}
-
-/* Breadcrumbs */
-.breadcrumbs-container {
-    background: white;
+.floating-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
     padding: 1rem;
-    box-shadow: var(--shadow);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-.breadcrumbs {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.breadcrumbs a {
+.floating-item i {
     color: var(--secondary);
-    text-decoration: none;
-}
-
-.breadcrumbs span {
-    color: var(--gray);
+    margin-bottom: 0.5rem;
 }
 /* Categories */
 .categories-container {
