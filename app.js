@@ -505,11 +505,10 @@ function filterProducts() {
     const sortFilter = document.getElementById('sort-filter').value;
     const activeCategory = document.querySelector('.category.active')?.dataset.category || 'все';
 
-    // Получаем все карточки продуктов
     const productCards = Array.from(document.querySelectorAll('.product-card'));
 
-    // Сначала фильтруем продукты
-    const filteredProducts = productCards.filter(card => {
+    // Фильтрация
+    const filteredCards = productCards.filter(card => {
         const productPrice = parseInt(card.querySelector('.price').textContent);
         const productCategory = card.dataset.category;
         const productBrand = card.dataset.brand;
@@ -521,47 +520,31 @@ function filterProducts() {
         return categoryMatch && priceMatch && brandMatch;
     });
 
-    // Затем сортируем отфильтрованные продукты
-    filteredProducts.sort((a, b) => {
-        const priceA = parseInt(a.querySelector('.price').textContent);
-        const priceB = parseInt(b.querySelector('.price').textContent);
+    // Сортировка только по цене (так как других данных нет)
+    if (sortFilter === 'price-asc' || sortFilter === 'price-desc') {
+        filteredCards.sort((a, b) => {
+            const priceA = parseInt(a.querySelector('.price').textContent);
+            const priceB = parseInt(b.querySelector('.price').textContent);
 
-        switch(sortFilter) {
-            case 'price-asc':
-                return priceA - priceB;
-            case 'price-desc':
-                return priceB - priceA;
-            case 'newest':
-                // Для сортировки по новизне можно использовать data-атрибут с датой добавления
-                // Если у вас нет такого атрибута, можно оставить без изменений
-                return 0;
-            case 'popular':
-                // Для сортировки по популярности также нужны дополнительные данные
-                return 0;
-            default:
-                return 0;
-        }
-    });
+            return sortFilter === 'price-asc' ? priceA - priceB : priceB - priceA;
+        });
+    }
 
-    // Сначала скрываем все карточки
+    // Скрыть все
     productCards.forEach(card => {
+        card.style.display = 'none';
         card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            card.style.display = 'none';
-        }, 300);
     });
 
-    // Затем показываем отсортированные и отфильтрованные карточки
+    // Показать отфильтрованные
     setTimeout(() => {
-        filteredProducts.forEach((card, index) => {
+        filteredCards.forEach((card, index) => {
             setTimeout(() => {
                 card.style.display = 'block';
                 setTimeout(() => {
                     card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
                 }, 10);
-            }, index * 50); // Небольшая задержка для анимации
+            }, index * 50);
         });
     }, 300);
 }
