@@ -288,6 +288,7 @@ function initApp() {
 
     // Обработка ошибок изображений
     initImageErrorHandling();
+
 }
 
 // Корзина
@@ -380,7 +381,15 @@ function removeFromCart(index) {
 
 function updateCartCount() {
     const count = cart.reduce((total, item) => total + item.quantity, 0);
-    document.getElementById('cart-count').textContent = count;
+    const cartBadge = document.getElementById('cart-count');
+
+    cartBadge.textContent = count;
+
+    // Анимация счетчика
+    cartBadge.classList.add('pulse');
+    setTimeout(() => {
+        cartBadge.classList.remove('pulse');
+    }, 500);
 }
 
 function updateQuantity(index, change) {
@@ -666,11 +675,16 @@ function initAddToCartButtons() {
         button.addEventListener('click', function() {
             const productCard = this.closest('.product-card');
             const productId = Array.from(productCard.parentNode.children).indexOf(productCard) + 1;
+            const cartButton = document.getElementById('cart-toggle');
 
             if (products[productId]) {
+                // Запускаем анимацию
+                animateAddToCart(productCard, cartButton);
+
+                // Добавляем в корзину
                 addToCart(productId);
 
-                // Анимация добавления
+                // Анимация кнопки
                 this.classList.add('added');
                 const originalHtml = this.innerHTML;
                 this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
@@ -722,7 +736,66 @@ function showToast(message, type = 'success') {
         toast.classList.remove('active');
     }, 3000);
 }
+function animateAddToCart(productCard, cartButton) {
+    // Создаем клон изображения товара
+    const productImage = productCard.querySelector('.product-image img');
+    const clone = productImage.cloneNode(true);
 
+    // Получаем позиции элементов
+    const productRect = productImage.getBoundingClientRect();
+    const cartRect = cartButton.getBoundingClientRect();
+
+    // Настраиваем клон
+    clone.style.position = 'fixed';
+    clone.style.width = '50px';
+    clone.style.height = '50px';
+    clone.style.borderRadius = '4px';
+    clone.style.objectFit = 'cover';
+    clone.style.zIndex = '10000';
+    clone.style.left = `${productRect.left}px`;
+    clone.style.top = `${productRect.top}px`;
+    clone.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    clone.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    clone.style.pointerEvents = 'none';
+
+    // Добавляем клон в DOM
+    document.body.appendChild(clone);
+
+    // Запускаем анимацию
+    requestAnimationFrame(() => {
+        clone.style.left = `${cartRect.left + cartRect.width/2 - 25}px`;
+        clone.style.top = `${cartRect.top + cartRect.height/2 - 25}px`;
+        clone.style.opacity = '0.5';
+        clone.style.transform = 'scale(0.3) rotate(360deg)';
+    });
+
+    // Удаляем клон после анимации
+    setTimeout(() => {
+        document.body.removeChild(clone);
+    }, 800);
+
+    // Анимация иконки корзины
+    cartButton.classList.add('bounce');
+    setTimeout(() => {
+        cartButton.classList.remove('bounce');
+    }, 300);
+}
+// Вибрация при добавлении в корзину (если поддерживается)
+function vibrate() {
+    if ('vibrate' in navigator) {
+        navigator.vibrate(50);
+    }
+}
+
+// Обновите функцию addToCart
+function addToCart(productId, size = 'M') {
+    // ... существующий код ...
+
+    // Вибрация
+    vibrate();
+
+    // ... остальной код ...
+}
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
