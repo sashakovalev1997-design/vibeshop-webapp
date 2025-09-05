@@ -130,7 +130,7 @@ const products = {
         name: "Лонгслив Guess черный",
         brand: "guess",
         price: 90,
-        description: "Модный лонgслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
+        description: "Модный лонгслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
         features: [
             "Материал: хлопок",
             "Узнаваемый логотип Guess",
@@ -461,6 +461,67 @@ function generateOrderText() {
     return text;
 }
 
+// Категории
+function initCategories() {
+    const categoryElements = document.querySelectorAll('.category');
+    const productCards = document.querySelectorAll('.product-card');
+    const categoriesContainer = document.querySelector('.categories');
+    const scrollLeftBtn = document.querySelector('.scroll-left');
+    const scrollRightBtn = document.querySelector('.scroll-right');
+
+    // Функция фильтрации товаров по категориям
+    function filterProducts(category) {
+        productCards.forEach(card => {
+            const cardCategory = card.dataset.category;
+
+            if (category === 'все' || cardCategory === category) {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 50);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+
+    // Обработчики для категорий
+    categoryElements.forEach(categoryEl => {
+        categoryEl.addEventListener('click', function() {
+            const selectedCategory = this.dataset.category;
+
+            // Убираем выделение со всех категорий и выделяем выбранную
+            categoryElements.forEach(el => el.classList.remove('active'));
+            this.classList.add('active');
+
+            // Фильтруем товары
+            filterProducts(selectedCategory);
+        });
+    });
+
+    // Прокрутка категорий
+    if (scrollLeftBtn && scrollRightBtn) {
+        scrollRightBtn.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+
+        scrollLeftBtn.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+    }
+
+    // Активируем категорию "Все" по умолчанию
+    const allCategory = document.querySelector('.category[data-category="все"]');
+    if (allCategory) {
+        allCategory.classList.add('active');
+    }
+}
+
 // Модальные окна
 function initModals() {
     const contactBtn = document.getElementById('contact-btn');
@@ -550,7 +611,7 @@ function showProductDetail(productId) {
         thumbnail.classList.add('thumbnail');
         thumbnail.loading = 'lazy';
         thumbnail.onerror = function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1iZWRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
         };
 
         if (index === 0) {
@@ -604,13 +665,9 @@ function initAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', function() {
             const productCard = this.closest('.product-card');
-            const productName = productCard.querySelector('h4').textContent;
+            const productId = Array.from(productCard.parentNode.children).indexOf(productCard) + 1;
 
-            const productId = Object.keys(products).find(id =>
-                products[id].name === productName
-            );
-
-            if (productId) {
+            if (products[productId]) {
                 addToCart(productId);
 
                 // Анимация добавления
@@ -631,7 +688,7 @@ function initAddToCartButtons() {
 function initImageErrorHandling() {
     document.querySelectorAll('img').forEach(img => {
         img.onerror = function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMzc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2NDY0NjQiPk5vIGltYWdlPC90ZXh0Pgo8L3N2Zz4=';
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBkb21pbmFudC1iYXNlbGluZTM9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
         };
     });
 }
@@ -644,8 +701,12 @@ function initPagination() {
         btn.addEventListener('click', function() {
             paginationBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            // Здесь можно добавить логику переключения страниц
-            showToast('Пагинация будет реализована в следующем обновлении', 'error');
+
+            // Простая реализация пагинации
+            const pageNumber = this.textContent;
+            if (pageNumber && !isNaN(pageNumber)) {
+                showToast(`Страница ${pageNumber}`, 'error');
+            }
         });
     });
 }
