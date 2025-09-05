@@ -18,10 +18,21 @@ function initApp() {
 // Preloader
 function initPreloader() {
     window.addEventListener('load', function() {
-        setTimeout(function() {
-            document.getElementById('preloader').style.display = 'none';
-        }, 1000);
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            setTimeout(function() {
+                preloader.style.display = 'none';
+            }, 1000);
+        }
     });
+
+    // На всякий случай скрываем прелоадер через 5 секунд
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader && preloader.style.display !== 'none') {
+            preloader.style.display = 'none';
+        }
+    }, 5000);
 }
 
 // Модальные окна
@@ -110,9 +121,14 @@ function initCategories() {
 
 // Загрузка продуктов
 function loadProducts() {
+    const productsGrid = document.getElementById('products-grid');
+    if (!productsGrid) return;
+
+    // Очищаем скелетоны
+    productsGrid.innerHTML = '';
+
     // Заглушка для демонстрации
     setTimeout(function() {
-        const productsGrid = document.getElementById('products-grid');
         productsGrid.innerHTML = `
             <div class="product-card">
                 <div class="product-image">
@@ -160,4 +176,21 @@ function showToast(message, type = 'success') {
 // Функция фильтрации по категориям (заглушка)
 function filterByCategory(category) {
     showToast(`Выбрана категория: ${category}`, 'info');
+}
+function initApp() {
+    // Проверка существования необходимых элементов
+    if (!document.getElementById('preloader') ||
+        !document.getElementById('contact-btn')) {
+        console.error('Не найдены необходимые элементы DOM');
+        return;
+    }
+
+    // Инициализация компонентов
+    initPreloader();
+    initModals();
+    initCart();
+    initFilters();
+    initCategories();
+    loadProducts();
+    initProductDetails();
 }

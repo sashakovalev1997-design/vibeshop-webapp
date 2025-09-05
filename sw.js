@@ -14,6 +14,7 @@ self.addEventListener('install', (event) => {
                 return cache.addAll(urlsToCache);
             })
     );
+    self.skipWaiting(); // Добавьте эту строку
 });
 
 self.addEventListener('fetch', (event) => {
@@ -26,4 +27,9 @@ self.addEventListener('fetch', (event) => {
                 return fetch(event.request);
             })
     );
+});
+
+// Добавьте активацию
+self.addEventListener('activate', (event) => {
+    event.waitUntil(self.clients.claim());
 });
