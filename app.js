@@ -118,19 +118,19 @@ const products = {
         ],
         images: [
             "Лонгguess1.jpg",
-            "Лонгguess2.jpg",
+            "Лонgguess2.jpg",
             "Лонgguess3.jpg",
-            "Лонгguess4.jpg",
-            "Лонгguess5.jpg",
-            "Лонгguess6.jpg",
-            "Лонгguess7.jpg"
+            "Лонgguess4.jpg",
+            "Лонgguess5.jpg",
+            "Лонgguess6.jpg",
+            "Лонgguess7.jpg"
         ]
     },
     7: {
         name: "Лонгслив Guess черный",
         brand: "guess",
         price: 90,
-        description: "Модный лонгслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
+        description: "Модный лонgслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
         features: [
             "Материал: хлопок",
             "Узнаваемый логотип Guess",
@@ -138,13 +138,13 @@ const products = {
             "Размеры: M, L"
         ],
         images: [
-            "Лонгguessчер1.jpg",
-            "Лонгguessчер2.jpg",
-            "Лонгguessчер3.jpg",
-            "Лонгguessчер4.jpg",
-            "Лонгguessчер5.jpg",
-            "Лонгguessчер6.jpg",
-            "Лонгguessчер7.jpg"
+            "Лонgguessчер1.jpg",
+            "Лонgguessчер2.jpg",
+            "Лонgguessчер3.jpg",
+            "Лонgguessчер4.jpg",
+            "Лонgguessчер5.jpg",
+            "Лонgguessчер6.jpg",
+            "Лонgguessчер7.jpg"
         ]
     },
     8: {
@@ -226,7 +226,7 @@ const products = {
             "ЖИЛЕТКИ POLO RALPH LAUREN2.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN3.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN4.jpg",
-            "ЖИЛЕТКИ POLO RALPH LAUREN5.jpg",
+            "ЖиЛЕТКИ POLO RALPH LAUREN5.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN6.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN7.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN8.jpg"
@@ -465,6 +465,39 @@ function generateOrderText() {
 }
 
 // Фильтры
+function initFilters() {
+    const priceRange = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-value');
+    const brandFilter = document.getElementById('brand-filter');
+    const sizeFilter = document.getElementById('size-filter');
+    const sortFilter = document.getElementById('sort-filter');
+    const resetButton = document.getElementById('reset-filters');
+
+    priceRange.addEventListener('input', function() {
+        priceValue.textContent = `До ${this.value} BYN`;
+        filterProducts();
+    });
+
+    brandFilter.addEventListener('change', filterProducts);
+    sizeFilter.addEventListener('change', filterProducts);
+    sortFilter.addEventListener('change', filterProducts);
+
+    resetButton.addEventListener('click', function() {
+        priceRange.value = 300;
+        priceValue.textContent = 'До 300 BYN';
+        brandFilter.value = 'all';
+        sizeFilter.value = 'all';
+        sortFilter.value = 'newest';
+
+        document.querySelectorAll('.category').forEach(cat => {
+            cat.classList.remove('active');
+        });
+        document.querySelector('.category[data-category="все"]').classList.add('active');
+
+        filterProducts();
+    });
+}
+
 function filterProducts() {
     const priceRange = document.getElementById('price-range').value;
     const brandFilter = document.getElementById('brand-filter').value;
@@ -532,6 +565,7 @@ function filterProducts() {
         });
     }, 300);
 }
+
 // Категории
 function initCategories() {
     const categories = document.querySelectorAll('.category');
@@ -647,7 +681,7 @@ function showProductDetail(productId) {
         thumbnail.classList.add('thumbnail');
         thumbnail.loading = 'lazy';
         thumbnail.onerror = function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1iZWRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
         };
 
         if (index === 0) {
@@ -728,7 +762,7 @@ function initAddToCartButtons() {
 function initImageErrorHandling() {
     document.querySelectorAll('img').forEach(img => {
         img.onerror = function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2NDY0NjQiPk5vIGltYWdlPC90ZXh0Pgo8L3N2Zz4=';
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMzc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2NDY0NjQiPk5vIGltYWdlPC90ZXh0Pgo8L3N2Zz4=';
         };
     });
 }
@@ -762,3 +796,4 @@ function showToast(message, type = 'success') {
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
+window.filterProducts = filterProducts;
