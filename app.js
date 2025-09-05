@@ -665,4 +665,3 @@ function showToast(message, type = 'success') {
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
-window.filterProducts = filterProducts;
