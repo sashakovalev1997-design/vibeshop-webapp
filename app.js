@@ -626,6 +626,7 @@ function initQuickView() {
     });
 }
 
+// Обновленная функция показа деталей продукта
 function showProductDetail(productId) {
     const product = products[productId];
     if (!product) return;
@@ -644,7 +645,7 @@ function showProductDetail(productId) {
     productPrice.textContent = `${product.price} BYN`;
     productDesc.textContent = product.description;
 
-    // Устанавливаем изображения
+    // Устанавливаем главное изображение
     mainImage.src = product.images[0];
     mainImage.alt = product.name;
 
@@ -654,13 +655,23 @@ function showProductDetail(productId) {
         const thumbnail = document.createElement('img');
         thumbnail.src = image;
         thumbnail.alt = `${product.name} - вид ${index + 1}`;
-        thumbnail.classList.add('product-thumbnail');
-        if (index === 0) thumbnail.classList.add('active');
+        thumbnail.classList.add('thumbnail');
+        thumbnail.loading = 'lazy';
+
+        if (index === 0) {
+            thumbnail.classList.add('active');
+        }
 
         thumbnail.addEventListener('click', function() {
             mainImage.src = this.src;
-            document.querySelectorAll('.product-thumbnail').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
             this.classList.add('active');
+
+            // Плавное появление нового изображения
+            mainImage.style.opacity = 0;
+            setTimeout(() => {
+                mainImage.style.opacity = 1;
+            }, 100);
         });
 
         thumbnailsContainer.appendChild(thumbnail);
@@ -683,102 +694,73 @@ function showProductDetail(productId) {
         if (option.dataset.size === 'M') {
             option.classList.add('selected');
         }
+    });
 
+    // Показываем страницу деталей
+    productDetailPage.classList.add('active');
+
+    // Блокируем прокрутку основного контента
+    document.body.style.overflow = 'hidden';
+
+    // Прокручиваем к верху
+    window.scrollTo(0, 0);
+
+    // Добавляем обработчик для кнопки "Назад"
+    const backBtn = document.getElementById('back-to-products');
+    backBtn.onclick = function() {
+        productDetailPage.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+
+    // Добавляем обработчики для выбора размера
+    document.querySelectorAll('.size-option').forEach(option => {
         option.addEventListener('click', function() {
             document.querySelectorAll('.size-option').forEach(o => o.classList.remove('selected'));
             this.classList.add('selected');
         });
     });
 
-    // Показываем страницу деталей
-    productDetailPage.style.display = 'block';
+    // Добавляем обработчик для кнопки добавления в корзину
+    addToCartBtn.onclick = function() {
+        const selectedSize = document.querySelector('.size-option.selected');
+        const size = selectedSize ? selectedSize.dataset.size : 'M';
 
-    // Прокручиваем к верху
-    window.scrollTo(0, 0);
+        addToCart(productId, product, size);
+
+        // Анимация добавления в корзину
+        this.classList.add('added');
+        this.innerHTML = '<i class="fas fa-check"></i> Добавлено в корзину';
+
+        setTimeout(() => {
+            this.classList.remove('added');
+            this.innerHTML = '<i class="fas fa-shopping-cart"></i> Добавить в корзину';
+        }, 2000);
+    };
 }
 
-// Пагинация
-function initPagination() {
-    const paginationButtons = document.querySelectorAll('.pagination-btn');
+// Обновленная функция добавления в корзину
+function addToCart(productId, product, size) {
+    const existingItemIndex = cart.findIndex(item => item.id === productId && item.size === size);
 
-    paginationButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            paginationButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-
-            // Здесь должна быть логика загрузки соответствующей страницы товаров
-            // В данном примере это заглушка
-            showToast('Функция пагинации в разработке', 'error');
+    if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity += 1;
+    } else {
+        cart.push({
+            id: productId,
+            name: product.name,
+            price: product.price,
+            size: size,
+            quantity: 1,
+            image: product.images[0]
         });
-    });
-}
-
-// Вспомогательные функции
-function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = 'toast';
-
-    if (type === 'error') {
-        toast.classList.add('error');
     }
 
-    toast.classList.add('active');
+    // Сохраняем корзину в localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
 
-    setTimeout(() => {
-        toast.classList.remove('active');
-    }, 3000);
+    // Обновляем счетчик корзины
+    updateCartCount();
+
+    // Показываем уведомление
+    showToast(`${product.name} (Размер: ${size}) добавлен в корзину!`);
 }
-
-// Анимация появления карточек товаров
-function animateProductCards() {
-    const productCards = document.querySelectorAll('.product-card');
-
-    productCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
-}
-
-// Инициализация анимации карточек после загрузки страницы
-window.addEventListener('load', animateProductCards);
-
-// Обработчики для выбора размера
-document.querySelectorAll('.size-option').forEach(option => {
-    option.addEventListener('click', function() {
-        document.querySelectorAll('.size-option').forEach(o => o.classList.remove('selected'));
-        this.classList.add('selected');
-    });
-});
-
-// Добавляем обработчики для кнопок "В корзину" на карточках товаров
-document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const productCard = this.closest('.product-card');
-        const productName = productCard.querySelector('h4').textContent;
-
-        // Находим ID продукта по имени (это упрощенная реализация)
-        let productId = null;
-        for (const id in products) {
-            if (products[id].name === productName) {
-                productId = id;
-                break;
-            }
-        }
-
-        if (productId) {
-            addToCart(productId);
-
-            // Анимация добавления в корзину
-            this.classList.add('added');
-            this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-
-            setTimeout(() => {
-                this.classList.remove('added');
-                this.innerHTML = '<i class="fas fa-shopping-cart"></i> В корзину';
-            }, 2000);
-        }
-    });
-});
