@@ -291,11 +291,11 @@ function initApp() {
 
     // Инициализация модальных окон преимуществ
     initAdvantageModals();
-
 }
 
 // Корзина
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
 function initAdvantageModals() {
     const features = document.querySelectorAll('.feature');
     const modals = {
@@ -355,11 +355,6 @@ function initAdvantageModals() {
     });
 }
 
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    initAdvantageModals();
-});
-
 function initCart() {
     updateCartCount();
 
@@ -393,8 +388,19 @@ function initCart() {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
         if (isMobile) {
-            // Для мобильных устройств используем tg:// ссылку
-            window.location.href = `tg://msg?text=${encodedText}&to=${telegramUsername}`;
+            // Для мобильных устройств используем универсальный подход
+            const telegramUrl = `tg://msg?text=${encodedText}&to=${telegramUsername}`;
+            const webUrl = `https://t.me/${telegramUsername}?text=${encodedText}`;
+
+            // Пытаемся открыть приложение Telegram
+            window.location.href = telegramUrl;
+
+            // Если приложение не открылось, через 500ms открываем веб-версию
+            setTimeout(function() {
+                if (!document.webkitHidden && !document.hidden) {
+                    window.open(webUrl, '_blank');
+                }
+            }, 500);
         } else {
             // Для десктопов используем стандартную ссылку
             window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
@@ -409,14 +415,21 @@ function initCart() {
         }
 
         const orderText = generateOrderText();
-        navigator.clipboard.writeText(orderText)
-            .then(() => {
-                showToast('Заказ скопирован в буфер обмена');
-            })
-            .catch(err => {
-                console.error('Ошибка копирования: ', err);
-                showToast('Не удалось скопировать заказ', 'error');
-            });
+
+        // Современный API для копирования в буфер обмена
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(orderText)
+                .then(() => {
+                    showToast('Заказ скопирован в буфер обмена');
+                })
+                .catch(err => {
+                    // Fallback для старых браузеров
+                    copyToClipboardFallback(orderText);
+                });
+        } else {
+            // Fallback для старых браузеров
+            copyToClipboardFallback(orderText);
+        }
     });
 
     // Обработчики для выбора способа оплаты
@@ -496,6 +509,29 @@ function initCart() {
             }
         }
     }
+}
+
+// Fallback метод для копирования в буфер обмена
+function copyToClipboardFallback(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showToast('Заказ скопирован в буфер обмена');
+        } else {
+            showToast('Не удалось скопировать заказ', 'error');
+        }
+    } catch (err) {
+        showToast('Не удалось скопировать заказ', 'error');
+    }
+
+    document.body.removeChild(textArea);
 }
 
 function addToCart(productId, size = 'M') {
@@ -584,7 +620,7 @@ function renderCartItems() {
 
         itemsHTML += `
             <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+'">
+                <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+'>
                 <div class="cart-item-details">
                     <div class="cart-item-name">${item.name}</div>
                     <div class="cart-item-price">${item.price} BYN × ${item.quantity} = ${itemTotal} BYN</div>
@@ -625,13 +661,14 @@ function generateOrderText() {
     text += `\n💳 Способ оплаты: ${selectedPayment}`;
     text += "\n\nСпасибо!";
     return text;
-
 }
+
 function vibrate() {
     if ('vibrate' in navigator) {
         navigator.vibrate(50);
     }
 }
+
 // Категории
 function initCategories() {
     const categoryElements = document.querySelectorAll('.category');
@@ -832,123 +869,160 @@ function showProductDetail(productId) {
 }
 
 // Кнопки добавления в корзину
-// Кнопки добавления в корзину
 function initAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', function() {
             const productCard = this.closest('.product-card');
 
-            // Находим кнопку быстрого просмотра в той же карточке товара
-            const quickViewBtn = productCard.querySelector('.quick-view');
+            // Находим выбранный размер
+            const sizeSelect = productCard.querySelector('.size-select');
+            const selectedSize = sizeSelect ? sizeSelect.value : 'M';
 
-            // Получаем ID продукта из data-атрибута кнопки быстрого просмотра
-            const productId = quickViewBtn.dataset.product;
-            const cartButton = document.getElementById('cart-toggle');
+            const productId = this.dataset.product;
+            addToCart(productId, selectedSize);
 
-            if (products[productId]) {
-                // Запускаем анимацию
-                animateAddToCart(productCard, cartButton);
+            this.classList.add('added');
+            this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
 
-                // Добавляем в корзину
-                addToCart(productId);
-
-                // Анимация кнопки
-                this.classList.add('added');
-                const originalHtml = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-check"></i> Добавлено';
-
-                setTimeout(() => {
-                    this.classList.remove('added');
-                    this.innerHTML = originalHtml;
-                }, 2000);
-            }
+            setTimeout(() => {
+                this.classList.remove('added');
+                this.innerHTML = '<i class="fas fa-shopping-cart"></i> В корзину';
+            }, 2000);
         });
-    });
-}
-
-// Обработка ошибок изображений
-function initImageErrorHandling() {
-    document.querySelectorAll('img').forEach(img => {
-        img.onerror = function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBkb21pbmFudC1iYXNlbGluZTM9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
-        };
     });
 }
 
 // Пагинация
 function initPagination() {
-    const paginationBtns = document.querySelectorAll('.pagination-btn');
+    const paginationButtons = document.querySelectorAll('.pagination-btn');
+    const productCards = document.querySelectorAll('.product-card');
 
-    paginationBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            paginationBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
+    paginationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const page = parseInt(this.dataset.page);
+            showPage(page);
+        });
+    });
 
-            // Простая реализация пагинации
-            const pageNumber = this.textContent;
-            if (pageNumber && !isNaN(pageNumber)) {
-                showToast(`Страница ${pageNumber}`, 'error');
+    function showPage(page) {
+        const cardsPerPage = 8;
+        const startIndex = (page - 1) * cardsPerPage;
+        const endIndex = startIndex + cardsPerPage;
+
+        productCards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 50);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
             }
+        });
+
+        paginationButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.page) === page) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // Показываем первую страницу по умолчанию
+    showPage(1);
+}
+
+// Обработка ошибок изображений
+function initImageErrorHandling() {
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM2NDY0NjQiPk5vIGltYWdlPC90ZXh0Pgo8L3N2Zz4=';
         });
     });
 }
 
 // Уведомления
 function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = 'toast active';
-    toast.classList.add(type);
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+        <span>${message}</span>
+    `;
 
+    document.body.appendChild(toast);
+
+    // Анимация появления
     setTimeout(() => {
-        toast.classList.remove('active');
+        toast.classList.add('show');
+    }, 100);
+
+    // Автоматическое скрытие через 3 секунды
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
     }, 3000);
 }
-function animateAddToCart(productCard, cartButton) {
-    // Создаем клон изображения товара
-    const productImage = productCard.querySelector('.product-image img');
-    const clone = productImage.cloneNode(true);
 
-    // Получаем позиции элементов
-    const productRect = productImage.getBoundingClientRect();
-    const cartRect = cartButton.getBoundingClientRect();
+// Обработчики для выбора размера
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('size-option')) {
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        e.target.classList.add('selected');
+    }
+});
 
-    // Настраиваем клон
-    clone.style.position = 'fixed';
-    clone.style.width = '50px';
-    clone.style.height = '50px';
-    clone.style.borderRadius = '4px';
-    clone.style.objectFit = 'cover';
-    clone.style.zIndex = '10000';
-    clone.style.left = `${productRect.left}px`;
-    clone.style.top = `${productRect.top}px`;
-    clone.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-    clone.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
-    clone.style.pointerEvents = 'none';
+// Открытие модальных окон преимуществ
+document.querySelectorAll('.feature').forEach(feature => {
+    feature.addEventListener('click', function() {
+        const emoji = this.querySelector('.emoji-icon').textContent.trim();
+        const modalId = emoji === '🚚' ? 'delivery-modal' :
+            emoji === '🏅' ? 'quality-modal' :
+                emoji === '🏷️' ? 'prices-modal' : null;
 
-    // Добавляем клон в DOM
-    document.body.appendChild(clone);
-
-    // Запускаем анимацию
-    requestAnimationFrame(() => {
-        clone.style.left = `${cartRect.left + cartRect.width/2 - 25}px`;
-        clone.style.top = `${cartRect.top + cartRect.height/2 - 25}px`;
-        clone.style.opacity = '0.5';
-        clone.style.transform = 'scale(0.3) rotate(360deg)';
+        if (modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
     });
+});
 
-    // Удаляем клон после анимации
-    setTimeout(() => {
-        document.body.removeChild(clone);
-    }, 800);
+// Закрытие модальных окон преимуществ
+document.querySelectorAll('.close-advantage-modal').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.advantage-modal').forEach(modal => {
+            modal.classList.remove('active');
+        });
+        document.body.style.overflow = 'auto';
+    });
+});
 
-    // Анимация иконки корзины
-    cartButton.classList.add('bounce');
-    setTimeout(() => {
-        cartButton.classList.remove('bounce');
-    }, 300);
-}
-// Глобальные функции для использования в HTML
-window.updateQuantity = updateQuantity;
-window.removeFromCart = removeFromCart;
+// Закрытие по клику вне модального окна
+document.querySelectorAll('.advantage-modal').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
 
+// Закрытие по ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.advantage-modal').forEach(modal => {
+            modal.classList.remove('active');
+        });
+        document.body.style.overflow = 'auto';
+    }
+});
