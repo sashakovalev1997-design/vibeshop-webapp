@@ -218,16 +218,11 @@ body {
 }
 
 .hero h2 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, #fff, #ecf0f1, #bdc3c7);
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-size: 200% 200%;
-    animation: gradientText 3s ease-in-out infinite alternate;
+    animation: gradientShift 3s ease-in-out infinite;
 }
 
 .hero p {
