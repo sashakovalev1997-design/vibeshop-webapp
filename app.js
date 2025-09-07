@@ -379,27 +379,15 @@ function initCart() {
     });
 
     // Обработчик кнопки "Оформить заказ"
-    // Обработчик кнопки "Оформить заказ"
     document.getElementById('order-btn').addEventListener('click', function() {
         if (cart.length === 0) {
             showToast('Корзина пуста', 'error');
             return;
         }
-
         const orderText = generateOrderText();
         const telegramUsername = 'bigdigovich';
-
-        // Альтернативные варианты ссылок
-        const telegramLink = `https://t.me/${telegramUsername}?start=${encodeURIComponent(orderText)}`;
-        const telegramIntent = `tg://msg?text=${encodeURIComponent(orderText)}`;
-
-        // Пробуем открыть через intent (для мобильных)
-        window.location.href = telegramIntent;
-
-        // Fallback: открываем обычную ссылку через 500ms
-        setTimeout(() => {
-            window.open(telegramLink, '_blank');
-        }, 500);
+        const encodedText = encodeURIComponent(orderText);
+        window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
     });
 
     // Обработчик кнопки "Скопировать заказ"
