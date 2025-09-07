@@ -409,6 +409,44 @@ function initCart() {
             });
     });
 }
+// Обработчики для выбора способа оплаты
+document.querySelectorAll('.payment-method').forEach(method => {
+    method.addEventListener('click', function() {
+        // Снимаем выделение со всех методов
+        document.querySelectorAll('.payment-method').forEach(m => {
+            m.classList.remove('selected');
+        });
+
+        // Выделяем выбранный метод
+        this.classList.add('selected');
+
+        // Программно выбираем radio-кнопку
+        const radio = this.querySelector('input[type="radio"]');
+        if (radio) {
+            radio.checked = true;
+        }
+
+        // Легкая вибрация для подтверждения выбора
+        if ('vibrate' in navigator) {
+            navigator.vibrate(30);
+        }
+    });
+});
+
+// Выбираем наличные по умолчанию при открытии корзины
+function renderCartItems() {
+    // ... существующий код ...
+
+    // Устанавливаем "Наличные" по умолчанию
+    const cashMethod = document.querySelector('.payment-method:first-child');
+    if (cashMethod) {
+        cashMethod.classList.add('selected');
+        const radio = cashMethod.querySelector('input[type="radio"]');
+        if (radio) {
+            radio.checked = true;
+        }
+    }
+}
 
 function addToCart(productId, size = 'M') {
     const product = products[productId];
@@ -521,6 +559,9 @@ function renderCartItems() {
 }
 
 function generateOrderText() {
+    // Получаем выбранный способ оплаты
+    const selectedPayment = document.querySelector('input[name="payment-method"]:checked').value;
+
     let text = "Здравствуйте! Хочу оформить заказ:\n\n";
     let total = 0;
 
@@ -531,6 +572,7 @@ function generateOrderText() {
     });
 
     text += `\nИтого: ${total} BYN`;
+    text += `\n💳 Способ оплаты: ${selectedPayment}`;
     text += "\n\nСпасибо!";
 
     return text;

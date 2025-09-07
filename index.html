@@ -519,18 +519,27 @@
         <!-- Элементы корзины будут добавлены динамически -->
     </div>
     <div class="cart-footer">
-        <div class="payment-info">
-            <div class="payment-info-header">
+        <div class="payment-methods">
+            <label class="payment-method">
+                <input type="radio" name="payment-method" value="Наличные" checked>
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Наличные</span>
+            </label>
+            <label class="payment-method">
+                <input type="radio" name="payment-method" value="VISA">
+                <i class="fab fa-cc-visa"></i>
+                <span>VISA</span>
+            </label>
+            <label class="payment-method">
+                <input type="radio" name="payment-method" value="MasterCard">
+                <i class="fab fa-cc-mastercard"></i>
+                <span>MasterCard</span>
+            </label>
+            <label class="payment-method">
+                <input type="radio" name="payment-method" value="МИР">
                 <i class="fas fa-credit-card"></i>
-                <span>Способы оплаты</span>
-            </div>
-            <div class="payment-methods">
-                <div class="payment-method">Наличные</div>
-                <div class="payment-method">VISA</div>
-                <div class="payment-method">MasterCard</div>
-                <div class="payment-method">МИР</div>
-            </div>
-            <p class="payment-details">Оплата происходит напрямую продавцу после оформления заказа.</p>
+                <span>МИР</span>
+            </label>
         </div>
         <div class="cart-total">
             <span>Итого:</span>
