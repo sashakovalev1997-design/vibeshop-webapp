@@ -856,15 +856,6 @@ function animateAddToCart(productCard, cartButton) {
         cartButton.classList.remove('bounce');
     }, 300);
 }
-// Функции для обработки свайпов
-function initSwipeGestures() {
-    initModalSwipe('cart-sidebar', 'right');
-    initModalSwipe('contact-modal', 'down');
-    initModalSwipe('product-detail', 'right');
-    initModalSwipe('quality-modal', 'down');
-    initModalSwipe('delivery-modal', 'down');
-    initModalSwipe('prices-modal', 'down');
-}
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
