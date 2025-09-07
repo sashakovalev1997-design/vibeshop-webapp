@@ -313,6 +313,11 @@ function initAdvantageModals() {
                 if (modal) {
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
+
+                    // Добавляем вибрацию при открытии
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate(50);
+                    }
                 }
             }
         });
@@ -337,7 +342,22 @@ function initAdvantageModals() {
             }
         });
     });
+
+    // Закрытие по ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.advantage-modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        }
+    });
 }
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    initAdvantageModals();
+});
 
 function initCart() {
     updateCartCount();
