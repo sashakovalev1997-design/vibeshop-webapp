@@ -292,7 +292,6 @@ function initApp() {
     // Инициализация модальных окон преимуществ
     initAdvantageModals();
 
-    initSwipeGestures();
 }
 
 // Корзина
@@ -865,85 +864,6 @@ function initSwipeGestures() {
     initModalSwipe('quality-modal', 'down');
     initModalSwipe('delivery-modal', 'down');
     initModalSwipe('prices-modal', 'down');
-}
-function initModalSwipe(modalId, direction = 'right') {
-    const modal = document.getElementById(modalId);
-    if (!modal) return;
-
-    let startX, startY, distX, distY;
-    const threshold = 50;
-    const restraint = 100;
-    const allowedTime = 500;
-    let startTime;
-
-    modal.addEventListener('touchstart', function(e) {
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        startTime = new Date().getTime();
-        modal.classList.add('dragging');
-        e.preventDefault();
-    }, { passive: false });
-
-    modal.addEventListener('touchmove', function(e) {
-        if (!startX || !startY) return;
-
-        const touch = e.touches[0];
-        distX = touch.clientX - startX;
-        distY = touch.clientY - startY;
-
-        // Плавное перемещение при драге
-        if (direction === 'right' || direction === 'left') {
-            modal.style.transform = `translateX(${distX}px)`;
-        } else if (direction === 'down' || direction === 'up') {
-            modal.style.transform = `translateY(${distY}px)`;
-        }
-
-        e.preventDefault();
-    }, { passive: false });
-
-    modal.addEventListener('touchend', function(e) {
-        modal.classList.remove('dragging');
-        modal.style.transform = '';
-
-        if (!startX || !startY) return;
-
-        const touch = e.changedTouches[0];
-        distX = touch.clientX - startX;
-        distY = touch.clientY - startY;
-        const elapsedTime = new Date().getTime() - startTime;
-
-        let shouldClose = false;
-
-        if (elapsedTime <= allowedTime) {
-            switch (direction) {
-                case 'right':
-                    shouldClose = distX > threshold && Math.abs(distY) <= restraint;
-                    break;
-                case 'left':
-                    shouldClose = distX < -threshold && Math.abs(distY) <= restraint;
-                    break;
-                case 'down':
-                    shouldClose = distY > threshold && Math.abs(distX) <= restraint;
-                    break;
-                case 'up':
-                    shouldClose = distY < -threshold && Math.abs(distX) <= restraint;
-                    break;
-            }
-        }
-
-        if (shouldClose) {
-            modal.classList.add(direction === 'right' || direction === 'left' ?
-                'swipe-out-right' : 'swipe-out-down');
-
-            setTimeout(() => {
-                closeModal(modalId);
-                modal.classList.remove('swipe-out-right', 'swipe-out-down');
-            }, 300);
-        }
-
-        startX = startY = null;
-    }, { passive: false });
 }
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
