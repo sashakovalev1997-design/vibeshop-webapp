@@ -384,10 +384,21 @@ function initCart() {
             showToast('Корзина пуста', 'error');
             return;
         }
+
         const orderText = generateOrderText();
         const telegramUsername = 'bigdigovich';
         const encodedText = encodeURIComponent(orderText);
-        window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
+
+        // Проверяем, является ли устройство мобильным
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // Для мобильных устройств используем tg:// ссылку
+            window.location.href = `tg://msg?text=${encodedText}&to=${telegramUsername}`;
+        } else {
+            // Для десктопов используем стандартную ссылку
+            window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
+        }
     });
 
     // Обработчик кнопки "Скопировать заказ"
@@ -407,42 +418,82 @@ function initCart() {
                 showToast('Не удалось скопировать заказ', 'error');
             });
     });
-}
-// Обработчики для выбора способа оплаты
-document.querySelectorAll('.payment-method').forEach(method => {
-    method.addEventListener('click', function() {
-        // Снимаем выделение со всех методов
-        document.querySelectorAll('.payment-method').forEach(m => {
-            m.classList.remove('selected');
+
+    // Обработчики для выбора способа оплаты
+    document.querySelectorAll('.payment-method').forEach(method => {
+        method.addEventListener('click', function() {
+            // Снимаем выделение со всех методов
+            document.querySelectorAll('.payment-method').forEach(m => {
+                m.classList.remove('selected');
+            });
+
+            // Выделяем выбранный метод
+            this.classList.add('selected');
+
+            // Программно выбираем radio-кнопку
+            const radio = this.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+            }
+        });
+    });
+
+    // Выбираем наличные по умолчанию при открытии корзины
+    function renderCartItems() {
+        const cartContent = document.getElementById('cart-content');
+        const cartTotal = document.getElementById('cart-total-price');
+
+        if (cart.length === 0) {
+            cartContent.innerHTML = `
+                <div class="cart-empty">
+                    <i class="fas fa-shopping-basket"></i>
+                    <p>Ваша корзина пуста</p>
+                </div>
+            `;
+            cartTotal.textContent = '0 BYN';
+            return;
+        }
+
+        let total = 0;
+        let itemsHTML = '';
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            itemsHTML += `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+'>
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} BYN × ${item.quantity} = ${itemTotal} BYN</div>
+                        <div class="cart-item-size">Размер: ${item.size}</div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                <span class="quantity">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <button class="remove-item" onclick="removeFromCart(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
         });
 
-        // Выделяем выбранный метод
-        this.classList.add('selected');
+        cartContent.innerHTML = itemsHTML;
+        cartTotal.textContent = `${total} BYN`;
 
-        // Программно выбираем radio-кнопку
-        const radio = this.querySelector('input[type="radio"]');
-        if (radio) {
-            radio.checked = true;
-        }
-
-        // Легкая вибрация для подтверждения выбора
-        if ('vibrate' in navigator) {
-            navigator.vibrate(30);
-        }
-    });
-});
-
-// Выбираем наличные по умолчанию при открытии корзины
-function renderCartItems() {
-    // ... существующий код ...
-
-    // Устанавливаем "Наличные" по умолчанию
-    const cashMethod = document.querySelector('.payment-method:first-child');
-    if (cashMethod) {
-        cashMethod.classList.add('selected');
-        const radio = cashMethod.querySelector('input[type="radio"]');
-        if (radio) {
-            radio.checked = true;
+        // Устанавливаем "Наличные" по умолчанию
+        const cashMethod = document.querySelector('.payment-method:first-child');
+        if (cashMethod) {
+            cashMethod.classList.add('selected');
+            const radio = cashMethod.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+            }
         }
     }
 }
@@ -573,8 +624,8 @@ function generateOrderText() {
     text += `\nИтого: ${total} BYN`;
     text += `\n💳 Способ оплаты: ${selectedPayment}`;
     text += "\n\nСпасибо!";
-
     return text;
+
 }
 function vibrate() {
     if ('vibrate' in navigator) {
