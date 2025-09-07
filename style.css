@@ -1709,3 +1709,203 @@ select:focus {
         transform: scale(1);
     }
 }
+/* Модальные окна преимуществ */
+.advantage-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.advantage-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.advantage-modal-content {
+    background: white;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.advantage-modal-content h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.advantage-details p:first-child {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.advantage-details ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.advantage-details li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.advantage-details li::before {
+    content: "•";
+    color: var(--secondary);
+    font-weight: bold;
+    position: absolute;
+    left: -1rem;
+}
+
+.advantage-details p:last-child {
+    margin-top: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+}
+
+.close-advantage-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: var(--transition);
+}
+
+.close-advantage-modal:hover {
+    color: var(--accent);
+}
+
+/* Адаптивность для модальных окон */
+@media (max-width: 768px) {
+    .advantage-modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .advantage-details ul {
+        padding-left: 1rem;
+    }
+}
+/* Модальные окна преимуществ */
+.advantage-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.advantage-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.advantage-modal-content {
+    background: white;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.advantage-modal-content h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.advantage-details p:first-child {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.advantage-details ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.advantage-details li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.advantage-details li::before {
+    content: "•";
+    color: var(--secondary);
+    font-weight: bold;
+    position: absolute;
+    left: -1rem;
+}
+
+.advantage-details p:last-child {
+    margin-top: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+}
+
+.close-advantage-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: var(--transition);
+}
+
+.close-advantage-modal:hover {
+    color: var(--accent);
+}
+
+/* Адаптивность для модальных окон */
+@media (max-width: 768px) {
+    .advantage-modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .advantage-details ul {
+        padding-left: 1rem;
+    }
+}

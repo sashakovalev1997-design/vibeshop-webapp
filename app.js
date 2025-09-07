@@ -289,6 +289,8 @@ function initApp() {
     // Обработка ошибок изображений
     initImageErrorHandling();
 
+    // Инициализация модальных окон преимуществ
+    initAdvantageModals();
 }
 
 // Корзина
