@@ -792,12 +792,49 @@ function animateAddToCart(productCard, cartButton) {
         cartButton.classList.remove('bounce');
     }, 300);
 }
-// Вибрация при добавлении в корзину (если поддерживается)
-function vibrate() {
-    if ('vibrate' in navigator) {
-        navigator.vibrate(50);
-    }
-}
+// Вибрация при
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
+// Инициализация модальных окон преимуществ
+function initAdvantageModals() {
+    const features = document.querySelectorAll('.feature');
+    const modals = {
+        '🏅': 'quality-modal',
+        '🚚': 'delivery-modal',
+        '🏷️': 'prices-modal'
+    };
+
+    features.forEach(feature => {
+        feature.addEventListener('click', function() {
+            const emoji = this.querySelector('.emoji-icon').textContent;
+            const modalId = modals[emoji];
+
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Закрытие модальных окон
+    document.querySelectorAll('.close-advantage-modal').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.advantage-modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    // Закрытие по клику вне модального окна
+    document.querySelectorAll('.advantage-modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
+}
