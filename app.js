@@ -312,7 +312,6 @@ function initCart() {
     });
 
     // Обработчик кнопки "Оформить заказ"
-    // Обработчик кнопки "Оформить заказ"
     document.getElementById('order-btn').addEventListener('click', function() {
         if (cart.length === 0) {
             showToast('Корзина пуста', 'error');
@@ -323,7 +322,16 @@ function initCart() {
         const telegramUsername = 'bigdigovich';
         const encodedText = encodeURIComponent(orderText);
 
+        // Открываем Telegram с заказом
         openTelegramLink(encodedText, telegramUsername);
+
+        // Очищаем корзину
+        cart = [];
+        updateCart();
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Показываем уведомление
+        showToast('Заказ отправлен, корзина очищена', 'success');
     });
 
 // Универсальная функция открытия Telegram
