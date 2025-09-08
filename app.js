@@ -312,6 +312,7 @@ function initCart() {
     });
 
     // Обработчик кнопки "Оформить заказ"
+    // Обработчик кнопки "Оформить заказ"
     document.getElementById('order-btn').addEventListener('click', function() {
         if (cart.length === 0) {
             showToast('Корзина пуста', 'error');
@@ -322,25 +323,27 @@ function initCart() {
         const telegramUsername = 'bigdigovich';
         const encodedText = encodeURIComponent(orderText);
 
-        // Проверяем, является ли устройство мобильным
+        openTelegramLink(encodedText, telegramUsername);
+    });
+
+// Универсальная функция открытия Telegram
+    function openTelegramLink(encodedText, username) {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
         if (isMobile) {
-            // Для мобильных устройств используем универсальный подход
-            const telegramUrl = `tg://msg?text=${encodedText}`;
+            // Пробуем открыть приложение Telegram
+            window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
 
-            // Пытаемся открыть приложение Telegram
-            window.location.href = telegramUrl;
-
-            // Если приложение не открылось, через 500ms открываем веб-версию
-            setTimeout(function() {
-                window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
-            }, 300);
+            // Если не открылось — fallback на веб через 500 мс
+            setTimeout(() => {
+                window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+            }, 500);
         } else {
-            // Для десктопов используем стандартную ссылку
-            window.open(`https://t.me/${telegramUsername}?text=${encodedText}`, '_blank');
+            // На ПК сразу открываем веб-версию
+            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
         }
-    });
+    }
+
 
     // Обработчик кнопки "Скопировать заказ"
     document.getElementById('copy-order-btn').addEventListener('click', function() {
