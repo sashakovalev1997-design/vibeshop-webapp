@@ -327,8 +327,9 @@ function initCart() {
 
         // Очищаем корзину
         cart = [];
-        updateCart();
         localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCartItems();
 
         // Показываем уведомление
         showToast('Заказ отправлен, корзина очищена', 'success');
@@ -886,6 +887,11 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.remove('active');
     }, 3000);
+}
+function updateCart() {
+    updateCartCount();
+    renderCartItems();
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Глобальные функции для использования в HTML
