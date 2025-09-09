@@ -277,8 +277,8 @@ function initApp() {
     // Инициализация категорий
     initCategories();
 
-    // Инициализация модальных окон преимуществ
-    initAdvantageModals();
+    // Инициализация модальных окон
+    initModals();
 
     // Инициализация быстрого просмотра
     initQuickView();
