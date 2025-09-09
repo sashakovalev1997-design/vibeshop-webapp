@@ -289,30 +289,19 @@ function initApp() {
     // Инициализация модальных окон преимуществ
     initAdvantageModals();
 
+    // Инициализация загрузки изображений
+    initImageLoading();
+
+    // Инициализация анимаций карточек
+    initProductAnimations();
+
     // Обновляем счетчик корзины при загрузке
     updateCartCount();
 }
 
 function initCart() {
     updateCartCount();
-// Добавьте в функцию initApp()
-    function initProductAnimations() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeIn 0.6s ease forwards';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.product-card').forEach(card => {
-            observer.observe(card);
-        });
-    }
-
-// Вызовите в initApp()
-    initProductAnimations();
     // Обработчик открытия корзины
     document.getElementById('cart-toggle').addEventListener('click', function() {
         document.getElementById('cart-sidebar').classList.add('active');
@@ -352,7 +341,7 @@ function initCart() {
         showToast('Заказ отправлен, корзина очищена', 'success');
     });
 
-// Универсальная функция открытия Telegram
+    // Универсальная функция открытия Telegram
     function openTelegramLink(encodedText, username) {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -369,7 +358,6 @@ function initCart() {
             window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
         }
     }
-
 
     // Обработчик кнопки "Скопировать заказ"
     document.getElementById('copy-order-btn').addEventListener('click', function() {
@@ -560,6 +548,7 @@ function renderCartItems() {
     cartContent.innerHTML = itemsHTML;
     if (cartTotal) cartTotal.textContent = `${total} BYN`;
 }
+
 function generateOrderText() {
     // Получаем выбранный способ оплаты
     const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
