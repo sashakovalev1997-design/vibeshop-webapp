@@ -256,9 +256,8 @@ const products = {
 
 // Корзина
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-// Переменная для хранения позиции прокрутки
-let scrollPosition = 0;
+let currentProductId = null;
+let selectedSize = 'M';
 
 // Основной код приложения
 document.addEventListener('DOMContentLoaded', function() {
@@ -300,82 +299,65 @@ function initCart() {
     updateCartCount();
 
     // Обработчик открытия корзины
-    const cartToggle = document.getElementById('cart-toggle');
-    if (cartToggle) {
-        cartToggle.addEventListener('click', function() {
-            openCart();
-        });
-    }
+    document.getElementById('cart-toggle').addEventListener('click', function() {
+        openCart();
+    });
 
     // Обработчик закрытия корзины
-    const closeBtn = document.querySelector('.close-btn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            closeCart();
-        });
-    }
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        closeCart();
+    });
 
     // Обработчик кнопки "Оформить заказ"
-    const orderBtn = document.getElementById('order-btn');
-    if (orderBtn) {
-        orderBtn.addEventListener('click', function() {
-            if (cart.length === 0) {
-                showToast('Корзина пуста', 'error');
-                return;
-            }
+    document.getElementById('order-btn').addEventListener('click', function() {
+        if (cart.length === 0) {
+            showToast('Корзина пуста', 'error');
+            return;
+        }
 
-            const orderText = generateOrderText();
-            const telegramUsername = 'bigdigovich';
-            const encodedText = encodeURIComponent(orderText);
+        const orderText = generateOrderText();
+        const telegramUsername = 'bigdigovich';
+        const encodedText = encodeURIComponent(orderText);
 
-            // Открываем Telegram с заказом
-            openTelegramLink(encodedText, telegramUsername);
+        // Открываем Telegram с заказом
+        openTelegramLink(encodedText, telegramUsername);
 
-            // Показываем уведомление
-            showToast('Заказ отправлен в Telegram', 'success');
-        });
-    }
+        // Показываем уведомление
+        showToast('Заказ отправлен в Telegram', 'success');
+    });
 
     // Обработчик кнопки "Скопировать заказ"
-    const copyOrderBtn = document.getElementById('copy-order-btn');
-    if (copyOrderBtn) {
-        copyOrderBtn.addEventListener('click', function() {
-            if (cart.length === 0) {
-                showToast('Корзина пуста', 'error');
-                return;
-            }
+    document.getElementById('copy-order-btn').addEventListener('click', function() {
+        if (cart.length === 0) {
+            showToast('Корзина пуста', 'error');
+            return;
+        }
 
-            const orderText = generateOrderText();
+        const orderText = generateOrderText();
 
-            // Современный API для копирования в буфер обмена
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(orderText)
-                    .then(() => {
-                        showToast('Заказ скопирован в буфер обмена');
-                    })
-                    .catch(err => {
-                        // Fallback для старых браузеров
-                        copyToClipboardFallback(orderText);
-                    });
-            } else {
-                // Fallback для старых браузеров
-                copyToClipboardFallback(orderText);
-            }
-        });
-    }
+        // Современный API для копирования в буфер обмена
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(orderText)
+                .then(() => {
+                    showToast('Заказ скопирован в буфер обмена');
+                })
+                .catch(err => {
+                    // Fallback для старых браузеров
+                    copyToClipboardFallback(orderText);
+                });
+        } else {
+            // Fallback для старых браузеров
+            copyToClipboardFallback(orderText);
+        }
+    });
 
     // Обработчики для выбора способа оплаты
     document.querySelectorAll('.payment-method').forEach(method => {
         method.addEventListener('click', function() {
-            // Снимаем выделение со всех методов
             document.querySelectorAll('.payment-method').forEach(m => {
                 m.classList.remove('selected');
             });
-
-            // Выделяем выбранный метод
             this.classList.add('selected');
-
-            // Программно выбираем radio-кнопку
             const radio = this.querySelector('input[type="radio"]');
             if (radio) {
                 radio.checked = true;
@@ -394,51 +376,212 @@ function initCart() {
     }
 }
 
-// Универсальная функция открытия Telegram
-function openTelegramLink(encodedText, username) {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+function initCategories() {
+    const categories = document.querySelectorAll('.category');
+    const productsGrid = document.getElementById('products-grid');
+    const products = document.querySelectorAll('.product-card');
 
-    if (isMobile) {
-        // Пробуем открыть приложение Telegram
-        window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
+    categories.forEach(category => {
+        category.addEventListener('click', function() {
+            const categoryName = this.dataset.category;
 
-        // Если не открылось — fallback на веб через 500 мс
-        setTimeout(() => {
-            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
-        }, 500);
-    } else {
-        // На ПК сразу открываем веб-версию
-        window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+            // Убираем активный класс у всех категорий
+            categories.forEach(cat => cat.classList.remove('active'));
+            // Добавляем активный класс текущей категории
+            this.classList.add('active');
+
+            // Фильтрация товаров
+            products.forEach(product => {
+                if (categoryName === 'все' || product.dataset.category === categoryName) {
+                    product.style.display = 'block';
+                    product.classList.add('animate');
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Инициализация кнопок прокрутки категорий
+    const scrollLeft = document.querySelector('.scroll-left');
+    const scrollRight = document.querySelector('.scroll-right');
+    const categoriesContainer = document.querySelector('.categories');
+
+    if (scrollLeft && scrollRight && categoriesContainer) {
+        scrollLeft.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+
+        scrollRight.addEventListener('click', () => {
+            categoriesContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        });
     }
+}
+
+function initModals() {
+    // Модальное окно контактов
+    const contactModal = document.getElementById('contact-modal');
+    const contactBtn = document.getElementById('contact-btn');
+    const closeModalBtn = document.querySelector('.close-modal');
+
+    if (contactBtn && contactModal) {
+        contactBtn.addEventListener('click', () => {
+            contactModal.classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            contactModal.classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    }
+
+    // Обработчик для overlay
+    document.getElementById('overlay').addEventListener('click', function() {
+        closeCart();
+        document.querySelectorAll('.modal.active').forEach(modal => {
+            modal.classList.remove('active');
+        });
+        document.querySelectorAll('.advantage-modal.active').forEach(modal => {
+            modal.classList.remove('active');
+        });
+        this.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+}
+
+function initQuickView() {
+    // Обработчики для быстрого просмотра
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('quick-view')) {
+            const productId = e.target.dataset.product;
+            showProductDetail(productId);
+        }
+    });
+
+    // Обработчик для кнопки "Назад к товарам"
+    document.getElementById('back-to-products').addEventListener('click', function() {
+        document.getElementById('product-detail').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+
+    // Обработчики для выбора размера
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('size-option')) {
+            // Убираем выделение у всех размеров
+            document.querySelectorAll('.size-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            // Выделяем выбранный размер
+            e.target.classList.add('selected');
+            selectedSize = e.target.dataset.size;
+        }
+    });
+
+    // Обработчик для добавления в корзину из детальной страницы
+    document.getElementById('detail-add-to-cart').addEventListener('click', function() {
+        if (currentProductId) {
+            addToCart(currentProductId, selectedSize);
+            this.classList.add('added');
+            setTimeout(() => {
+                this.classList.remove('added');
+            }, 1000);
+        }
+    });
+}
+
+function initAddToCartButtons() {
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.add-to-cart-btn')) {
+            const productCard = e.target.closest('.product-card');
+            const productId = Array.from(productCard.parentNode.children).indexOf(productCard) + 1;
+            addToCart(productId.toString(), 'M');
+
+            // Анимация кнопки
+            const btn = e.target.closest('.add-to-cart-btn');
+            btn.classList.add('adding');
+            setTimeout(() => {
+                btn.classList.remove('adding');
+            }, 1000);
+        }
+    });
+}
+
+function initAdvantageModals() {
+    // Обработчики для модальных окон преимуществ
+    const advantageModals = {
+        'quality': document.getElementById('quality-modal'),
+        'delivery': document.getElementById('delivery-modal'),
+        'prices': document.getElementById('prices-modal')
+    };
+
+    const closeButtons = document.querySelectorAll('.close-advantage-modal');
+
+    // Закрытие модальных окон преимуществ
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.advantage-modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.getElementById('overlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    // Открытие модальных окон при клике на преимущества в hero
+    document.querySelectorAll('.feature').forEach((feature, index) => {
+        feature.addEventListener('click', function() {
+            let modalKey = '';
+            switch(index) {
+                case 0: modalKey = 'delivery'; break;
+                case 1: modalKey = 'quality'; break;
+                case 2: modalKey = 'prices'; break;
+            }
+
+            if (advantageModals[modalKey]) {
+                advantageModals[modalKey].classList.add('active');
+                document.getElementById('overlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
 }
 
 // Открытие корзины
 function openCart() {
-    const cartSidebar = document.getElementById('cart-sidebar');
-    const overlay = document.getElementById('overlay');
+    document.getElementById('cart-sidebar').classList.add('active');
+    document.getElementById('overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    renderCartItems();
 
-    if (cartSidebar && overlay) {
-        cartSidebar.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        renderCartItems();
-
-        // Вибрация при открытии корзины
-        if ('vibrate' in navigator) {
-            navigator.vibrate(30);
-        }
+    // Вибрация при открытии корзины
+    if ('vibrate' in navigator) {
+        navigator.vibrate(30);
     }
 }
 
 // Закрытие корзины
 function closeCart() {
-    const cartSidebar = document.getElementById('cart-sidebar');
-    const overlay = document.getElementById('overlay');
+    document.getElementById('cart-sidebar').classList.remove('active');
+    document.getElementById('overlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
 
-    if (cartSidebar && overlay) {
-        cartSidebar.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
+// Универсальная функция открытия Telegram
+function openTelegramLink(encodedText, username) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
+        setTimeout(() => {
+            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+        }, 500);
+    } else {
+        window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
     }
 }
 
@@ -494,7 +637,7 @@ function addToCart(productId, size = 'M') {
     createFlyToCartAnimation();
 
     // Обновляем корзину если она открыта
-    if (document.getElementById('cart-sidebar')?.classList.contains('active')) {
+    if (document.getElementById('cart-sidebar').classList.contains('active')) {
         renderCartItems();
     }
 }
@@ -505,34 +648,24 @@ function createFlyToCartAnimation() {
     flyElement.className = 'fly-to-cart';
     flyElement.innerHTML = '<i class="fas fa-shopping-cart"></i>';
 
-    // Позиционируем элемент в центре экрана
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
     flyElement.style.left = (viewportWidth / 2 - 30) + 'px';
     flyElement.style.top = (viewportHeight / 2 - 30) + 'px';
 
-    // Конечная позиция (иконка корзины)
     const cartBtn = document.getElementById('cart-toggle');
-    if (!cartBtn) return;
-
     const cartRect = cartBtn.getBoundingClientRect();
     const endX = cartRect.left + cartRect.width / 2 - 30;
     const endY = cartRect.top + cartRect.height / 2 - 30;
 
-    // Устанавливаем CSS переменные для анимации
     document.documentElement.style.setProperty('--fly-x', (endX - viewportWidth / 2) + 'px');
     document.documentElement.style.setProperty('--fly-y', (endY - viewportHeight / 2) + 'px');
-    document.documentElement.style.setProperty('--fly-end-x', (endX - viewportWidth / 2) * 2 + 'px');
-    document.documentElement.style.setProperty('--fly-end-y', (endY - viewportHeight / 2) * 2 + 'px');
 
     document.body.appendChild(flyElement);
 
-    // Удаляем элемент после анимации
     setTimeout(() => {
-        if (document.body.contains(flyElement)) {
-            document.body.removeChild(flyElement);
-        }
+        document.body.removeChild(flyElement);
     }, 1000);
 }
 
@@ -559,9 +692,13 @@ function updateCartCount() {
 
     if (cartBadge) {
         cartBadge.textContent = count;
-        cartBadge.style.display = count > 0 ? 'flex' : 'none';
 
-        // Анимация счетчика
+        if (count > 0) {
+            cartBadge.style.display = 'flex';
+        } else {
+            cartBadge.style.display = 'none';
+        }
+
         cartBadge.classList.add('pulse');
         setTimeout(() => {
             cartBadge.classList.remove('pulse');
@@ -583,7 +720,6 @@ function updateQuantity(index, change) {
         updateCartCount();
         renderCartItems();
 
-        // Вибрация при изменении количества
         if ('vibrate' in navigator) {
             navigator.vibrate(20);
         }
@@ -593,9 +729,6 @@ function updateQuantity(index, change) {
 function renderCartItems() {
     const cartContent = document.getElementById('cart-content');
     const cartTotal = document.getElementById('cart-total-price');
-    const progressBar = document.getElementById('cart-progress-bar');
-    const freeShippingInfo = document.getElementById('free-shipping-info');
-    const shippingInfo = document.getElementById('shipping-info');
 
     if (!cartContent) return;
 
@@ -608,9 +741,6 @@ function renderCartItems() {
             </div>
         `;
         if (cartTotal) cartTotal.textContent = '0 BYN';
-        if (progressBar) progressBar.style.width = '0%';
-        if (freeShippingInfo) freeShippingInfo.style.display = 'none';
-        if (shippingInfo) shippingInfo.style.display = 'none';
         return;
     }
 
@@ -645,40 +775,9 @@ function renderCartItems() {
 
     cartContent.innerHTML = itemsHTML;
     if (cartTotal) cartTotal.textContent = `${total} BYN`;
-
-    // Обновляем прогресс бесплатной доставки
-    updateShippingProgress(total);
-}
-
-// Обновление прогресса бесплатной доставки
-function updateShippingProgress(total) {
-    const progressBar = document.getElementById('cart-progress-bar');
-    const freeShippingInfo = document.getElementById('free-shipping-info');
-    const shippingInfo = document.getElementById('shipping-info');
-
-    const freeShippingThreshold = 200;
-    const progress = Math.min((total / freeShippingThreshold) * 100, 100);
-
-    if (progressBar) {
-        progressBar.style.width = `${progress}%`;
-    }
-
-    if (freeShippingInfo && shippingInfo) {
-        if (total >= freeShippingThreshold) {
-            freeShippingInfo.style.display = 'block';
-            shippingInfo.style.display = 'none';
-            freeShippingInfo.innerHTML = '🎉 Вы получили бесплатную доставку!';
-        } else {
-            freeShippingInfo.style.display = 'none';
-            shippingInfo.style.display = 'block';
-            const remaining = freeShippingThreshold - total;
-            shippingInfo.innerHTML = `До бесплатной доставки осталось: ${remaining} BYN`;
-        }
-    }
 }
 
 function generateOrderText() {
-    // Получаем выбранный способ оплаты
     const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
     const paymentMethod = selectedPayment ? selectedPayment.value : 'Наличные';
 
@@ -694,7 +793,6 @@ function generateOrderText() {
     text += `\n💰 Итого: ${total} BYN`;
     text += `\n💳 Способ оплаты: ${paymentMethod}`;
 
-    // Добавляем информацию о бесплатной доставке
     if (total >= 200) {
         text += "\n🚚 Доставка: Бесплатная";
     } else {
@@ -706,9 +804,66 @@ function generateOrderText() {
     return text;
 }
 
+function showProductDetail(productId) {
+    const product = products[productId];
+    if (!product) return;
+
+    currentProductId = productId;
+
+    // Заполняем информацию о товаре
+    document.getElementById('detail-product-name').textContent = product.name;
+    document.getElementById('detail-product-price').textContent = `${product.price} BYN`;
+    document.getElementById('detail-product-desc').textContent = product.description;
+
+    // Заполняем характеристики
+    const featuresList = document.getElementById('detail-features');
+    featuresList.innerHTML = '';
+    product.features.forEach(feature => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        featuresList.appendChild(li);
+    });
+
+    // Устанавливаем главное изображение
+    const mainImage = document.getElementById('main-product-image');
+    mainImage.src = product.images[0];
+    mainImage.alt = product.name;
+
+    // Создаем миниатюры
+    const thumbnailsContainer = document.querySelector('.product-thumbnails');
+    thumbnailsContainer.innerHTML = '';
+
+    product.images.forEach((image, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = image;
+        thumbnail.alt = `Миниатюра ${index + 1}`;
+        thumbnail.className = 'thumbnail';
+        if (index === 0) thumbnail.classList.add('active');
+
+        thumbnail.addEventListener('click', () => {
+            mainImage.src = image;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+        });
+
+        thumbnailsContainer.appendChild(thumbnail);
+    });
+
+    // Сбрасываем выбор размера
+    document.querySelectorAll('.size-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    document.querySelector('.size-option[data-size="M"]').classList.add('selected');
+    selectedSize = 'M';
+
+    // Показываем страницу товара
+    document.getElementById('product-detail').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+}
+
 // Функция для показа уведомлений
 function showToast(message, type = 'success') {
-    // Создаем элемент уведомления
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `
@@ -718,261 +873,31 @@ function showToast(message, type = 'success') {
         </div>
     `;
 
-    // Добавляем в DOM
     document.body.appendChild(toast);
 
-    // Анимация появления
     setTimeout(() => {
         toast.classList.add('show');
     }, 10);
 
-    // Автоматическое скрытие через 3 секунды
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => {
-            if (document.body.contains(toast)) {
-                document.body.removeChild(toast);
-            }
+            document.body.removeChild(toast);
         }, 300);
     }, 3000);
 }
 
-// Инициализация кнопок добавления в корзину
-function initAddToCartButtons() {
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.add-to-cart-btn')) {
-            const productId = e.target.closest('.add-to-cart-btn').dataset.productId;
-            const sizeSelect = document.querySelector(`.product-card[data-product-id="${productId}"] .size-select`);
-            const size = sizeSelect ? sizeSelect.value : 'M';
-
-            addToCart(productId, size);
-
-            // Анимация кнопки
-            const btn = e.target.closest('.add-to-cart-btn');
-            btn.classList.add('adding');
-            setTimeout(() => {
-                btn.classList.remove('adding');
-            }, 1000);
-        }
+// Добавляем обработчик для overlay
+document.getElementById('overlay').addEventListener('click', function() {
+    closeCart();
+    document.querySelectorAll('.modal.active').forEach(modal => {
+        modal.classList.remove('active');
     });
-}
-
-// Инициализация модальных окон преимуществ
-function initAdvantageModals() {
-    const advantageButtons = document.querySelectorAll('.advantage-btn');
-    const advantageModal = document.getElementById('advantage-modal');
-
-    if (advantageModal) {
-        const closeModal = advantageModal.querySelector('.close-modal');
-
-        advantageButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const advantageType = this.dataset.advantage;
-                showAdvantageModal(advantageType);
-            });
-        });
-
-        if (closeModal) {
-            closeModal.addEventListener('click', function() {
-                advantageModal.classList.remove('active');
-                document.getElementById('overlay').classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-        }
-    }
-}
-
-function showAdvantageModal(type) {
-    const modal = document.getElementById('advantage-modal');
-    if (!modal) return;
-
-    const title = modal.querySelector('.modal-title');
-    const content = modal.querySelector('.modal-content');
-
-    const advantages = {
-        quality: {
-            title: 'Качество 1:1',
-            content: 'Все наши товары проходят строгий контроль качества. Мы гарантируем полное соответствие оригиналу по материалам, пошиву и деталям.'
-        },
-        delivery: {
-            title: 'Быстрая доставка',
-            content: 'Доставка по всему миру от 3 до 14 дней. Бесплатная доставка при заказе от 200 BYN. Отслеживание заказа в реальном времени.'
-        },
-        support: {
-            title: 'Поддержка 24/7',
-            content: 'Наша служба поддержки работает круглосуточно. Поможем с выбором размера, ответим на вопросы и решим любые проблемы.'
-        }
-    };
-
-    if (advantages[type]) {
-        title.textContent = advantages[type].title;
-        content.innerHTML = `<p>${advantages[type].content}</p>`;
-        modal.classList.add('active');
-        document.getElementById('overlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// Добавляем функцию для плавной прокрутки
-function smoothScrollTo(target) {
-    const element = document.querySelector(target);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-// Инициализация слайдеров
-function initSliders() {
-    // Инициализация главного слайдера
-    const mainSlider = document.querySelector('.main-slider');
-    if (mainSlider) {
-        let currentSlide = 0;
-        const slides = mainSlider.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Автопрокрутка слайдера
-        setInterval(nextSlide, 5000);
-    }
-}
-
-// Добавляем обработчики для улучшения UX
-document.addEventListener('DOMContentLoaded', function() {
-    // Плавная прокрутка для якорей
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = this.getAttribute('href');
-            if (target !== '#') {
-                smoothScrollTo(target);
-            }
-        });
+    document.querySelectorAll('.advantage-modal.active').forEach(modal => {
+        modal.classList.remove('active');
     });
-
-    // Ленивая загрузка изображений
-    if ('IntersectionObserver' in window) {
-        const lazyImages = document.querySelectorAll('img[data-src]');
-
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        lazyImages.forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    // Добавляем обработчик для overlay
-    const overlay = document.getElementById('overlay');
-    if (overlay) {
-        overlay.addEventListener('click', function() {
-            closeCart();
-
-            // Закрываем все модальные окна
-            document.querySelectorAll('.modal.active').forEach(modal => {
-                modal.classList.remove('active');
-            });
-
-            this.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    }
-
-    // Инициализация слайдеров
-    initSliders();
-
-    // Добавляем обработчик для кнопки "Наверх"
-    const scrollToTopBtn = document.createElement('button');
-    scrollToTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    scrollToTopBtn.className = 'scroll-to-top';
-    scrollToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--secondary);
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        z-index: 1000;
-    `;
-
-    scrollToTopBtn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px)';
-        this.style.boxShadow = '0 6px 20px rgba(52, 152, 219, 0.4)';
-    });
-
-    scrollToTopBtn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = 'var(--shadow)';
-    });
-
-    scrollToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-
-    document.body.appendChild(scrollToTopBtn);
-
-    // Показываем/скрываем кнопку при прокрутке
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            scrollToTopBtn.style.display = 'flex';
-        } else {
-            scrollToTopBtn.style.display = 'none';
-        }
-    });
-
-    // Добавляем анимации при скролле
-    const animateOnScroll = function() {
-        const elements = document.querySelectorAll('.product-card, .advantage-card, .category-card');
-
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.classList.add('animate');
-            }
-        });
-    };
-
-    window.addEventListener('scroll', animateOnScroll);
-    // Запускаем сразу при загрузке
-    animateOnScroll();
+    this.classList.remove('active');
+    document.body.style.overflow = 'auto';
 });
 
 // Добавляем поддержку PWA
@@ -985,48 +910,3 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
-
-// Инициализируем тему при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.createElement('button');
-    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    themeToggle.className = 'theme-toggle';
-    themeToggle.title = 'Переключить тему';
-
-    themeToggle.style.cssText = `
-        position: fixed;
-        bottom: 90px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--secondary);
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        z-index: 1000;
-    `;
-
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
-        const isDark = document.body.classList.contains('dark-theme');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    });
-
-    // Проверяем сохраненную тему
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-
-    document.body.appendChild(themeToggle);
-});
