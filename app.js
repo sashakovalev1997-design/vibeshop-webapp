@@ -292,8 +292,8 @@ function initApp() {
     // Инициализация загрузки изображений
     initImageLoading();
 
-    // Инициализация анимаций карточек
-    initProductAnimations();
+    // Инициализация пагинации
+    initPagination();
 
     // Обновляем счетчик корзины при загрузке
     updateCartCount();
@@ -876,6 +876,42 @@ function initAdvantageModals() {
     });
 }
 
+// Пагинация
+function initPagination() {
+    const paginationBtns = document.querySelectorAll('.pagination-btn');
+
+    paginationBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Удаляем класс active у всех кнопок
+            paginationBtns.forEach(b => b.classList.remove('active'));
+            // Добавляем класс active нажатой кнопке
+            this.classList.add('active');
+            // Прокручиваем страницу к секции с товарами
+            document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+}
+
+// Загрузка изображений
+function initImageLoading() {
+    const images = document.querySelectorAll('.product-image img');
+
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+
+            img.addEventListener('error', function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGM0Y0RjYiLz48dGV4dCB4PSIxMDAiIHk9IjEwMCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD48L3N2Zz4=';
+                this.classList.add('loaded');
+            });
+        }
+    });
+}
+
 // Уведомления
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
@@ -889,33 +925,7 @@ function showToast(message, type = 'success') {
         toast.classList.remove('active');
     }, 3000);
 }
-function updateCart() {
-    updateCartCount();
-    renderCartItems();
-    localStorage.setItem('cart', JSON.stringify(cart));
-    // Добавьте в функцию initApp()
-    function initImageLoading() {
-        const images = document.querySelectorAll('.product-image img');
 
-        images.forEach(img => {
-            if (img.complete) {
-                img.classList.add('loaded');
-            } else {
-                img.addEventListener('load', function() {
-                    this.classList.add('loaded');
-                });
-
-                img.addEventListener('error', function() {
-                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGM0Y0RjYiLz48dGV4dCB4PSIxMDAiIHk9IjEwMCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD48L3N2Zz4=';
-                    this.classList.add('loaded');
-                });
-            }
-        });
-    }
-
-// Вызовите в initApp()
-    initImageLoading();
-}
 // Глобальные функции для использования в HTML
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
