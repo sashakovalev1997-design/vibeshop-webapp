@@ -291,6 +291,7 @@ function initApp() {
 
     // Обновляем счетчик корзины при загрузке
     updateCartCount();
+
 }
 
 function initCart() {
@@ -333,6 +334,7 @@ function initCart() {
 
         // Показываем уведомление
         showToast('Заказ отправлен, корзина очищена', 'success');
+        initMobileGestures()
     });
 
 // Универсальная функция открытия Telegram
@@ -892,6 +894,39 @@ function updateCart() {
     updateCartCount();
     renderCartItems();
     localStorage.setItem('cart', JSON.stringify(cart));
+}
+// Обработка мобильных жестов
+function initMobileGestures() {
+    // Закрытие корзины свайпом
+    let startX = 0;
+    const cartSidebar = document.getElementById('cart-sidebar');
+
+    if (cartSidebar) {
+        cartSidebar.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        cartSidebar.addEventListener('touchmove', function(e) {
+            const currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+
+            if (diffX > 50) { // Свайп вправо для закрытия
+                this.classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    // Предотвращение масштабирования при двойном тапе
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
 }
 
 // Глобальные функции для использования в HTML
