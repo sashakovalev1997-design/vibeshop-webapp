@@ -277,8 +277,8 @@ function initApp() {
     // Инициализация категорий
     initCategories();
 
-    // Инициализация модальных окон
-    initModals();
+    // Инициализация модальных окон преимуществ
+    initAdvantageModals();
 
     // Инициализация быстрого просмотра
     initQuickView();
@@ -851,11 +851,6 @@ function initAdvantageModals() {
                 if (modal) {
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
-
-                    // Добавляем вибрацию при открытии
-                    if ('vibrate' in navigator) {
-                        navigator.vibrate(50);
-                    }
                 }
             }
         });
