@@ -300,77 +300,69 @@ function initCart() {
     updateCartCount();
 
     // Обработчик открытия корзины
-    document.getElementById('cart-toggle').addEventListener('click', function() {
-        openCart();
-    });
+    const cartToggle = document.getElementById('cart-toggle');
+    if (cartToggle) {
+        cartToggle.addEventListener('click', function() {
+            openCart();
+        });
+    }
 
     // Обработчик закрытия корзины
-    document.querySelector('.close-btn').addEventListener('click', function() {
-        closeCart();
-    });
+    const closeBtn = document.querySelector('.close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            closeCart();
+        });
+    }
 
     // Обработчик кнопки "Оформить заказ"
-    document.getElementById('order-btn').addEventListener('click', function() {
-        if (cart.length === 0) {
-            showToast('Корзина пуста', 'error');
-            return;
-        }
+    const orderBtn = document.getElementById('order-btn');
+    if (orderBtn) {
+        orderBtn.addEventListener('click', function() {
+            if (cart.length === 0) {
+                showToast('Корзина пуста', 'error');
+                return;
+            }
 
-        const orderText = generateOrderText();
-        const telegramUsername = 'bigdigovich';
-        const encodedText = encodeURIComponent(orderText);
+            const orderText = generateOrderText();
+            const telegramUsername = 'bigdigovich';
+            const encodedText = encodeURIComponent(orderText);
 
-        // Открываем Telegram с заказом
-        openTelegramLink(encodedText, telegramUsername);
+            // Открываем Telegram с заказом
+            openTelegramLink(encodedText, telegramUsername);
 
-        // Показываем уведомление
-        showToast('Заказ отправлен в Telegram', 'success');
-
-        // Не очищаем корзину автоматически - пусть пользователь сам решит
-    });
-
-    // Универсальная функция открытия Telegram
-    function openTelegramLink(encodedText, username) {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        if (isMobile) {
-            // Пробуем открыть приложение Telegram
-            window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
-
-            // Если не открылось — fallback на веб через 500 мс
-            setTimeout(() => {
-                window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
-            }, 500);
-        } else {
-            // На ПК сразу открываем веб-версию
-            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
-        }
+            // Показываем уведомление
+            showToast('Заказ отправлен в Telegram', 'success');
+        });
     }
 
     // Обработчик кнопки "Скопировать заказ"
-    document.getElementById('copy-order-btn').addEventListener('click', function() {
-        if (cart.length === 0) {
-            showToast('Корзина пуста', 'error');
-            return;
-        }
+    const copyOrderBtn = document.getElementById('copy-order-btn');
+    if (copyOrderBtn) {
+        copyOrderBtn.addEventListener('click', function() {
+            if (cart.length === 0) {
+                showToast('Корзина пуста', 'error');
+                return;
+            }
 
-        const orderText = generateOrderText();
+            const orderText = generateOrderText();
 
-        // Современный API для копирования в буфер обмена
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(orderText)
-                .then(() => {
-                    showToast('Заказ скопирован в буфер обмена');
-                })
-                .catch(err => {
-                    // Fallback для старых браузеров
-                    copyToClipboardFallback(orderText);
-                });
-        } else {
-            // Fallback для старых браузеров
-            copyToClipboardFallback(orderText);
-        }
-    });
+            // Современный API для копирования в буфер обмена
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(orderText)
+                    .then(() => {
+                        showToast('Заказ скопирован в буфер обмена');
+                    })
+                    .catch(err => {
+                        // Fallback для старых браузеров
+                        copyToClipboardFallback(orderText);
+                    });
+            } else {
+                // Fallback для старых браузеров
+                copyToClipboardFallback(orderText);
+            }
+        });
+    }
 
     // Обработчики для выбора способа оплаты
     document.querySelectorAll('.payment-method').forEach(method => {
@@ -402,24 +394,52 @@ function initCart() {
     }
 }
 
+// Универсальная функция открытия Telegram
+function openTelegramLink(encodedText, username) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // Пробуем открыть приложение Telegram
+        window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
+
+        // Если не открылось — fallback на веб через 500 мс
+        setTimeout(() => {
+            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+        }, 500);
+    } else {
+        // На ПК сразу открываем веб-версию
+        window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+    }
+}
+
 // Открытие корзины
 function openCart() {
-    document.getElementById('cart-sidebar').classList.add('active');
-    document.getElementById('overlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    renderCartItems();
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const overlay = document.getElementById('overlay');
 
-    // Вибрация при открытии корзины
-    if ('vibrate' in navigator) {
-        navigator.vibrate(30);
+    if (cartSidebar && overlay) {
+        cartSidebar.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        renderCartItems();
+
+        // Вибрация при открытии корзины
+        if ('vibrate' in navigator) {
+            navigator.vibrate(30);
+        }
     }
 }
 
 // Закрытие корзины
 function closeCart() {
-    document.getElementById('cart-sidebar').classList.remove('active');
-    document.getElementById('overlay').classList.remove('active');
-    document.body.style.overflow = 'auto';
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const overlay = document.getElementById('overlay');
+
+    if (cartSidebar && overlay) {
+        cartSidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
 }
 
 // Fallback метод для копирования в буфер обмена
@@ -474,7 +494,7 @@ function addToCart(productId, size = 'M') {
     createFlyToCartAnimation();
 
     // Обновляем корзину если она открыта
-    if (document.getElementById('cart-sidebar').classList.contains('active')) {
+    if (document.getElementById('cart-sidebar')?.classList.contains('active')) {
         renderCartItems();
     }
 }
@@ -494,6 +514,8 @@ function createFlyToCartAnimation() {
 
     // Конечная позиция (иконка корзины)
     const cartBtn = document.getElementById('cart-toggle');
+    if (!cartBtn) return;
+
     const cartRect = cartBtn.getBoundingClientRect();
     const endX = cartRect.left + cartRect.width / 2 - 30;
     const endY = cartRect.top + cartRect.height / 2 - 30;
@@ -508,7 +530,9 @@ function createFlyToCartAnimation() {
 
     // Удаляем элемент после анимации
     setTimeout(() => {
-        document.body.removeChild(flyElement);
+        if (document.body.contains(flyElement)) {
+            document.body.removeChild(flyElement);
+        }
     }, 1000);
 }
 
@@ -535,13 +559,7 @@ function updateCartCount() {
 
     if (cartBadge) {
         cartBadge.textContent = count;
-
-        // Показываем/скрываем бейдж
-        if (count > 0) {
-            cartBadge.style.display = 'flex';
-        } else {
-            cartBadge.style.display = 'none';
-        }
+        cartBadge.style.display = count > 0 ? 'flex' : 'none';
 
         // Анимация счетчика
         cartBadge.classList.add('pulse');
@@ -712,13 +730,12 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => {
-            document.body.removeChild(toast);
+            if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+            }
         }, 300);
     }, 3000);
 }
-
-// Остальные функции (initCategories, initModals, initQuickView и т.д.) остаются без изменений
-// ... [остальной код функций инициализации] ...
 
 // Инициализация кнопок добавления в корзину
 function initAddToCartButtons() {
@@ -740,54 +757,35 @@ function initAddToCartButtons() {
     });
 }
 
-// Функция для обновления общего количества товаров в корзине
-function updateTotalItemsCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalElement = document.getElementById('cart-total-items');
-    if (totalElement) {
-        totalElement.textContent = totalItems;
-    }
-}
-
-// Обновляем общее количество при изменении корзины
-function updateCartCount() {
-    const count = cart.reduce((total, item) => total + item.quantity, 0);
-    const cartBadge = document.getElementById('cart-count');
-
-    if (cartBadge) {
-        cartBadge.textContent = count;
-        cartBadge.style.display = count > 0 ? 'flex' : 'none';
-
-        // Анимация
-        cartBadge.classList.add('pulse');
-        setTimeout(() => cartBadge.classList.remove('pulse'), 500);
-    }
-
-    updateTotalItemsCount();
-}
-
 // Инициализация модальных окон преимуществ
 function initAdvantageModals() {
     const advantageButtons = document.querySelectorAll('.advantage-btn');
     const advantageModal = document.getElementById('advantage-modal');
-    const closeModal = advantageModal.querySelector('.close-modal');
 
-    advantageButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const advantageType = this.dataset.advantage;
-            showAdvantageModal(advantageType);
+    if (advantageModal) {
+        const closeModal = advantageModal.querySelector('.close-modal');
+
+        advantageButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const advantageType = this.dataset.advantage;
+                showAdvantageModal(advantageType);
+            });
         });
-    });
 
-    closeModal.addEventListener('click', function() {
-        advantageModal.classList.remove('active');
-        document.getElementById('overlay').classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                advantageModal.classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        }
+    }
 }
 
 function showAdvantageModal(type) {
     const modal = document.getElementById('advantage-modal');
+    if (!modal) return;
+
     const title = modal.querySelector('.modal-title');
     const content = modal.querySelector('.modal-content');
 
@@ -888,17 +886,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Добавляем обработчик для overlay
-    document.getElementById('overlay').addEventListener('click', function() {
-        closeCart();
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            closeCart();
 
-        // Закрываем все модальные окна
-        document.querySelectorAll('.modal.active').forEach(modal => {
-            modal.classList.remove('active');
+            // Закрываем все модальные окна
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+
+            this.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
-
-        this.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
+    }
 
     // Инициализация слайдеров
     initSliders();
@@ -985,8 +986,8 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// Добавляем обработчик для изменения темы
-function initTheme() {
+// Инициализируем тему при загрузке
+document.addEventListener('DOMContentLoaded', function() {
     const themeToggle = document.createElement('button');
     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
     themeToggle.className = 'theme-toggle';
@@ -1028,7 +1029,4 @@ function initTheme() {
     }
 
     document.body.appendChild(themeToggle);
-}
-
-// Инициализируем тему при загрузке
-document.addEventListener('DOMContentLoaded', initTheme);
+});
