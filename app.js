@@ -257,6 +257,9 @@ const products = {
 // Корзина
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Переменная для хранения позиции прокрутки
+let scrollPosition = 0;
+
 // Основной код приложения
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация приложения
@@ -676,6 +679,9 @@ function initQuickView() {
         backToProductsBtn.addEventListener('click', function() {
             document.getElementById('product-detail').classList.remove('active');
             document.body.style.overflow = 'auto';
+
+            // Восстанавливаем позицию прокрутки
+            window.scrollTo(0, scrollPosition);
         });
     }
 
@@ -712,6 +718,9 @@ function showProductDetail(productId) {
     const addToCartBtn = document.getElementById('detail-add-to-cart');
 
     if (!productDetailPage || !mainImage || !productName) return;
+
+    // Сохраняем текущую позицию прокрутки
+    scrollPosition = window.scrollY;
 
     productName.textContent = product.name;
     productPrice.textContent = `${product.price} BYN`;
@@ -773,7 +782,6 @@ function showProductDetail(productId) {
 
     productDetailPage.classList.add('active');
     document.body.style.overflow = 'hidden';
-    window.scrollTo(0, 0);
 
     document.querySelectorAll('.size-option').forEach(option => {
         option.addEventListener('click', function() {
