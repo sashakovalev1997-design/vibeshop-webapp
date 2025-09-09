@@ -295,7 +295,24 @@ function initApp() {
 
 function initCart() {
     updateCartCount();
+// Добавьте в функцию initApp()
+    function initProductAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
+        document.querySelectorAll('.product-card').forEach(card => {
+            observer.observe(card);
+        });
+    }
+
+// Вызовите в initApp()
+    initProductAnimations();
     // Обработчик открытия корзины
     document.getElementById('cart-toggle').addEventListener('click', function() {
         document.getElementById('cart-sidebar').classList.add('active');
