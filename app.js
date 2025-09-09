@@ -522,7 +522,7 @@ function renderCartItems() {
                 <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+'>
                 <div class="cart-item-details">
                     <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">${item.price} BYN × ${item.quantity} = ${itemTotal} BYN</div>
+                    <div class="cart-item-price">${item.price} BYN</div>
                     <div class="cart-item-size">Размер: ${item.size}</div>
                     <div class="cart-item-actions">
                         <div class="quantity-control">
@@ -542,7 +542,6 @@ function renderCartItems() {
     cartContent.innerHTML = itemsHTML;
     if (cartTotal) cartTotal.textContent = `${total} BYN`;
 }
-
 function generateOrderText() {
     // Получаем выбранный способ оплаты
     const selectedPayment = document.querySelector('input[name="payment-method"]:checked');

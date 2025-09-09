@@ -1676,6 +1676,126 @@ textarea:focus {
         color: white;
     }
 }
+/* Стили для выбора способа оплаты */
+.payment-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 2px solid #eee;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    background: white;
+}
+
+.payment-method:hover {
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.payment-method.selected {
+    border-color: var(--secondary);
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.payment-method input[type="radio"] {
+    display: none;
+}
+
+.payment-method i {
+    font-size: 1.2rem;
+    min-width: 20px;
+}
+
+.payment-method span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.payment-details {
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: var(--radius);
+}
+
+/* Адаптивность для способов оплаты */
+@media (max-width: 480px) {
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Улучшенные стили для элементов корзины */
+.cart-item-price {
+    color: var(--accent);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 0.25rem;
+}
+
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quantity-btn:hover {
+    background: var(--secondary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.quantity {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.remove-item {
+    color: var(--accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    transition: var(--transition);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.remove-item:hover {
+    color: #c0392b;
+    background: rgba(231, 76, 60, 0.1);
+}
 .payment-method .fa-cc-visa { color: #1a1f71; }
 .payment-method .fa-cc-mastercard { color: #eb001b; }
 .payment-method .fa-money-bill-wave { color: #28a745; }
