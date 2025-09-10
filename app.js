@@ -295,10 +295,14 @@ function initApp() {
     // Инициализация пагинации
     initPagination();
 
+    // Инициализация touch events для мобильных
+    initTouchEvents();
+
     // Обновляем счетчик корзины при загрузке
     updateCartCount();
 }
 
+// КОРЗИНА
 function initCart() {
     updateCartCount();
 
@@ -340,24 +344,6 @@ function initCart() {
         // Показываем уведомление
         showToast('Заказ отправлен, корзина очищена', 'success');
     });
-
-    // Универсальная функция открытия Telegram
-    function openTelegramLink(encodedText, username) {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        if (isMobile) {
-            // Пробуем открыть приложение Telegram
-            window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
-
-            // Если не открылось — fallback на веб через 500 мс
-            setTimeout(() => {
-                window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
-            }, 500);
-        } else {
-            // На ПК сразу открываем веб-версию
-            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
-        }
-    }
 
     // Обработчик кнопки "Скопировать заказ"
     document.getElementById('copy-order-btn').addEventListener('click', function() {
@@ -402,6 +388,24 @@ function initCart() {
             }
         });
     });
+}
+
+// Универсальная функция открытия Telegram
+function openTelegramLink(encodedText, username) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // Пробуем открыть приложение Telegram
+        window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
+
+        // Если не открылось — fallback на веб через 500 мс
+        setTimeout(() => {
+            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+        }, 500);
+    } else {
+        // На ПК сразу открываем веб-версию
+        window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+    }
 }
 
 // Fallback метод для копирования в буфер обмена
@@ -569,7 +573,7 @@ function generateOrderText() {
     return text;
 }
 
-// Категории
+// КАТЕГОРИИ
 function initCategories() {
     const categoryElements = document.querySelectorAll('.category');
     const productCards = document.querySelectorAll('.product-card');
@@ -630,7 +634,7 @@ function initCategories() {
     }
 }
 
-// Модальные окна
+// МОДАЛЬНЫЕ ОКНА
 function initModals() {
     const contactBtn = document.getElementById('contact-btn');
     const contactModal = document.getElementById('contact-modal');
@@ -665,14 +669,14 @@ function initModals() {
     }
 }
 
-// Быстрый просмотр
+// БЫСТРЫЙ ПРОСМОТР
 function initQuickView() {
     const quickViewButtons = document.querySelectorAll('.quick-view');
-    const productDetailPage = document.getElementById('product-detail');
     const backToProductsBtn = document.getElementById('back-to-products');
 
     quickViewButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
             const productId = this.dataset.product;
             showProductDetail(productId);
         });
@@ -735,7 +739,7 @@ function showProductDetail(productId) {
             thumbnail.classList.add('thumbnail');
             thumbnail.loading = 'lazy';
             thumbnail.onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1iZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
             };
 
             if (index === 0) {
@@ -789,7 +793,7 @@ function showProductDetail(productId) {
     });
 }
 
-// Кнопки добавления в корзину
+// КНОПКИ ДОБАВЛЕНИЯ В КОРЗИНУ
 function initAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', function(e) {
@@ -822,6 +826,7 @@ function initAddToCartButtons() {
     });
 }
 
+// МОДАЛЬНЫЕ ОКНА ПРЕИМУЩЕСТВ
 function initAdvantageModals() {
     const features = document.querySelectorAll('.feature');
     const modals = {
@@ -876,7 +881,28 @@ function initAdvantageModals() {
     });
 }
 
-// Пагинация
+// TOUCH EVENTS ДЛЯ МОБИЛЬНЫХ
+function initTouchEvents() {
+    const productCards = document.querySelectorAll('.product-card');
+
+    productCards.forEach(card => {
+        card.addEventListener('touchstart', function(e) {
+            // Предотвращаем стандартное поведение
+            e.preventDefault();
+
+            // Находим кнопку быстрого просмотра
+            const quickViewBtn = this.querySelector('.quick-view');
+            if (quickViewBtn) {
+                const productId = quickViewBtn.dataset.product;
+                if (productId) {
+                    showProductDetail(productId);
+                }
+            }
+        }, { passive: false });
+    });
+}
+
+// ПАГИНАЦИЯ
 function initPagination() {
     const paginationBtns = document.querySelectorAll('.pagination-btn');
 
