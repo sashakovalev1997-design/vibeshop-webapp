@@ -702,6 +702,7 @@ body {
 /* Адаптивность */
 @media (max-width: 480px) {
     .products-grid {
+        grid-template-columns: 1fr; /* Одна колонка на маленьких экранах */
         gap: 1.2rem;
         padding: 0 0.8rem;
     }
@@ -716,7 +717,7 @@ body {
 
     .product-info h4 {
         font-size: 0.95rem;
-        min-height: 2.6rem;
+        min-height: auto; /* Убираем фиксированную высоту */
     }
 
     .price {
@@ -734,6 +735,20 @@ body {
     }
 }
 
+/* Добавляем медиа-запрос для средних мобильных устройств */
+@media (min-width: 481px) and (max-width: 767px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+        padding: 0 0.8rem;
+    }
+
+    .product-info h4 {
+        min-height: auto; /* Убираем фиксированную высоту */
+        font-size: 0.9rem;
+    }
+}
+
 @media (min-width: 768px) {
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -747,6 +762,7 @@ body {
 
     .product-info h4 {
         font-size: 1.1rem;
+        min-height: 2.8rem;
     }
 
     .price {
