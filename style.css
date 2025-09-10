@@ -619,6 +619,41 @@ body {
         height: 250px;
     }
 }
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.product-image:hover .product-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.quick-view {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.quick-view:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
 
 /* Pagination */
 .pagination {
