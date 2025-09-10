@@ -883,25 +883,42 @@ function initAdvantageModals() {
 
 // TOUCH EVENTS ДЛЯ МОБИЛЬНЫХ
 function initTouchEvents() {
-    const productCards = document.querySelectorAll('.product-card');
+    let touchStartY = 0;
+    const scrollThreshold = 5; // Порог для определения скролла
 
-    productCards.forEach(card => {
-        card.addEventListener('touchstart', function(e) {
-            // Предотвращаем стандартное поведение
-            e.preventDefault();
+    const quickViewButtons = document.querySelectorAll('.quick-view');
 
-            // Находим кнопку быстрого просмотра
-            const quickViewBtn = this.querySelector('.quick-view');
-            if (quickViewBtn) {
-                const productId = quickViewBtn.dataset.product;
+    quickViewButtons.forEach(button => {
+        button.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        button.addEventListener('touchmove', function(e) {
+            const currentY = e.touches[0].clientY;
+            const deltaY = Math.abs(currentY - touchStartY);
+
+            // Если пользователь скроллит, отменяем действие
+            if (deltaY > scrollThreshold) {
+                this.style.opacity = '0.5'; // Визуальная обратная связь
+            }
+        }, { passive: true });
+
+        button.addEventListener('touchend', function(e) {
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaY = Math.abs(touchEndY - touchStartY);
+
+            // Если движение было небольшим (не скролл)
+            if (deltaY <= scrollThreshold) {
+                const productId = this.dataset.product;
                 if (productId) {
                     showProductDetail(productId);
                 }
             }
-        }, { passive: false });
+
+            this.style.opacity = '1'; // Восстанавливаем прозрачность
+        }, { passive: true });
     });
 }
-
 // ПАГИНАЦИЯ
 function initPagination() {
     const paginationBtns = document.querySelectorAll('.pagination-btn');
