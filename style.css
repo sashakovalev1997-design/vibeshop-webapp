@@ -210,7 +210,7 @@ body {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: float 6s ease-in-out infinite;
     width: 160px; /* Фиксированная ширина для одинакового размера */
-    height: 100px; /* Фиксированная высота для одинакового размера */
+    height: 110px; /* Фиксированная высота для одинакового размера */
     justify-content: center;
 }
 

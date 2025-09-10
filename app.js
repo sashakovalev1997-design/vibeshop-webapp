@@ -257,6 +257,11 @@ const products = {
 // Корзина
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Переменные для пагинации
+let currentPage = 1;
+const productsPerPage = 8;
+let scrollPosition = 0;
+
 // Основной код приложения
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация приложения
@@ -677,6 +682,10 @@ function initQuickView() {
     quickViewButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
+
+            // Сохраняем текущую позицию прокрутки
+            scrollPosition = window.scrollY;
+
             const productId = this.dataset.product;
             showProductDetail(productId);
         });
@@ -686,6 +695,9 @@ function initQuickView() {
         backToProductsBtn.addEventListener('click', function() {
             document.getElementById('product-detail').classList.remove('active');
             document.body.style.overflow = 'auto';
+
+            // Восстанавливаем позицию прокрутки
+            window.scrollTo(0, scrollPosition);
         });
     }
 
@@ -907,69 +919,221 @@ function initTouchEvents() {
             const touchEndY = e.changedTouches[0].clientY;
             const deltaY = Math.abs(touchEndY - touchStartY);
 
-            // Если движение было небольшим (не скролл)
+            // Если это был тап, а не скролл
             if (deltaY <= scrollThreshold) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Сохраняем позицию прокрутки
+                scrollPosition = window.scrollY;
+
                 const productId = this.dataset.product;
-                if (productId) {
-                    showProductDetail(productId);
-                }
+                showProductDetail(productId);
             }
 
-            this.style.opacity = '1'; // Восстанавливаем прозрачность
+            this.style.opacity = '1';
+        });
+    });
+
+    // Обработка свайпов для модальных окон изображений
+    document.addEventListener('DOMContentLoaded', function() {
+        const productDetail = document.getElementById('product-detail');
+        if (!productDetail) return;
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        productDetail.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        productDetail.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+
+            // Определяем свайп влево/вправо
+            if (Math.abs(deltaX) > 50) { // Порог для свайпа
+                const mainImage = document.getElementById('main-product-image');
+                const thumbnails = document.querySelectorAll('.thumbnail');
+                let currentIndex = 0;
+
+                // Находим текущее активное изображение
+                thumbnails.forEach((thumb, index) => {
+                    if (thumb.classList.contains('active')) {
+                        currentIndex = index;
+                    }
+                });
+
+                if (deltaX > 0) { // Свайп вправо - предыдущее изображение
+                    const prevIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+                    thumbnails[prevIndex].click();
+                } else { // Свайп влево - следующее изображение
+                    const nextIndex = (currentIndex + 1) % thumbnails.length;
+                    thumbnails[nextIndex].click();
+                }
+            }
         }, { passive: true });
     });
 }
-// ПАГИНАЦИЯ
-function initPagination() {
-    const paginationBtns = document.querySelectorAll('.pagination-btn');
 
-    paginationBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Удаляем класс active у всех кнопок
-            paginationBtns.forEach(b => b.classList.remove('active'));
-            // Добавляем класс active нажатой кнопке
-            this.classList.add('active');
-            // Прокручиваем страницу к секции с товарами
-            document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+// ЗАГРУЗКА ИЗОБРАЖЕНИЙ
+function initImageLoading() {
+    const images = document.querySelectorAll('img[loading="lazy"]');
+
+    images.forEach(img => {
+        img.addEventListener('error', function() {
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
         });
     });
 }
 
-// Загрузка изображений
-function initImageLoading() {
-    const images = document.querySelectorAll('.product-image img');
+// ПАГИНАЦИЯ
+function initPagination() {
+    const productsContainer = document.querySelector('.products-grid');
+    const paginationContainer = document.querySelector('.pagination');
 
-    images.forEach(img => {
-        if (img.complete) {
-            img.classList.add('loaded');
-        } else {
-            img.addEventListener('load', function() {
-                this.classList.add('loaded');
-            });
+    if (!productsContainer || !paginationContainer) return;
 
-            img.addEventListener('error', function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGM0Y0RjYiLz48dGV4dCB4PSIxMDAiIHk9IjEwMCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD48L3N2Zz4=';
-                this.classList.add('loaded');
+    const allProducts = Array.from(productsContainer.querySelectorAll('.product-card'));
+    const totalPages = Math.ceil(allProducts.length / productsPerPage);
+
+    // Создаем пагинацию
+    function createPagination() {
+        paginationContainer.innerHTML = '';
+
+        // Кнопка "Назад"
+        const prevBtn = document.createElement('button');
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.classList.add('pagination-btn');
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateProductsDisplay();
+                updatePagination();
+                window.scrollTo(0, 0);
+            }
+        });
+        paginationContainer.appendChild(prevBtn);
+
+        // Номера страниц
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, startPage + 4);
+
+        for (let i = startPage; i <= endPage; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.textContent = i;
+            pageBtn.classList.add('pagination-btn');
+            if (i === currentPage) {
+                pageBtn.classList.add('active');
+            }
+            pageBtn.addEventListener('click', () => {
+                currentPage = i;
+                updateProductsDisplay();
+                updatePagination();
+                window.scrollTo(0, 0);
             });
+            paginationContainer.appendChild(pageBtn);
         }
-    });
+
+        // Кнопка "Вперед"
+        const nextBtn = document.createElement('button');
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.classList.add('pagination-btn');
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateProductsDisplay();
+                updatePagination();
+                window.scrollTo(0, 0);
+            }
+        });
+        paginationContainer.appendChild(nextBtn);
+    }
+
+    // Обновление отображения товаров
+    function updateProductsDisplay() {
+        const startIndex = (currentPage - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+
+        allProducts.forEach((product, index) => {
+            if (index >= startIndex && index < endIndex) {
+                product.style.display = 'block';
+                setTimeout(() => {
+                    product.style.opacity = '1';
+                    product.style.transform = 'translateY(0)';
+                }, 50);
+            } else {
+                product.style.opacity = '0';
+                product.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    product.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+
+    // Обновление состояния пагинации
+    function updatePagination() {
+        const buttons = paginationContainer.querySelectorAll('.pagination-btn');
+        buttons.forEach((button, index) => {
+            if (index === 0) return; // Пропускаем кнопку "Назад"
+            if (index === buttons.length - 1) return; // Пропускаем кнопку "Вперед"
+
+            const pageNum = parseInt(button.textContent);
+            button.classList.toggle('active', pageNum === currentPage);
+        });
+
+        // Обновляем состояние кнопок навигации
+        buttons[0].disabled = currentPage === 1;
+        buttons[buttons.length - 1].disabled = currentPage === totalPages;
+    }
+
+    // Инициализация пагинации
+    createPagination();
+    updateProductsDisplay();
 }
 
-// Уведомления
+// УВЕДОМЛЕНИЯ
 function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
+    // Удаляем существующие уведомления
+    const existingToasts = document.querySelectorAll('.toast');
+    existingToasts.forEach(toast => {
+        toast.remove();
+    });
 
-    toast.textContent = message;
-    toast.className = 'toast';
-    toast.classList.add(type, 'active');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
 
+    document.body.appendChild(toast);
+
+    // Анимация появления
     setTimeout(() => {
-        toast.classList.remove('active');
+        toast.classList.add('show');
+    }, 100);
+
+    // Автоматическое скрытие через 3 секунды
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
     }, 3000);
 }
 
 // Глобальные функции для использования в HTML
-window.updateQuantity = updateQuantity;
-window.removeFromCart = removeFromCart;
 window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.updateQuantity = updateQuantity;
+window.showProductDetail = showProductDetail;
+window.openTelegramLink = openTelegramLink;
+window.copyToClipboardFallback = copyToClipboardFallback;
