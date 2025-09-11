@@ -398,18 +398,38 @@ function initCart() {
 // Универсальная функция открытия Telegram
 function openTelegramLink(encodedText, username) {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const telegramUrl = `https://t.me/${username}?text=${encodedText}`;
 
     if (isMobile) {
         // Пробуем открыть приложение Telegram
-        window.location.href = `tg://resolve?domain=${username}&text=${encodedText}`;
+        const appUrl = `tg://resolve?domain=${username}&text=${encodedText}`;
 
-        // Если не открылось — fallback на веб через 500 мс
-        setTimeout(() => {
-            window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+        // Создаем iframe для открытия приложения
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = appUrl;
+        document.body.appendChild(iframe);
+
+        // Таймаут для проверки, открылось ли приложение
+        let appOpened = false;
+        const timeout = setTimeout(() => {
+            if (!appOpened) {
+                // Если приложение не открылось, открываем веб-версию
+                window.location.href = telegramUrl;
+            }
+            document.body.removeChild(iframe);
         }, 500);
+
+        // Событие для определения, что приложение открылось
+        window.addEventListener('blur', function onBlur() {
+            appOpened = true;
+            clearTimeout(timeout);
+            window.removeEventListener('blur', onBlur);
+            document.body.removeChild(iframe);
+        });
     } else {
         // На ПК сразу открываем веб-версию
-        window.open(`https://t.me/${username}?text=${encodedText}`, '_blank');
+        window.open(telegramUrl, '_blank');
     }
 }
 
