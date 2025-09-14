@@ -305,6 +305,8 @@ function initApp() {
 
     // Обновляем счетчик корзины при загрузке
     updateCartCount();
+    // Инициализация поиска
+    initSearch();
 }
 
 // КОРЗИНА
@@ -1149,7 +1151,165 @@ function showToast(message, type = 'success') {
         }, 300);
     }, 3000);
 }
+// ПОИСК
+function initSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const clearSearchBtn = document.getElementById('clear-search');
+    const searchResults = document.getElementById('search-results');
+    const mobileSearchBtn = document.getElementById('mobile-search-btn');
+    const searchContainer = document.querySelector('.search-container');
 
+    let searchTimeout;
+
+    // Функция поиска товаров
+    function searchProducts(query) {
+        if (!query.trim()) {
+            searchResults.style.display = 'none';
+            return;
+        }
+
+        const searchTerm = query.toLowerCase().trim();
+        const results = [];
+
+        // Поиск по всем товарам
+        Object.entries(products).forEach(([id, product]) => {
+            const nameMatch = product.name.toLowerCase().includes(searchTerm);
+            const brandMatch = product.brand.toLowerCase().includes(searchTerm);
+            const descMatch = product.description.toLowerCase().includes(searchTerm);
+            const categoryMatch = getProductCategory(product).toLowerCase().includes(searchTerm);
+
+            if (nameMatch || brandMatch || descMatch || categoryMatch) {
+                results.push({
+                    id,
+                    ...product,
+                    category: getProductCategory(product)
+                });
+            }
+        });
+
+        displaySearchResults(results);
+    }
+
+    // Функция определения категории товара
+    function getProductCategory(product) {
+        const name = product.name.toLowerCase();
+        if (name.includes('свитшот')) return 'свитшоты';
+        if (name.includes('лонгслив')) return 'лонгсливы';
+        if (name.includes('зипк')) return 'зипки';
+        if (name.includes('жилетк')) return 'жилетки';
+        if (name.includes('сумк')) return 'сумки';
+        return 'другое';
+    }
+
+    // Отображение результатов поиска
+    function displaySearchResults(results) {
+        searchResults.innerHTML = '';
+
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="search-no-results">
+                    <i class="fas fa-search"></i>
+                    <p>Ничего не найдено</p>
+                    <small>Попробуйте изменить запрос</small>
+                </div>
+            `;
+        } else {
+            results.forEach(product => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                resultItem.innerHTML = `
+                    <img src="${product.images[0]}" alt="${product.name}" class="search-result-image" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjI1IiB5PSIyNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+'">
+                    <div class="search-result-info">
+                        <div class="search-result-name">${product.name}</div>
+                        <div class="search-result-price">${product.price} BYN</div>
+                        <div class="search-result-category">${product.category}</div>
+                    </div>
+                `;
+
+                resultItem.addEventListener('click', () => {
+                    showProductDetail(product.id);
+                    searchResults.style.display = 'none';
+                    searchInput.value = '';
+                    clearSearchBtn.style.display = 'none';
+                });
+
+                searchResults.appendChild(resultItem);
+            });
+        }
+
+        searchResults.style.display = 'block';
+    }
+
+    // Обработчики событий
+    searchInput.addEventListener('input', function(e) {
+        clearTimeout(searchTimeout);
+        const query = e.target.value;
+
+        if (query) {
+            clearSearchBtn.style.display = 'block';
+        } else {
+            clearSearchBtn.style.display = 'none';
+            searchResults.style.display = 'none';
+            return;
+        }
+
+        searchTimeout = setTimeout(() => {
+            searchProducts(query);
+        }, 300);
+    });
+
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchProducts(this.value);
+        }
+    });
+
+    searchBtn.addEventListener('click', () => {
+        searchProducts(searchInput.value);
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchResults.style.display = 'none';
+        clearSearchBtn.style.display = 'none';
+        searchInput.focus();
+    });
+
+    // Закрытие результатов при клике вне области поиска
+    document.addEventListener('click', function(e) {
+        if (!searchContainer.contains(e.target) &&
+            !mobileSearchBtn?.contains(e.target)) {
+            searchResults.style.display = 'none';
+
+            // На мобильных скрываем всю поисковую панель
+            if (window.innerWidth <= 768) {
+                searchContainer.classList.remove('active');
+            }
+        }
+    });
+
+    // Мобильный поиск
+    if (mobileSearchBtn && searchContainer) {
+        mobileSearchBtn.addEventListener('click', () => {
+            searchContainer.classList.toggle('active');
+            if (searchContainer.classList.contains('active')) {
+                searchInput.focus();
+            }
+        });
+    }
+
+    // Обработка escape для закрытия поиска
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            searchResults.style.display = 'none';
+            if (window.innerWidth <= 768) {
+                searchContainer.classList.remove('active');
+            }
+        }
+    });
+}
 // Глобальные функции для использования в HTML
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;

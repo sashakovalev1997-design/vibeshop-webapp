@@ -53,6 +53,21 @@
             <h1><i class="fas fa-shirt"></i> VibeShop</h1>
             <p>Стиль в каждом моменте</p>
         </div>
+
+        <!-- Поисковая строка -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Поиск товаров..." aria-label="Поиск товаров">
+                <button id="search-btn" aria-label="Найти">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="clear-search" class="clear-btn" aria-label="Очистить поиск" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="search-results" class="search-results"></div>
+        </div>
+
         <div class="header-actions">
             <button id="contact-btn" class="contact-btn">
                 <i class="fas fa-envelope"></i> Контакты
