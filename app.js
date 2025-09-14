@@ -54,7 +54,6 @@ const products = {
         ],
         images: [
             "СВИТШОТЫ LACOSTEбел1.jpg",
-            "СВИТШОТЫ LACOSTE2.jpg",
             "СВИТШОТЫ LACOSTEбел3.jpg",
             "СВИТШОТЫ LACOSTEбел4.jpg",
             "СВИТШОТЫ LACOSTEбел5.jpg",
