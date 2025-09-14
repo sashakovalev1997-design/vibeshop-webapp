@@ -763,36 +763,73 @@ function showProductDetail(productId) {
     productPrice.textContent = `${product.price} BYN`;
     productDesc.textContent = product.description;
 
-    // Убедитесь, что изображение загружается напрямую, без ленивой загрузки
-    mainImage.src = product.images[0];
+    // Устанавливаем заглушку перед загрузкой
+    mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
+    mainImage.style.opacity = 1;
     mainImage.alt = product.name;
-    mainImage.style.opacity = 1; // Убедитесь, что изображение видимо
+
+    // Загружаем главное изображение без ленивой загрузки
+    mainImage.setAttribute('loading', 'eager');
+
+    // Проверяем, загружено ли изображение заранее
+    const img = new Image();
+    img.onload = function() {
+        mainImage.src = product.images[0];
+        mainImage.style.opacity = 1;
+        mainImage.style.transition = 'opacity 0.3s ease';
+    };
+    img.onerror = function() {
+        mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+        mainImage.style.opacity = 1;
+    };
+
+    // Устанавливаем источник после добавления обработчиков
+    img.src = product.images[0];
 
     if (thumbnailsContainer) {
         thumbnailsContainer.innerHTML = '';
         product.images.forEach((image, index) => {
             const thumbnail = document.createElement('img');
-            thumbnail.src = image;
+
+            // Устанавливаем прозрачную заглушку сначала
+            thumbnail.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
             thumbnail.alt = `${product.name} - вид ${index + 1}`;
             thumbnail.classList.add('thumbnail');
             thumbnail.loading = 'lazy';
-            thumbnail.onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1iZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+
+            // Загружаем реальное изображение
+            const thumbImg = new Image();
+            thumbImg.onload = function() {
+                thumbnail.src = image;
+                thumbnail.style.opacity = 1;
             };
+            thumbImg.onerror = function() {
+                thumbnail.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjM1IiB5PSIzNSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1iZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+            };
+            thumbImg.src = image;
 
             if (index === 0) {
                 thumbnail.classList.add('active');
             }
 
             thumbnail.addEventListener('click', function() {
-                mainImage.src = this.src;
+                // Показываем заглушку при переключении
+                mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
+                mainImage.style.opacity = 1;
+
+                // Загружаем новое изображение
+                const newImg = new Image();
+                newImg.onload = function() {
+                    mainImage.src = this.src;
+                    mainImage.style.opacity = 1;
+                };
+                newImg.onerror = function() {
+                    mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+                };
+                newImg.src = this.src;
+
                 document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
-
-                mainImage.style.opacity = 0;
-                setTimeout(() => {
-                    mainImage.style.opacity = 1;
-                }, 100);
             });
 
             thumbnailsContainer.appendChild(thumbnail);
