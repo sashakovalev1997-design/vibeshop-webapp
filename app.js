@@ -54,7 +54,7 @@ const products = {
         ],
         images: [
             "СВИТШОТЫ LACOSTEбел1.jpg",
-            "СВИТШОТЫ LACOSTEбел2.jpg",
+            "СВИТШОТЫ LACOSTE2.jpg",
             "СВИТШОТЫ LACOSTEбел3.jpg",
             "СВИТШОТЫ LACOSTEбел4.jpg",
             "СВИТШОТЫ LACOSTEбел5.jpg",
@@ -79,7 +79,7 @@ const products = {
             "СВИТШОТЫ LACOSTEчер3.jpg",
             "СВИТШОТЫ LACOSTEчер4.jpg",
             "СВИТШОТЫ LACOSTEчер5.jpg",
-            "СВИТШОТЫ LACOSTЕчер6.jpg",
+            "СВИТШОТЫ LACOSTEчер6.jpg",
         ]
     },
     5: {
@@ -164,8 +164,7 @@ const products = {
             "CORTEIZjil3.jpg",
             "CORTEIZjil4.jpg",
             "CORTEIZjil5.jpg",
-            "CORTEIZjil6.jpg",
-            "CORTEIZjil7.jpg"
+            "CORTEIZjil6.jpg"
         ]
     },
     9: {
@@ -226,7 +225,7 @@ const products = {
             "ЖИЛЕТКИ POLO RALPH LAUREN2.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN3.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN4.jpg",
-            "ЖиЛЕТКИ POLO RALPH LAUREN5.jpg",
+            "ЖИЛЕТКИ POLO RALPH LAUREN5.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN6.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN7.jpg",
             "ЖИЛЕТКИ POLO RALPH LAUREN8.jpg"
