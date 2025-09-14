@@ -118,12 +118,12 @@ const products = {
         ],
         images: [
             "Лонгguess.jpg",
-            "Лонgguess2.jpg",
-            "Лонgguess3.jpg",
-            "Лонgguess4.jpg",
-            "Лонgguess5.jpg",
-            "Лонgguess6.jpg",
-            "Лонgguess7.jpg"
+            "Лонгguess2.jpg",
+            "Лонгguess3.jpg",
+            "Лонгguess4.jpg",
+            "Лонгguess5.jpg",
+            "Лонгguess6.jpg",
+            "Лонгguess7.jpg"
         ]
     },
     7: {
@@ -138,13 +138,13 @@ const products = {
             "Размеры: M, L"
         ],
         images: [
-            "Лонgguessчер1.jpg",
-            "Лонgguessчер2.jpg",
-            "Лонgguessчер3.jpg",
-            "Лонgguessчер4.jpg",
-            "Лонgguessчер5.jpg",
-            "Лонgguessчер6.jpg",
-            "Лонgguessчер7.jpg"
+            "tshirt.jpg",
+            "Лонгguessчер.jpg",
+            "Лонгguessчер2.jpg",
+            "Лонгguessчер3.jpg",
+            "Лонгguessчер4.jpg",
+            "Лонгguessчер5.jpg",
+            "Лонгguessчер6.jpg"
         ]
     },
     8: {
