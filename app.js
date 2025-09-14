@@ -307,6 +307,8 @@ function initApp() {
     updateCartCount();
     // Инициализация поиска
     initSearch();
+    // Предзагрузка изображений
+    preloadProductImages();
 }
 
 // КОРЗИНА
@@ -1002,10 +1004,51 @@ function initTouchEvents() {
 function initImageLoading() {
     const images = document.querySelectorAll('img[loading="lazy"]');
 
-    images.forEach(img => {
-        img.addEventListener('error', function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+    // Создаем Intersection Observer для ленивой загрузки
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                const src = img.getAttribute('data-src') || img.src;
+
+                // Загружаем изображение
+                loadImageWithPriority(src).then(() => {
+                    img.src = src;
+                    img.setAttribute('data-loaded', 'true');
+                    observer.unobserve(img);
+                }).catch(() => {
+                    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+                });
+            }
         });
+    }, {
+        rootMargin: '200px 0px', // Начинаем загружать заранее
+        threshold: 0.01
+    });
+
+    // Наблюдаем за всеми изображениями
+    images.forEach(img => {
+        // Сохраняем оригинальный src в data-src
+        if (!img.hasAttribute('data-src')) {
+            img.setAttribute('data-src', img.src);
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
+        }
+        imageObserver.observe(img);
+    });
+}
+
+// Функция приоритетной загрузки изображений
+function loadImageWithPriority(src) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve();
+        img.onerror = () => reject();
+        img.src = src;
+
+        // Таймаут для избежания вечной загрузки
+        setTimeout(() => {
+            if (!img.complete) reject();
+        }, 10000);
     });
 }
 
@@ -1307,6 +1350,47 @@ function initSearch() {
             if (window.innerWidth <= 768) {
                 searchContainer.classList.remove('active');
             }
+        }
+    });
+}
+// Функция предзагрузки изображений
+function preloadProductImages() {
+    const allImages = [];
+
+    // Собираем все изображения из продуктов
+    Object.values(products).forEach(product => {
+        product.images.forEach(image => {
+            allImages.push(image);
+        });
+    });
+
+    // Предзагружаем изображения
+    allImages.forEach(imageSrc => {
+        const img = new Image();
+        img.src = imageSrc;
+        img.onerror = function() {
+            console.warn('Не удалось загрузить изображение:', imageSrc);
+        };
+    });
+
+    console.log('Предзагружено изображений:', allImages.length);
+}
+// Инициализация после полной загрузки страницы
+window.addEventListener('load', function() {
+    // Предзагрузка изображений для текущей viewport
+    preloadVisibleImages();
+
+    // Запускаем ленивую загрузку
+    initImageLoading();
+});
+
+function preloadVisibleImages() {
+    const viewportImages = document.querySelectorAll('.product-card:not([style*="display: none"]) img');
+    viewportImages.forEach(img => {
+        const src = img.getAttribute('data-src');
+        if (src) {
+            const preloadImg = new Image();
+            preloadImg.src = src;
         }
     });
 }
