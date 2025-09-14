@@ -763,8 +763,10 @@ function showProductDetail(productId) {
     productPrice.textContent = `${product.price} BYN`;
     productDesc.textContent = product.description;
 
+    // Убедитесь, что изображение загружается напрямую, без ленивой загрузки
     mainImage.src = product.images[0];
     mainImage.alt = product.name;
+    mainImage.style.opacity = 1; // Убедитесь, что изображение видимо
 
     if (thumbnailsContainer) {
         thumbnailsContainer.innerHTML = '';
