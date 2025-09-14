@@ -108,7 +108,7 @@ const products = {
     6: {
         name: "Лонгслив Guess",
         brand: "guess",
-        price: 90,
+        price: 98,
         description: "Модный лонгслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
         features: [
             "Материал: хлопок",
@@ -117,7 +117,7 @@ const products = {
             "Размеры: M, L"
         ],
         images: [
-            "Лонгguess1.jpg",
+            "Лонгguess.jpg",
             "Лонgguess2.jpg",
             "Лонgguess3.jpg",
             "Лонgguess4.jpg",
@@ -129,7 +129,7 @@ const products = {
     7: {
         name: "Лонгслив Guess черный",
         brand: "guess",
-        price: 90,
+        price: 98,
         description: "Модный лонгслив от Guess с узнаваемым логотипом. Комфорт и стиль для повседневной носки.",
         features: [
             "Материал: хлопок",
@@ -786,6 +786,7 @@ function showProductDetail(productId) {
     // Устанавливаем источник после добавления обработчиков
     img.src = product.images[0];
 
+    // В функции showProductDetail замените этот блок:
     if (thumbnailsContainer) {
         thumbnailsContainer.innerHTML = '';
         product.images.forEach((image, index) => {
@@ -796,6 +797,7 @@ function showProductDetail(productId) {
             thumbnail.alt = `${product.name} - вид ${index + 1}`;
             thumbnail.classList.add('thumbnail');
             thumbnail.loading = 'lazy';
+            thumbnail.dataset.src = image; // Сохраняем реальный источник в data-атрибут
 
             // Загружаем реальное изображение
             const thumbImg = new Image();
@@ -826,7 +828,7 @@ function showProductDetail(productId) {
                 newImg.onerror = function() {
                     mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
                 };
-                newImg.src = this.src;
+                newImg.src = this.src; // Используем уже загруженное изображение из миниатюры
 
                 document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
