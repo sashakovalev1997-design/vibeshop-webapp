@@ -9,7 +9,7 @@ const products = {
             "Материал: премиальный хлопок",
             "Качество 1:1",
             "Фирменная бирка и упаковка",
-            "Доступные размеры: S, M, L, XL"
+            "Доступные размеры: M, L"
         ],
         images: [
             "hermeshud1.jpg",
@@ -70,7 +70,7 @@ const products = {
             "Материал: премиальный хлопок",
             "Классический черный цвет",
             "Фирменный крокодил",
-            "Размеры: S, M, L, XL"
+            "Размеры: M, L"
         ],
         images: [
             "СВИТШОТЫ LACOSTEчер1.jpg",
@@ -217,7 +217,7 @@ const products = {
             "Материал: хлопок/нейлон",
             "Классический дизайн",
             "Фирменный логотип",
-            "Размеры: S, M, L, XL"
+            "Размеры: M, L"
         ],
         images: [
             "ЖИЛЕТКИ POLO RALPH LAUREN1.jpg",
@@ -1020,31 +1020,86 @@ function initImageLoading() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                const src = img.getAttribute('data-src') || img.src;
+                const src = img.getAttribute('data-src');
+
+                if (!src) return;
+
+                // Добавляем класс загрузки
+                img.classList.add('image-loading');
 
                 // Загружаем изображение
-                loadImageWithPriority(src).then(() => {
-                    img.src = src;
-                    img.setAttribute('data-loaded', 'true');
-                    observer.unobserve(img);
-                }).catch(() => {
-                    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
-                });
+                loadImageWithPriority(src)
+                    .then(() => {
+                        img.src = src;
+                        img.classList.remove('image-loading');
+                        img.classList.add('image-loaded');
+                        img.setAttribute('data-loaded', 'true');
+                        observer.unobserve(img);
+                    })
+                    .catch(() => {
+                        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+                        img.classList.remove('image-loading');
+                    });
             }
         });
     }, {
-        rootMargin: '200px 0px', // Начинаем загружать заранее
+        rootMargin: '200px 0px',
         threshold: 0.01
     });
 
     // Наблюдаем за всеми изображениями
     images.forEach(img => {
-        // Сохраняем оригинальный src в data-src
-        if (!img.hasAttribute('data-src')) {
-            img.setAttribute('data-src', img.src);
-            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
+        // Сохраняем оригинальный src в data-src и устанавливаем плейсхолдер
+        const originalSrc = img.src;
+        if (originalSrc && !img.hasAttribute('data-src')) {
+            img.setAttribute('data-src', originalSrc);
+
+            // Создаем низкокачественный плейсхолдер
+            createLowQualityPlaceholder(originalSrc)
+                .then(placeholder => {
+                    if (placeholder) {
+                        img.src = placeholder;
+                        img.style.filter = 'blur(10px)';
+                        img.style.transform = 'scale(1.05)';
+                    }
+                })
+                .catch(() => {
+                    // Fallback на простой плейсхолдер
+                    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
+                });
         }
+
         imageObserver.observe(img);
+    });
+}
+
+// Функция для создания низкокачественных плейсхолдеров
+function createLowQualityPlaceholder(src) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = function() {
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Уменьшаем размер для плейсхолдера
+                const width = Math.min(img.width, 20);
+                const height = Math.round((img.height * width) / img.width);
+
+                canvas.width = width;
+                canvas.height = height;
+
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Получаем data URL с низким качеством
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.1);
+                resolve(dataUrl);
+            } catch (error) {
+                resolve(null);
+            }
+        };
+        img.onerror = () => resolve(null);
+        img.src = src;
     });
 }
 
@@ -1052,14 +1107,42 @@ function initImageLoading() {
 function loadImageWithPriority(src) {
     return new Promise((resolve, reject) => {
         const img = new Image();
-        img.onload = () => resolve();
-        img.onerror = () => reject();
+
+        img.onload = () => {
+            clearTimeout(timeoutId);
+            resolve();
+        };
+
+        img.onerror = () => {
+            clearTimeout(timeoutId);
+            reject();
+        };
+
         img.src = src;
 
         // Таймаут для избежания вечной загрузки
-        setTimeout(() => {
-            if (!img.complete) reject();
-        }, 10000);
+        const timeoutId = setTimeout(() => {
+            if (!img.complete) {
+                reject();
+            }
+        }, 15000); // Увеличил таймаут до 15 секунд
+    });
+}
+
+// Функция для приоритетной загрузки изображений выше складки
+function loadAboveFoldImages() {
+    const viewportHeight = window.innerHeight;
+    const productCards = document.querySelectorAll('.product-card');
+
+    productCards.forEach((card, index) => {
+        if (index < 4) { // Первые 4 товара (выше складки)
+            const img = card.querySelector('img');
+            if (img && img.hasAttribute('data-src')) {
+                const src = img.getAttribute('data-src');
+                const loader = new Image();
+                loader.src = src;
+            }
+        }
     });
 }
 
