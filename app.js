@@ -9,7 +9,7 @@ const products = {
             "Материал: премиальный хлопок",
             "Качество 1:1",
             "Фирменная бирка и упаковка",
-            "Доступные размеры: M, L"
+            "Доступные размеры:  M, L"
         ],
         images: [
             "hermeshud1.jpg",
@@ -307,6 +307,7 @@ function initApp() {
     initSearch();
     // Предзагрузка изображений
     preloadProductImages();
+    monitorPerformance();
 }
 
 // КОРЗИНА
@@ -1013,136 +1014,76 @@ function initTouchEvents() {
 
 // ЗАГРУЗКА ИЗОБРАЖЕНИЙ
 function initImageLoading() {
-    const images = document.querySelectorAll('img[loading="lazy"]');
-
-    // Создаем Intersection Observer для ленивой загрузки
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                const src = img.getAttribute('data-src');
-
-                if (!src) return;
-
-                // Добавляем класс загрузки
-                img.classList.add('image-loading');
-
-                // Загружаем изображение
-                loadImageWithPriority(src)
-                    .then(() => {
-                        img.src = src;
-                        img.classList.remove('image-loading');
-                        img.classList.add('image-loaded');
-                        img.setAttribute('data-loaded', 'true');
-                        observer.unobserve(img);
-                    })
-                    .catch(() => {
-                        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
-                        img.classList.remove('image-loading');
-                    });
+    if ('loading' in HTMLImageElement.prototype) {
+        // Браузер поддерживает native lazy loading
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+            if (img.complete) {
+                img.style.opacity = '1';
+            } else {
+                img.addEventListener('load', () => {
+                    img.style.opacity = '1';
+                });
+                img.addEventListener('error', () => {
+                    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjQ2NDY0Ij5ObyBpbWFnZTwvdGV4dD4KPC9zdmc+';
+                    img.style.opacity = '1';
+                });
             }
         });
-    }, {
-        rootMargin: '200px 0px',
-        threshold: 0.01
-    });
+    } else {
+        // Fallback для старых браузеров
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
 
-    // Наблюдаем за всеми изображениями
-    images.forEach(img => {
-        // Сохраняем оригинальный src в data-src и устанавливаем плейсхолдер
-        const originalSrc = img.src;
-        if (originalSrc && !img.hasAttribute('data-src')) {
-            img.setAttribute('data-src', originalSrc);
+        let lazyImageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    let lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src || lazyImage.src;
+                    lazyImageObserver.unobserve(lazyImage);
+                }
+            });
+        });
 
-            // Создаем низкокачественный плейсхолдер
-            createLowQualityPlaceholder(originalSrc)
-                .then(placeholder => {
-                    if (placeholder) {
-                        img.src = placeholder;
-                        img.style.filter = 'blur(10px)';
-                        img.style.transform = 'scale(1.05)';
-                    }
-                })
-                .catch(() => {
-                    // Fallback на простой плейсхолдер
-                    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg==';
-                });
-        }
-
-        imageObserver.observe(img);
-    });
+        lazyImages.forEach(lazyImage => {
+            lazyImageObserver.observe(lazyImage);
+        });
+    }
 }
 
-// Функция для создания низкокачественных плейсхолдеров
-function createLowQualityPlaceholder(src) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = function() {
-            try {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
+// Функция для измерения и оптимизации производительности
+function monitorPerformance() {
+    // Измерение времени загрузки
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            console.log(`Время загрузки страницы: ${loadTime}ms`);
 
-                // Уменьшаем размер для плейсхолдера
-                const width = Math.min(img.width, 20);
-                const height = Math.round((img.height * width) / img.width);
-
-                canvas.width = width;
-                canvas.height = height;
-
-                ctx.drawImage(img, 0, 0, width, height);
-
-                // Получаем data URL с низким качеством
-                const dataUrl = canvas.toDataURL('image/jpeg', 0.1);
-                resolve(dataUrl);
-            } catch (error) {
-                resolve(null);
+            if (loadTime > 3000) {
+                console.warn('Время загрузки превышает 3 секунды. Рекомендуется оптимизация.');
             }
-        };
-        img.onerror = () => resolve(null);
-        img.src = src;
+        }, 0);
     });
+
+    // Отслеживание Largest Contentful Paint (LCP)
+    new PerformanceObserver((entryList) => {
+        const entries = entryList.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        console.log('LCP:', lastEntry.startTime);
+    }).observe({type: 'largest-contentful-paint', buffered: true});
 }
 
 // Функция приоритетной загрузки изображений
 function loadImageWithPriority(src) {
     return new Promise((resolve, reject) => {
         const img = new Image();
-
-        img.onload = () => {
-            clearTimeout(timeoutId);
-            resolve();
-        };
-
-        img.onerror = () => {
-            clearTimeout(timeoutId);
-            reject();
-        };
-
+        img.onload = () => resolve();
+        img.onerror = () => reject();
         img.src = src;
 
         // Таймаут для избежания вечной загрузки
-        const timeoutId = setTimeout(() => {
-            if (!img.complete) {
-                reject();
-            }
-        }, 15000); // Увеличил таймаут до 15 секунд
-    });
-}
-
-// Функция для приоритетной загрузки изображений выше складки
-function loadAboveFoldImages() {
-    const viewportHeight = window.innerHeight;
-    const productCards = document.querySelectorAll('.product-card');
-
-    productCards.forEach((card, index) => {
-        if (index < 4) { // Первые 4 товара (выше складки)
-            const img = card.querySelector('img');
-            if (img && img.hasAttribute('data-src')) {
-                const src = img.getAttribute('data-src');
-                const loader = new Image();
-                loader.src = src;
-            }
-        }
+        setTimeout(() => {
+            if (!img.complete) reject();
+        }, 10000);
     });
 }
 
