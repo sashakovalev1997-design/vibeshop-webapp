@@ -308,7 +308,6 @@ function initApp() {
     // Предзагрузка изображений
     preloadProductImages();
     monitorPerformance();
-    initIconAnimation();
 }
 
 // КОРЗИНА
@@ -1429,15 +1428,6 @@ function preloadVisibleImages() {
             preloadImg.src = src;
         }
     });
-}
-// Анимация иконки в логотипе
-// Анимация иконки в логотипе
-function initIconAnimation() {
-    const iconElement = document.getElementById('animated-icon');
-
-    // Просто добавляем класс для анимации через CSS
-    // Вся анимация теперь управляется через CSS
-    console.log('Icon animation initialized');
 }
 // Глобальные функции для использования в HTML
 window.addToCart = addToCart;
