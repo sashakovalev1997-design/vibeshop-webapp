@@ -308,6 +308,7 @@ function initApp() {
     // Предзагрузка изображений
     preloadProductImages();
     monitorPerformance();
+    initIconAnimation();
 }
 
 // КОРЗИНА
@@ -1428,6 +1429,38 @@ function preloadVisibleImages() {
             preloadImg.src = src;
         }
     });
+}
+// Анимация иконки в логотипе
+function initIconAnimation() {
+    const iconElement = document.getElementById('animated-icon');
+    const icons = [
+        'fa-tshirt',           // Майка
+        'fa-vest-patches',     // Жилетка
+        'fa-sunglasses',       // Солнцезащитные очки
+        'fa-shirt-long-sleeve',// Длинный рукав
+        'fa-shirt-jersey',     // Джерси
+        'fa-sneaker',          // Кроссовки
+        'fa-shorts',           // Шорты
+        'fa-jeans'             // Джинсы
+    ];
+
+    let currentIcon = 0;
+
+    // Функция для смены иконки
+    function changeIcon() {
+        // Удаляем все классы иконок
+        iconElement.classList.remove(...icons);
+
+        // Добавляем текущую иконку
+        iconElement.classList.add('fas', icons[currentIcon]);
+
+        // Переходим к следующей иконке
+        currentIcon = (currentIcon + 1) % icons.length;
+    }
+
+    // Начинаем анимацию
+    changeIcon(); // Установить первую иконку сразу
+    setInterval(changeIcon, 1500); // Менять иконку каждые 1.5 секунды
 }
 // Глобальные функции для использования в HTML
 window.addToCart = addToCart;

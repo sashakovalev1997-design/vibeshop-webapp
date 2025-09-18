@@ -91,6 +91,48 @@ body {
     display: flex;
     gap: 0.5rem;
 }
+/* Анимация иконки в логотипе */
+.animated-icon {
+    font-size: 1.2em;
+    display: inline-block;
+    animation: changeIcon 12s infinite;
+}
+
+@keyframes changeIcon {
+    0% { content: "\f553"; } /* fa-tshirt */
+    14% { content: "\f553"; }
+    16% { content: "\f546"; } /* fa-vest-patches */
+    28% { content: "\f546"; }
+    30% { content: "\f5e9"; } /* fa-sunglasses */
+    42% { content: "\f5e9"; }
+    44% { content: "\f3c9"; } /* fa-shirt-long-sleeve */
+    56% { content: "\f3c9"; }
+    58% { content: "\f3c8"; } /* fa-shirt-jersey */
+    70% { content: "\f3c8"; }
+    72% { content: "\f5e8"; } /* fa-sneaker */
+    84% { content: "\f5e8"; }
+    86% { content: "\f5e7"; } /* fa-shorts */
+    98% { content: "\f5e7"; }
+    100% { content: "\f5e6"; } /* fa-jeans */
+}
+
+/* Для поддержки Font Awesome через псевдоэлементы */
+.animated-icon::before {
+    content: "\f553"; /* Начальная иконка - майка */
+    animation: changeIcon 12s infinite;
+}
+
+/* Плавные переходы между иконками */
+@keyframes changeIcon {
+    0%, 14% { content: "\f553"; } /* fa-tshirt */
+    15%, 28% { content: "\f546"; } /* fa-vest-patches */
+    29%, 42% { content: "\f5e9"; } /* fa-sunglasses */
+    43%, 56% { content: "\f3c9"; } /* fa-shirt-long-sleeve */
+    57%, 70% { content: "\f3c8"; } /* fa-shirt-jersey */
+    71%, 84% { content: "\f5e8"; } /* fa-sneaker */
+    85%, 98% { content: "\f5e7"; } /* fa-shorts */
+    99%, 100% { content: "\f5e6"; } /* fa-jeans */
+}
 
 .contact-btn, .cart-btn {
     background: var(--primary);
