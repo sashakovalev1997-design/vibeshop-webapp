@@ -377,56 +377,98 @@ body {
 /* Categories */
 .categories-container {
     max-width: 1200px;
-    margin: 1.5rem auto;
+    margin: 1rem auto 2rem;
     padding: 0 1rem;
     position: relative;
     display: flex;
     align-items: center;
-}
-
-.categories {
-    display: flex;
-    gap: 0.8rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 0.5rem;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-
-.categories::-webkit-scrollbar {
-    display: none;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 .category {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
-    min-width: 70px;
+    gap: 0.6rem;
+    min-width: 85px;
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 8px;
-    transition: var(--transition);
+    padding: 0.8rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
     flex-shrink: 0;
+    background: white;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .category:hover {
-    background: #f0f0f0;
+    background: var(--secondary);
+    transform: translateY(-3px);
+    border-color: var(--secondary);
+}
+
+.category:hover span {
+    color: white;
+}
+
+.category:hover img {
+    transform: scale(1.1);
 }
 
 .category img {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
     border-radius: 50%;
+    transition: var(--transition);
+    border: 2px solid #f0f0f0;
 }
 
 .category span {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     text-align: center;
+    font-weight: 500;
+    color: var(--dark);
+    transition: var(--transition);
 }
 
+.category.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.category.active span {
+    color: white;
+    font-weight: 600;
+}
+
+.category.active img {
+    border-color: white;
+}
+/* Добавьте индикатор выбранной категории */
+.category.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 6px;
+    height: 6px;
+    background: var(--secondary);
+    border-radius: 50%;
+}
+/* Разделители между категориями */
+.category:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, #ddd, transparent);
+}
 .scroll-btn {
     background: white;
     border: 1px solid #ddd;
