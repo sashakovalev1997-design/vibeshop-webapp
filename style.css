@@ -117,6 +117,273 @@ body {
     margin: 0 1rem;
     min-width: 150px;
 }
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 25px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.search-box:focus-within {
+    border-color: var(--secondary);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+    background: white;
+}
+#search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    outline: none;
+    color: var(--dark);
+}
+
+#search-input::placeholder {
+    color: #95a5a6;
+}
+
+#search-btn {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+#search-btn:hover {
+    background: var(--primary);
+    transform: scale(1.05);
+}
+
+#clear-search {
+    background: none;
+    border: none;
+    color: #95a5a6;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#clear-search:hover {
+    color: var(--accent);
+}
+
+/* Результаты поиска */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    margin-top: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.search-result-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-result-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.search-result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.search-result-name {
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0.2rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-result-price {
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+}
+
+.search-result-category {
+    color: var(--gray);
+    font-size: 0.8rem;
+}
+
+.search-no-results {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--gray);
+}
+
+.search-no-results i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #ddd;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+    .header-content {
+        padding: 0 0.5rem;
+        gap: 0.5rem;
+    }
+
+    .search-container {
+        margin: 0 0.5rem;
+        min-width: 120px;
+        max-width: 250px;
+    }
+
+    .search-box {
+        padding: 0.4rem;
+    }
+
+    #search-input {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    #search-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Убираем лишние пробелы на мобильных */
+    .logo {
+        flex-shrink: 1;
+        min-width: auto;
+    }
+
+    .logo h1 {
+        font-size: 1.2rem;
+        white-space: nowrap;
+    }
+
+    .header-actions {
+        gap: 0.3rem;
+    }
+
+    .contact-btn span {
+        display: none;
+    }
+
+    .contact-btn {
+        padding: 0.5rem;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 0.8rem;
+        z-index: 101;
+        margin: 0;
+        max-width: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-container.active {
+        display: block;
+    }
+
+    .mobile-search-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f8f9fa;
+        border: none;
+        color: var(--dark);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-search-btn:hover {
+        background: var(--secondary);
+        color: white;
+    }
+
+    /* Уменьшаем логотип на очень маленьких экранах */
+    .logo h1 {
+        font-size: 1rem;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* Анимация для поиска */
+@keyframes searchSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-results {
+    animation: searchSlideIn 0.3s ease;
+}
+
+/* Улучшенная анимация для кнопки поиска */
+#search-btn i {
+    transition: transform 0.3s ease;
+}
+
+#search-btn:hover i {
+    transform: scale(1.1);
+}
 
 .header-actions {
     display: flex;
