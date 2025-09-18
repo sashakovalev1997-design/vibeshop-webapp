@@ -76,7 +76,7 @@ body {
 }
 
 .logo h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-style: italic;
     background: linear-gradient(45deg, #2c3e50, #3498db, #e74c3c);
