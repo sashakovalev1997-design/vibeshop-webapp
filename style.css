@@ -82,7 +82,7 @@ body {
     gap: 10px;
 }
 
-.logo-icon {
+logo-icon {
     position: relative;
     width: 40px;
     height: 40px;
@@ -92,51 +92,33 @@ body {
 }
 
 .logo-icon i {
-    position: absolute;
+    position: static;
     font-size: 28px;
     color: #2c3e50;
-    transition: all 0.5s ease;
+    margin: 0 2px;
     opacity: 1;
+    animation: iconPulse 3s ease-in-out infinite;
 }
 
-/* Анимация смены иконок */
-.logo-icon i:nth-child(1) {
-    animation: iconChange 12s infinite;
-}
+.logo-icon i:nth-child(1) { animation-delay: 0s; }
+.logo-icon i:nth-child(2) { animation-delay: 1s; }
+.logo-icon i:nth-child(3) { animation-delay: 2s; }
+.logo-icon i:nth-child(4) { animation-delay: 0.5s; }
+.logo-icon i:nth-child(5) { animation-delay: 1.5s; }
+.logo-icon i:nth-child(6) { animation-delay: 2.5s; }
+.logo-icon i:nth-child(7) { animation-delay: 0.8s; }
+.logo-icon i:nth-child(8) { animation-delay: 1.8s; }
 
-.logo-icon i:nth-child(2) {
-    animation: iconChange 12s infinite 4s;
-    opacity: 0;
-}
-
-.logo-icon i:nth-child(3) {
-    animation: iconChange 12s infinite 8s;
-    opacity: 0;
-}
-
-@keyframes iconChange {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.8);
-    }
-    10% {
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
         opacity: 1;
-        transform: translateY(0) scale(1);
     }
-    30% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    40% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.8);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.8);
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
     }
 }
-
 .header-actions {
     display: flex;
     gap: 0.5rem;
