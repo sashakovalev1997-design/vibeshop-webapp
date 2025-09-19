@@ -1685,6 +1685,7 @@ body {
     margin-bottom: 0.8rem;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: stretch;
 }
 
 .order-btn {
@@ -1812,7 +1813,7 @@ body {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .payment-method {
@@ -1826,7 +1827,8 @@ body {
     transition: var(--transition);
     background: white;
     flex: 1;
-    min-width: 120px;
+    min-width: 0;
+    white-space: nowrap;
 }
 
 .payment-method:hover {
@@ -1866,11 +1868,15 @@ body {
     }
 
     .payment-methods {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
     }
 
     .payment-method {
-        min-width: auto;
+        min-width: 120px;
+        flex-shrink: 0;
     }
 }
 
@@ -1884,6 +1890,36 @@ body {
     .copy-btn {
         font-size: 0.75rem;
         padding: 0.6rem 0.7rem;
+    }
+
+    .payment-method {
+        min-width: 100px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Дополнительные медиа-запросы для обеспечения правильного отображения */
+@media (max-width: 320px) {
+    .cart-buttons-row {
+        flex-direction: row;
+    }
+
+    .order-btn,
+    .copy-btn {
+        min-width: 120px;
+        font-size: 0.7rem;
+        padding: 0.5rem 0.6rem;
+    }
+
+    .payment-methods {
+        gap: 0.5rem;
+    }
+
+    .payment-method {
+        min-width: 90px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
     }
 }
 /* ===== FOOTER ===== */
