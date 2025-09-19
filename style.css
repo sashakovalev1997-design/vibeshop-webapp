@@ -1856,7 +1856,13 @@ body {
 /* Адаптивность для мобильных */
 @media (max-width: 480px) {
     .cart-buttons-row {
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .order-btn,
+    .copy-btn {
+        font-size: 0.8rem;
+        padding: 0.7rem 0.8rem;
     }
 
     .payment-methods {
@@ -1865,6 +1871,19 @@ body {
 
     .payment-method {
         min-width: auto;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 360px) {
+    .cart-buttons-row {
+        gap: 0.5rem;
+    }
+
+    .order-btn,
+    .copy-btn {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.7rem;
     }
 }
 /* ===== FOOTER ===== */
