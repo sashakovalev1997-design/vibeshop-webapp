@@ -566,12 +566,12 @@
     <div class="cart-footer">
         <div class="payment-methods">
             <label class="payment-method">
-                <input type="radio" name="payment-method" value="Картой" checked> <!-- checked добавлено здесь -->
+                <input type="radio" name="payment-method" value="Картой" checked>
                 <i class="fas fa-credit-card"></i>
                 <span>Картой</span>
             </label>
             <label class="payment-method">
-                <input type="radio" name="payment-method" value="Наличные"> <!-- убрано checked -->
+                <input type="radio" name="payment-method" value="Наличные">
                 <i class="fas fa-money-bill-wave"></i>
                 <span>Наличные</span>
             </label>
@@ -581,14 +581,15 @@
             <span>Итого:</span>
             <span id="cart-total-price">0 BYN</span>
         </div>
-        <button id="order-btn" class="order-btn">
-            <i class="fas fa-check"></i> Оформить заказ
-        </button>
-        <button id="copy-order-btn" class="copy-btn">
-            <i class="fas fa-copy"></i> Скопировать заказ
-        </button>
+        <div class="cart-buttons-row">
+            <button id="order-btn" class="order-btn">
+                <i class="fas fa-check"></i> Оформить заказ
+            </button>
+            <button id="copy-order-btn" class="copy-btn">
+                <i class="fas fa-copy"></i> Скопировать
+            </button>
+        </div>
     </div>
-</div>
 <!-- Overlay -->
 <div id="overlay" class="overlay"></div>
 

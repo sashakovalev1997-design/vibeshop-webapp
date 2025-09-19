@@ -1678,9 +1678,10 @@ body {
     font-size: 1.2rem;
 }
 
-.cart-buttons {
+/* Обновленные стили для кнопок в одну строку */
+.cart-buttons-row {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.8rem;
     margin-bottom: 0.8rem;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -1803,6 +1804,67 @@ body {
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+/* Стили для способов оплаты */
+.payment-methods {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    background: white;
+    flex: 1;
+    min-width: 120px;
+}
+
+.payment-method:hover {
+    border-color: var(--secondary);
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
+}
+
+.payment-method.selected {
+    border-color: var(--secondary);
+    background: rgba(52, 152, 219, 0.05);
+}
+
+.payment-method input[type="radio"] {
+    margin: 0;
+}
+
+.payment-details {
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 480px) {
+    .cart-buttons-row {
+        flex-direction: column;
+    }
+
+    .payment-methods {
+        flex-direction: column;
+    }
+
+    .payment-method {
+        min-width: auto;
     }
 }
 /* ===== FOOTER ===== */
