@@ -604,14 +604,13 @@ function generateOrderText() {
 // КАТЕГОРИИ
 function initCategories() {
     const categoryElements = document.querySelectorAll('.category');
+    const productCards = document.querySelectorAll('.product-card');
     const categoriesContainer = document.querySelector('.categories');
     const scrollLeftBtn = document.querySelector('.scroll-left');
     const scrollRightBtn = document.querySelector('.scroll-right');
 
-    // Функция фильтрации товаров по категориям (теперь глобальная)
-    window.filterProducts = function(category) {
-        const productCards = document.querySelectorAll('.product-card');
-
+    // Функция фильтрации товаров по категориям
+    function filterProducts(category) {
         productCards.forEach(card => {
             const cardCategory = card.dataset.category;
 
@@ -629,15 +628,7 @@ function initCategories() {
                 }, 300);
             }
         });
-
-        // Обновляем пагинацию после фильтрации
-        if (window.updatePagination) {
-            setTimeout(() => {
-                window.currentPage = 1;
-                if (window.createPagination) window.createPagination();
-            }, 350);
-        }
-    };
+    }
 
     // Обработчики для категорий
     categoryElements.forEach(categoryEl => {
@@ -649,7 +640,7 @@ function initCategories() {
             this.classList.add('active');
 
             // Фильтруем товары
-            window.filterProducts(selectedCategory);
+            filterProducts(selectedCategory);
         });
     });
 
@@ -1095,10 +1086,7 @@ function loadImageWithPriority(src) {
         }, 10000);
     });
 }
-// Глобальные переменные для пагинации
-let currentPage = 1;
-const productsPerPage = 8;
-let scrollPosition = 0;
+
 // ПАГИНАЦИЯ
 function initPagination() {
     const productsContainer = document.querySelector('.products-grid');
@@ -1106,29 +1094,12 @@ function initPagination() {
 
     if (!productsContainer || !paginationContainer) return;
 
-    // Получаем только видимые товары (учитывая фильтрацию по категориям)
-    const getVisibleProducts = () => {
-        return Array.from(productsContainer.querySelectorAll('.product-card')).filter(card => {
-            return card.style.display !== 'none' &&
-                window.getComputedStyle(card).display !== 'none';
-        });
-    };
-
-    let currentPage = 1;
-    const productsPerPage = 8;
-    let visibleProducts = getVisibleProducts();
-    const totalPages = Math.ceil(visibleProducts.length / productsPerPage);
+    const allProducts = Array.from(productsContainer.querySelectorAll('.product-card'));
+    const totalPages = Math.ceil(allProducts.length / productsPerPage);
 
     // Создаем пагинацию
     function createPagination() {
         paginationContainer.innerHTML = '';
-
-        if (totalPages <= 1) {
-            paginationContainer.style.display = 'none';
-            return;
-        }
-
-        paginationContainer.style.display = 'flex';
 
         // Кнопка "Назад"
         const prevBtn = document.createElement('button');
@@ -1146,8 +1117,8 @@ function initPagination() {
         paginationContainer.appendChild(prevBtn);
 
         // Номера страниц
-        const startPage = Math.max(1, currentPage - 1);
-        const endPage = Math.min(totalPages, startPage + 2);
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, startPage + 4);
 
         for (let i = startPage; i <= endPage; i++) {
             const pageBtn = document.createElement('button');
@@ -1183,11 +1154,10 @@ function initPagination() {
 
     // Обновление отображения товаров
     function updateProductsDisplay() {
-        visibleProducts = getVisibleProducts();
         const startIndex = (currentPage - 1) * productsPerPage;
         const endIndex = startIndex + productsPerPage;
 
-        visibleProducts.forEach((product, index) => {
+        allProducts.forEach((product, index) => {
             if (index >= startIndex && index < endIndex) {
                 product.style.display = 'block';
                 setTimeout(() => {
@@ -1206,76 +1176,23 @@ function initPagination() {
 
     // Обновление состояния пагинации
     function updatePagination() {
-        visibleProducts = getVisibleProducts();
-        const newTotalPages = Math.ceil(visibleProducts.length / productsPerPage);
+        const buttons = paginationContainer.querySelectorAll('.pagination-btn');
+        buttons.forEach((button, index) => {
+            if (index === 0) return; // Пропускаем кнопку "Назад"
+            if (index === buttons.length - 1) return; // Пропускаем кнопку "Вперед"
 
-        if (newTotalPages !== totalPages) {
-            currentPage = 1; // Сбрасываем на первую страницу при изменении фильтрации
-            createPagination();
-        } else {
-            const buttons = paginationContainer.querySelectorAll('.pagination-btn');
-            buttons.forEach((button, index) => {
-                if (index === 0) return; // Пропускаем кнопку "Назад"
-                if (index === buttons.length - 1) return; // Пропускаем кнопку "Вперед"
-
-                const pageNum = parseInt(button.textContent);
-                button.classList.toggle('active', pageNum === currentPage);
-            });
-
-            // Обновляем состояние кнопок навигации
-            buttons[0].disabled = currentPage === 1;
-            buttons[buttons.length - 1].disabled = currentPage === totalPages;
-        }
-
-        updateProductsDisplay();
-    }
-
-    // Переопределяем функцию фильтрации товаров по категориям
-    const originalFilterProducts = window.filterProducts;
-    window.filterProducts = function(category) {
-        const productCards = document.querySelectorAll('.product-card');
-
-        productCards.forEach(card => {
-            const cardCategory = card.dataset.category;
-
-            if (category === 'все' || cardCategory === category) {
-                card.style.display = 'block';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 50);
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.display = 'none';
-                }, 300);
-            }
+            const pageNum = parseInt(button.textContent);
+            button.classList.toggle('active', pageNum === currentPage);
         });
 
-        // Обновляем пагинацию после фильтрации
-        setTimeout(() => {
-            currentPage = 1;
-            createPagination();
-        }, 350);
-    };
+        // Обновляем состояние кнопок навигации
+        buttons[0].disabled = currentPage === 1;
+        buttons[buttons.length - 1].disabled = currentPage === totalPages;
+    }
 
     // Инициализация пагинации
     createPagination();
     updateProductsDisplay();
-
-    // Наблюдатель за изменениями в DOM для обновления пагинации
-    const observer = new MutationObserver(() => {
-        visibleProducts = getVisibleProducts();
-        updatePagination();
-    });
-
-    observer.observe(productsContainer, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: ['style']
-    });
 }
 
 // УВЕДОМЛЕНИЯ
